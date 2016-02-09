@@ -49,9 +49,9 @@ public class OI
         controllerJoystick = new Joystick(1);
         
         boulderIntakeExtend = new JoystickButton(controllerJoystick, 6);
-        boulderIntakeExtend.whileHeld(new BoulderIntakeRoll(4.25));
+        boulderIntakeExtend.whileHeld(new BoulderIntakeControl(4.25, true));
         boulderIntakeLow = new JoystickButton(controllerJoystick, 4);
-        boulderIntakeLow.whileHeld(new BoulderIntakeControl(4.5));
+        boulderIntakeLow.whileHeld(new BoulderIntakeControl(4.5, false));
         button12 = new JoystickButton(controllerJoystick, 12);
         button12.whenPressed(new ShooterElevationControl(-120.0));
         button11 = new JoystickButton(controllerJoystick, 11);
@@ -74,9 +74,9 @@ public class OI
         shooterRetract.whenReleased(new ShooterShoot(false));
         shooterExtend = new JoystickButton(driveJoystick, 1);
         shooterExtend.whenPressed(new ShooterShoot(true));
-        joystickShiftPressed = new JoystickButton(driveJoystick, 4);
+        joystickShiftPressed = new JoystickButton(driveJoystick, 2);
         joystickShiftPressed.whenPressed(new ShiftGear(true));
-        joystickShiftReleased = new JoystickButton(driveJoystick, 4);
+        joystickShiftReleased = new JoystickButton(driveJoystick, 2);
         joystickShiftReleased.whenReleased(new ShiftGear(false));
 
 
@@ -89,7 +89,7 @@ public class OI
         SmartDashboard.putData("Chassis Drive Target LIDAR: BaseOfTower", new ChassisDriveTargetLIDAR(100.0));
         SmartDashboard.putData("Chassis Turn Angle: Turn90", new ChassisTurnAngle(90.0, 0.6));
         SmartDashboard.putData("ShiftGear: highGear", new ShiftGear(true));
-        SmartDashboard.putData("Boulder Intake Control: Retracted", new BoulderIntakeControl(0.0));
+        SmartDashboard.putData("Boulder Intake Control: Retracted", new BoulderIntakeControl(0.0, false));
         SmartDashboard.putData("Shooter Shoot: ShootControl", new ShooterShoot(true));
         SmartDashboard.putData("Shooter Elevation Control: Middle", new ShooterElevationControl(45.0));
         SmartDashboard.putData("Shooter Wheel Speed Control", new ShooterWheelSpeedControl());

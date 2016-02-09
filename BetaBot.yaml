@@ -443,6 +443,8 @@ Children:
         value:
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
           type: double, value: '1.1'}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll, type: boolean,
+          value: 'false'}
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: Boulder Intake Control}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
@@ -491,7 +493,7 @@ Children:
           default: '1'
           name: Button
           validators: null
-          value: '4'
+          value: '2'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -522,7 +524,7 @@ Children:
           default: '1'
           name: Button
           validators: null
-          value: '4'
+          value: '2'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -868,6 +870,8 @@ Children:
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
             type: double, value: '4.5'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll,
+            type: boolean, value: 'false'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id013
           default: '1'
@@ -899,6 +903,8 @@ Children:
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
             type: double, value: '4.25'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll,
+            type: boolean, value: 'true'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id013
           default: '1'
@@ -910,7 +916,7 @@ Children:
           name: Command
           type: Command
           validators: *id014
-          value: Boulder Intake Roll
+          value: Boulder Intake Control
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id015
           default: whileHeld
@@ -1299,6 +1305,7 @@ Children:
         value:
         - !!robotbuilder.data.properties.ParameterDescriptor {name: IntakePosition,
           type: double}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: roll, type: boolean}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Boulder Intake}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
@@ -1310,6 +1317,7 @@ Children:
           name: Retracted
           parameters:
           - {name: IntakePosition, type: double, value: '0.0'}
+          - {name: roll, type: boolean, value: 'false'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -1384,26 +1392,6 @@ Children:
     Properties: *id028
     Base: Command
     Name: Shoot Boulder In Goal
-  - Children: []
-    Properties:
-      Parameters: !!robotbuilder.data.properties.ParametersProperty
-        default: []
-        name: Parameters
-        validators: null
-        value:
-        - !!robotbuilder.data.properties.ParameterDescriptor {name: IntakePosition,
-          type: double}
-      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Requires, type: Subsystem, validators: null, value: Boulder Intake}
-      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id029 []
-        name: Parameter presets
-        validators: null
-        value: *id029
-      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
-    Base: Command
-    Name: Boulder Intake Roll
   Properties: {}
   Base: Commands
   Name: Commands
