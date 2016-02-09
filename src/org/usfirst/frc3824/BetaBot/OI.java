@@ -36,7 +36,7 @@ public class OI
     public JoystickButton button10;
     public JoystickButton button11;
     public JoystickButton button12;
-    public JoystickButton boulderIntakeRetract;
+    public JoystickButton boulderIntakeLow;
     public JoystickButton boulderIntakeExtend;
     public Joystick controllerJoystick;
 
@@ -49,9 +49,9 @@ public class OI
         controllerJoystick = new Joystick(1);
         
         boulderIntakeExtend = new JoystickButton(controllerJoystick, 6);
-        boulderIntakeExtend.whenPressed(new BoulderIntakeControl(4.25));
-        boulderIntakeRetract = new JoystickButton(controllerJoystick, 4);
-        boulderIntakeRetract.whenPressed(new BoulderIntakeControl(1.1));
+        boulderIntakeExtend.whileHeld(new BoulderIntakeRoll(4.25));
+        boulderIntakeLow = new JoystickButton(controllerJoystick, 4);
+        boulderIntakeLow.whileHeld(new BoulderIntakeControl(4.5));
         button12 = new JoystickButton(controllerJoystick, 12);
         button12.whenPressed(new ShooterElevationControl(-120.0));
         button11 = new JoystickButton(controllerJoystick, 11);
