@@ -59,7 +59,7 @@ public class ChassisTurnToImageTarget extends Command
 				Preferences.getInstance().getDouble("ImageTurn_P", Constants.IMAGE_TURN_P),
 		    	Preferences.getInstance().getDouble("ImageTurn_I", Constants.IMAGE_TURN_I),
 		    	Preferences.getInstance().getDouble("ImageTurn_D", Constants.IMAGE_TURN_D));
-		
+
 		turnController.setOutputRange(
 				-Preferences.getInstance().getDouble("ImageTurn_MaxAbsOutput", 1.0),
 				Preferences.getInstance().getDouble("ImageTurn_MaxAbsOutput", 1.0));

@@ -47,7 +47,7 @@ public class TeleopDrive extends Command
 	protected void execute()
 	{
 		Robot.chassis.driveWithJoystick(Robot.oi.driveJoystick);
-				
+		
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getGyroValue());
 		SmartDashboard.putNumber("Angle Position", Robot.shooterAngle.GetShooterElevatorAngle());
 	}

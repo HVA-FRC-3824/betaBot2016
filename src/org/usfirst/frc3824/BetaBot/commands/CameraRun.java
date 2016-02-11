@@ -40,7 +40,7 @@ public class CameraRun extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.targetCam.cameraEnable();
+    	Robot.targetCam.startStream();
     	Robot.targetCam.setExposure(Preferences.getInstance().getInt("camExposure", 50));
     	Robot.targetCam.setBrightness(Preferences.getInstance().getInt("camBrightness", 50));
     }

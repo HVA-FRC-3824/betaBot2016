@@ -87,6 +87,9 @@ public class Robot extends IterativeRobot
 		chooser.addDefault("1) Do Nothing", new AutonomousDoNothing());
 
 		RobotMap.chassisCompressor.setClosedLoopControl(true);
+		
+		// Start the target camera image processing
+		targetCam.start();
 	}
 
 	/**

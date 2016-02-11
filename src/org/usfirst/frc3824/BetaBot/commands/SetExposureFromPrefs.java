@@ -38,7 +38,7 @@ public class SetExposureFromPrefs extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.targetCam.setExposure(Preferences.getInstance().getInt("camExposure", 50));
+    	Robot.targetCam.setExposureValueFromPrefs();
     }
 
     // Called repeatedly when this Command is scheduled to run

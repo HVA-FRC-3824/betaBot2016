@@ -11,6 +11,7 @@
 
 package org.usfirst.frc3824.BetaBot.subsystems;
 
+import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
 
@@ -61,7 +62,6 @@ public class Targets extends Subsystem {
 		m_imageReport = NetworkTable.getTable("GRIP/imageSize");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
 
-		m_imageWidth = (int)m_imageReport.getNumber("x", 640.0);
 	}
 	
 	public double getTargetOffsetFromCenter()
@@ -81,6 +81,7 @@ public class Targets extends Subsystem {
 		SmartDashboard.putNumber("Targets X offset from image center", m_positionFromImageCenterX);
 		SmartDashboard.putNumber("Targets Normalized X offset from image center", m_normalizedOffestFromImageCenter);
 		SmartDashboard.putNumber("Targets center X", m_targetCenterX);
+		SmartDashboard.putNumber("Targets Image Width", m_imageWidth);
 	}
 	
 	// if the image is positioned to the right, the robot is too far left.
@@ -89,7 +90,7 @@ public class Targets extends Subsystem {
 	{
 		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
 		double[] areas = m_contoursReport.getNumberArray("area", m_defaultValue); 
-		
+		m_imageWidth = (int)m_imageReport.getNumber("x", 640.0);
 		
 		double maxArea = 0.0;
 		int maxAreaIndex = -1;

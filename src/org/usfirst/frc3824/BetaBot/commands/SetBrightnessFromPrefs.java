@@ -38,7 +38,7 @@ public class SetBrightnessFromPrefs extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.targetCam.setBrightness(Preferences.getInstance().getInt("camBrightness", 50));
+    	Robot.targetCam.setBrightnessValueFromPrefs();
     }
 
     // Called repeatedly when this Command is scheduled to run
