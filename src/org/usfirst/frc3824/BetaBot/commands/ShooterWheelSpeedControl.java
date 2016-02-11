@@ -59,8 +59,9 @@ public class ShooterWheelSpeedControl extends Command
 		{
 			// Shooter is disabled so turn off the motors
 			Robot.shooter.ShooterWheelControl(0.0);
-		SmartDashboard.putNumber("Control Y: ",Robot.oi.controllerJoystick.getY());
 		}
+		
+		SmartDashboard.putNumber("Control Y: ",Robot.oi.controllerJoystick.getY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
