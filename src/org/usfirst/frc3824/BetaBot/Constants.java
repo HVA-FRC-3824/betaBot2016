@@ -26,6 +26,14 @@ public class Constants
 	public static double DRIVETRAIN_DRIVE_STRAIGHT_D           = 0.0;
 	
 	// ***************************************************************************************
+	// Autonomous parameters
+	public static int	TURN_RIGHT                             = 0;
+	public static int   TURN_NONE                              = 1;
+	public static int   TURN_LEFT                              = 2;
+	public static int   LOW_GOAL                               = 0;
+	public static int   HIGH_GOAL                              = 1;
+
+	// ***************************************************************************************
 	// Image turn constants
 	public static double IMAGE_TURN_P                          = 2.0;	// Preference name: ImageTurn_P
 	public static double IMAGE_TURN_I                          = 0.0;	// Preference name: ImageTurn_I
