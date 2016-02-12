@@ -12,6 +12,7 @@ package org.usfirst.frc3824.BetaBot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3824.BetaBot.Robot;
+import org.usfirst.frc3824.BetaBot.Robot.AutoParameters;
 
 /**
  *
