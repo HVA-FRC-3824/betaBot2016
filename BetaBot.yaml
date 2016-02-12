@@ -661,6 +661,39 @@ Children:
           name: Parameters
           validators: null
           value:
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
+            type: double, value: '4.25'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll,
+            type: boolean, value: 'true'}
+        Button: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id013
+          default: '1'
+          name: Button
+          validators: null
+          value: '7'
+        Command: !!robotbuilder.data.properties.TypeSelectionProperty
+          default: None
+          name: Command
+          type: Command
+          validators: *id014
+          value: Boulder Intake Control
+        When to Run: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id015
+          default: whileHeld
+          name: When to Run
+          validators: null
+          value: whenPressed
+      Base: Joystick Button
+      Name: Button 7 Intake Boulder
+    - Children: []
+      Properties:
+        Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
+          name: Joystick, validators: null, value: Controller Joystick}
+        Parameters: !!robotbuilder.data.properties.ParametersProperty
+          default: []
+          name: Parameters
+          validators: null
+          value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: ShooterSetPoint,
             type: double, value: '-80'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -683,6 +716,39 @@ Children:
           value: whenPressed
       Base: Joystick Button
       Name: Button 8 Rest
+    - Children: []
+      Properties:
+        Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
+          name: Joystick, validators: null, value: Controller Joystick}
+        Parameters: !!robotbuilder.data.properties.ParametersProperty
+          default: []
+          name: Parameters
+          validators: null
+          value:
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
+            type: double, value: '1.1'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll,
+            type: boolean, value: 'false'}
+        Button: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id013
+          default: '1'
+          name: Button
+          validators: null
+          value: '8'
+        Command: !!robotbuilder.data.properties.TypeSelectionProperty
+          default: None
+          name: Command
+          type: Command
+          validators: *id014
+          value: Boulder Intake Control
+        When to Run: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id015
+          default: whileHeld
+          name: When to Run
+          validators: null
+          value: whenPressed
+      Base: Joystick Button
+      Name: Button 8 Rest Boulder
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
