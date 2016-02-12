@@ -86,9 +86,8 @@ public class ChassisTurnAngle extends Command
 	{
 		SmartDashboard.putNumber("Timer", m_Timer.get());
 		
-		// return PIDcontroller.OnTarget();
-		if (Math.abs(Robot.chassis.getAngleGyroController().getSetpoint() - 
-		             Robot.chassis.getGyro().pidGet()) < Constants.TURN_THRESHOLD)
+		// Determine if the robot has reached the desired angle
+		if (Robot.chassis.getAngleGyroController().onTarget() == true)
 		{
 			// Ensure hold position for time out time
 			if (m_Timer.get() > 0.1)
