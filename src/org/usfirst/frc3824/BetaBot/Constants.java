@@ -65,7 +65,7 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Shooter Wheel Speed constants
-	public static double SHOOTER_WHEEL_MIN_MULTIPLIER          = 1.0;
+	public static double SHOOTER_WHEEL_MIN_MULTIPLIER          = 0.8;
 	public static double SHOOTER_WHEEL_MAX_MULTIPLIER          = 1.5;
 	public static double SHOOTER_WHEEL_TELEOP_CURVE_MULTIPLIER = 0.5;
 }
