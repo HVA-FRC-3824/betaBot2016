@@ -54,25 +54,27 @@ public class ChassisTurnToImageTarget extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		turnController.setPID(		    	
-				Preferences.getInstance().getDouble("ImageTurn_P", Constants.IMAGE_TURN_P),
-		    	Preferences.getInstance().getDouble("ImageTurn_I", Constants.IMAGE_TURN_I),
-		    	Preferences.getInstance().getDouble("ImageTurn_D", Constants.IMAGE_TURN_D));
+		// Set the PID up for driving straight
+		Robot.chassis.getAngleGyroController().setPID(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
+		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_D);
 
-		turnController.setOutputRange(
-				-Preferences.getInstance().getDouble("ImageTurn_MaxAbsOutput", 1.0),
-				Preferences.getInstance().getDouble("ImageTurn_MaxAbsOutput", 1.0));
-		
-		turnController.reset();
-		turnController.setSetpoint(0.0);
+		Robot.chassis.getAngleGyroController().reset();
+		Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue() + Robot.targets.getTargetOffsetFromCenterAngle());
+
+		// update the PID direction and power
+		Robot.chassis.setDirection(0);
+		Robot.chassis.setMagnitude(0);
 
 		// enable the PID
-		turnController.enable();
+		Robot.chassis.getAngleGyroController().enable();
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
+		//Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue() + Robot.targets.getTargetOffsetFromCenterAngle());
 		SmartDashboard.putNumber("ImageTurn Current Angle", Robot.chassis.getGyroValue());
 	}
 
@@ -86,8 +88,8 @@ public class ChassisTurnToImageTarget extends Command
 	protected void end()
 	{
 		// disable the PID and stop the robot
-		turnController.reset();
-		turnController.disable();
+		Robot.chassis.getAngleGyroController().reset();
+		Robot.chassis.getAngleGyroController().disable();
 		Robot.chassis.stop();
 	}
 
@@ -98,39 +100,4 @@ public class ChassisTurnToImageTarget extends Command
 		// call the end method
 		this.end();
 	}
-
-	/**
-	 * Class declaration for the PIDSource
-	 */
-	public class ImageDataPIDInput implements PIDSource
-	{
-		double[] defaultValue = new double[0];
-
-		public ImageDataPIDInput()
-		{
-			// TODO Auto-generated constructor stub
-		}
-
-		/**
-		 * Virtual function to calculate pid value
-		 */
-		public double pidGet()
-		{
-			return Robot.targets.getTargetOffsetFromCenter();			
-		}
-
-
-		@Override
-		public PIDSourceType getPIDSourceType()
-		{
-			return PIDSourceType.kDisplacement;
-		}
-
-		@Override
-		public void setPIDSourceType(PIDSourceType pidSource)
-		{
-			// Do nothing.. Right now leave source type as displacement
-		}
-	}
-
 }

@@ -64,7 +64,7 @@ public class Targets extends Subsystem {
 
 	}
 	
-	public double getTargetOffsetFromCenter()
+	public double getTargetOffsetFromCenterNormalized()
 	{
 		// Drive the robot given the speed and direction
 		m_targetCenterX = getCenterXOfLargestTarget();
@@ -73,6 +73,11 @@ public class Targets extends Subsystem {
 		m_normalizedOffestFromImageCenter = m_positionFromImageCenterX / (m_imageWidth / 2); // convert to a range of -1 (left edge) to 1 (right edge)
 		
 		return -m_normalizedOffestFromImageCenter;
+	}
+	
+	public double getTargetOffsetFromCenterAngle()
+	{
+		return getTargetOffsetFromCenterNormalized() * (Constants.CAM_FOV / 2.0);
 	}
 	
 	public void updateSmartDashboard()
