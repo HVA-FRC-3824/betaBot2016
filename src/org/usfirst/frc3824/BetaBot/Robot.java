@@ -41,7 +41,6 @@ public class Robot extends IterativeRobot
     public static Power power;
     public static TargetCam targetCam;
     public static Shooter shooter;
-    public static ShooterAngle shooterAngle;
     public static BoulderIntake boulderIntake;
     public static Targets targets;
 
@@ -66,7 +65,6 @@ public class Robot extends IterativeRobot
         power = new Power();
         targetCam = new TargetCam();
         shooter = new Shooter();
-        shooterAngle = new ShooterAngle();
         boulderIntake = new BoulderIntake();
         targets = new Targets();
 
