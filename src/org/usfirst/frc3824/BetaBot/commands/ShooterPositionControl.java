@@ -66,34 +66,34 @@ public class ShooterPositionControl extends Command
 		else if (m_ShooterSetPoint == -70.0)
 		{ // Set position buttons
 			m_ActualShooterSetPoint = Preferences.getInstance().getDouble("Button 07",
-					Constants.SHOOTER_ELEVATION_BUTTON7);
+					Constants.SHOOTER_ELEVATION_INTAKE);
 			// Ball in position
 			wheelSpeed = -1.0;
 		} 
 		else if (m_ShooterSetPoint == -80.0)
 		{
 			m_ActualShooterSetPoint = Preferences.getInstance().getDouble("Button 08",
-					Constants.SHOOTER_ELEVATION_BUTTON8);
+					Constants.SHOOTER_ELEVATION_REST);
 		} 
 		else if (m_ShooterSetPoint == -90.0)
 		{
 			m_ActualShooterSetPoint = Preferences.getInstance().getDouble("Button 09",
-					Constants.SHOOTER_ELEVATION_BUTTON9);
+					Constants.SHOOTER_ELEVATION_SHOOT_POSITION1);
 		} 
 		else if (m_ShooterSetPoint == -100.0)
 		{
 			m_ActualShooterSetPoint = Preferences.getInstance().getDouble("Button 10",
-					Constants.SHOOTER_ELEVATION_BUTTON10);
+					Constants.SHOOTER_ELEVATION_SHOOT_POSITION2);
 		} 
 		else if (m_ShooterSetPoint == -110.0)
 		{
 			m_ActualShooterSetPoint = Preferences.getInstance().getDouble("Button 11",
-					Constants.SHOOTER_ELEVATION_BUTTON11);
+					Constants.SHOOTER_ELEVATION_SHOOT_POSITION3);
 		} 
 		else if (m_ShooterSetPoint == -120.0)
 		{
 			m_ActualShooterSetPoint = Preferences.getInstance().getDouble("Button 12",
-					Constants.SHOOTER_ELEVATION_BUTTON12);
+					Constants.SHOOTER_ELEVATION_SHOOT_POSITION4);
 		} 
 		else
 		{

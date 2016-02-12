@@ -56,12 +56,12 @@ public class Constants
 	public static double SHOOTER_ELEVATION_SETPOINT_MIN        = 0.05;
 	public static double SHOOTER_ELEVATION_SETPOINT_MAX        = 0.88;
 
-	public static double SHOOTER_ELEVATION_BUTTON7             = 35.0;
-	public static double SHOOTER_ELEVATION_BUTTON8             = 45.0;
-	public static double SHOOTER_ELEVATION_BUTTON9             = 50.0;
-	public static double SHOOTER_ELEVATION_BUTTON10            = 55.0;
-	public static double SHOOTER_ELEVATION_BUTTON11            = 60.0;
-	public static double SHOOTER_ELEVATION_BUTTON12            = 65.0;
+	public static double SHOOTER_ELEVATION_INTAKE              = 35.0;
+	public static double SHOOTER_ELEVATION_REST                = 45.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION1     = 50.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION2     = 55.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION3     = 60.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION4     = 65.0;
 	
 	// ***************************************************************************************
 	// Shooter Wheel Speed constants

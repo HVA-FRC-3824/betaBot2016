@@ -651,7 +651,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 7
+      Name: Button 7 Intake
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -682,7 +682,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 8
+      Name: Button 8 Rest
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -713,7 +713,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 9
+      Name: Button 9 Shoot 1
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -744,7 +744,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 10
+      Name: Button 10 Shoot 2
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -775,7 +775,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 11
+      Name: Button 11 Shoot 3
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -806,7 +806,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 12
+      Name: Button 12 Shoot 4
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
