@@ -51,6 +51,7 @@ public class Shooter extends Subsystem
     private PIDController shooterAngleController;
     
 	double m_PresentShooterAngle;
+	double m_PresentWheelSpeed;
 	double m_MinShooterHeight;
 	double m_MaxShooterHeight;
     
@@ -107,10 +108,13 @@ public class Shooter extends Subsystem
 	/**
 	 * Method to enable the shooter with the specified speed and curve Curve is
 	 * a percent of the speed parameter to be added to the right and subtracted
-	 * from the left Positve curves right, Negative curves left
+	 * from the left Positive curves right, Negative curves left
 	 */
 	public void ShooterWheelControl(double speed, double curvePercent)
 	{
+		// Record Current Wheel Speed
+		m_PresentWheelSpeed = speed;
+		
 		// Set the shooter wheel motor speeds
 		// Note: The multiplier is to ensure maximum speed is reached
 		// The multiplier also reduces the minimum speed
@@ -211,6 +215,14 @@ public class Shooter extends Subsystem
 	public double GetShooterAngleSetPoint()
 	{
 	   return(m_PresentShooterAngle);
+	}	
+
+	/**
+	 * Method to get the present shooter wheel speed
+	 */
+	public double GetShooterWheelSpeed()
+	{
+	   return(m_PresentWheelSpeed);
 	}	
 
 }
