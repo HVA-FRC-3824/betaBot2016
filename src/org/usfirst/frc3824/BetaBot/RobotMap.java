@@ -49,7 +49,7 @@ public class RobotMap
     public static Solenoid chassisTransmission;
     public static PowerDistributionPanel powerPowerDistributionPanel;
     public static AnalogPotentiometer shooterAnalogPotentiometer;
-    public static SpeedController shooterSpeedController;
+    public static SpeedController shooterActuator;
     public static CANTalon shooterWheelRightA;
     public static CANTalon shooterWheelRightB;
     public static CANTalon shooterWheelLeftA;
@@ -103,8 +103,8 @@ public class RobotMap
         shooterAnalogPotentiometer = new AnalogPotentiometer(1, 1.0, 0.0);
         LiveWindow.addSensor("Shooter", "Analog Potentiometer", shooterAnalogPotentiometer);
         
-        shooterSpeedController = new VictorSP(4);
-        LiveWindow.addActuator("Shooter", "Speed Controller", (VictorSP) shooterSpeedController);
+        shooterActuator = new VictorSP(4);
+        LiveWindow.addActuator("Shooter", "Actuator", (VictorSP) shooterActuator);
         
         shooterWheelRightA = new CANTalon(1);
         LiveWindow.addActuator("Shooter", "Wheel Right A", shooterWheelRightA);

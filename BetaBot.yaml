@@ -241,7 +241,7 @@ Children:
           validators: *id003
           value: '4'
       Base: Speed Controller
-      Name: Speed Controller
+      Name: Actuator
     - Children: []
       Properties:
         CAN ID: !!robotbuilder.data.properties.ChoicesProperty
