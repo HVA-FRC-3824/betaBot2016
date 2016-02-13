@@ -85,8 +85,23 @@ public class Chassis extends Subsystem
 	{
 		// Drive with arcade with the Y axis for forward/backward and
 		// steer with twist
-		// Note: Set the sensitivity to true to decrease joystick at small inputs
-		wCDrive4.arcadeDrive(stick.getY(), stick.getTwist(), true);
+		// Note: Set the sensitivity to true to decrease joystick at small input
+		double twist = stick.getTwist();
+		
+		// Cube twist to decrease sensitivity
+	    twist = twist * twist * twist;
+	    
+	    // Create a dead zone for forward/backward
+	    double moveValue = stick.getY();
+//	    if (Math.abs(moveValue) < 0.5)
+//	    	moveValue = 0;
+	    if (moveValue < 0)
+	    	moveValue = -1.0 * (moveValue * moveValue);
+	    else
+	    	moveValue = moveValue * moveValue;
+	    
+	    // Drive with arcade control
+		wCDrive4.arcadeDrive(moveValue, twist, false);
 	}
 
 	/**

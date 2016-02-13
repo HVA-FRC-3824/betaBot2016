@@ -109,19 +109,6 @@ public class ShooterPositionControl extends Command
 		// Enable the shooter elevation PID
 		Robot.shooter.setShooterElevationEnabled(true);
 		
-		// Determine if the shooter wheel is enabled
-		if (Robot.shooter.IsShooterWheelEnabled() == true)
-		{
-			// Continue to put out set wheel speed
-			// Set the shooter wheel curve based on the Operator Joystick
-			Robot.shooter.ShooterWheelControl(Robot.shooter.GetShooterWheelSpeed());
-
-		} else
-		{
-			// Shooter is disabled so turn off the motors
-			Robot.shooter.ShooterWheelControl(0.0);
-		}
-
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -142,14 +129,13 @@ public class ShooterPositionControl extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-		Robot.shooter.setShooterElevationEnabled(false);
-		Robot.shooter.ShooterWheelControl(0);
+
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted()
 	{
-		end();
+
 	}
 }

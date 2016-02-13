@@ -59,6 +59,9 @@ public class Constants
 	public static double BOULDER_INTAKE_POWER                  = 0.7;
 	public static double BOULDER_INTAKE_TOLERANCE              = 0.05;
 
+	public static double BOULDER_POSITION_VELOCITY             = 0.2;
+	public static double BOULDER_VELOCITY_OUTPUT               = 0.2;
+	
 	public static double BOULDER_ROLLER_SPEED                  = 0.7;
 	public static double BOULDER_INTAKE_POSITION_REST          = 1.10;
 	public static double BOULDER_INTAKE_POSITION_DOWN          = 4.25;
