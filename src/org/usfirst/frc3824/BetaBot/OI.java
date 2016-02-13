@@ -28,8 +28,8 @@ public class OI
     public JoystickButton shooterExtend;
     public JoystickButton shooterRetract;
     public Joystick driveJoystick;
-    public JoystickButton button3Up;
-    public JoystickButton button5Down;
+    public JoystickButton button5Up;
+    public JoystickButton button3Down;
     public JoystickButton button7Intake;
     public JoystickButton button7IntakeBoulder;
     public JoystickButton button8Rest;
@@ -82,10 +82,10 @@ public class OI
         button7IntakeBoulder.whenPressed(new BoulderIntakeControl(-4, true));
         button7Intake = new JoystickButton(controllerJoystick, 7);
         button7Intake.whenPressed(new ShooterPositionControl(-70));
-        button5Down = new JoystickButton(controllerJoystick, 5);
-        button5Down.whenPressed(new ShooterPositionControl(-50));
-        button3Up = new JoystickButton(controllerJoystick, 3);
-        button3Up.whenPressed(new ShooterPositionControl(-30));
+        button3Down = new JoystickButton(controllerJoystick, 3);
+        button3Down.whenPressed(new ShooterPositionControl(-50));
+        button5Up = new JoystickButton(controllerJoystick, 5);
+        button5Up.whenPressed(new ShooterPositionControl(-30));
         driveJoystick = new Joystick(0);
         
         shooterRetract = new JoystickButton(driveJoystick, 1);

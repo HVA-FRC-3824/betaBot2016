@@ -74,7 +74,7 @@ public class BoulderIntakeControl extends Command
 	{
 		if (m_roll == true)
 		{
-			Robot.boulderIntake.setBoulderIntakeWheelSpeed(Robot.oi.controllerJoystick.getThrottle());
+			Robot.boulderIntake.setBoulderIntakeWheelSpeed(Constants.BOULDER_ROLLER_SPEED);
 		} else {
 			Robot.boulderIntake.setBoulderIntakeWheelSpeed(0);
 		}

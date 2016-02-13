@@ -191,6 +191,7 @@ public class Shooter extends Subsystem
 		double setPoint =  A * (setpointDegrees * setpointDegrees) + (B * setpointDegrees) + C;
 		
 		SmartDashboard.putNumber("Angle Setpoint", setpointDegrees);
+		SmartDashboard.putNumber("Angle Pot Setpoint", setPoint);
 		
 		// Set the shooter elevation set point
 		shooterAngleController.setSetpoint(setPoint);

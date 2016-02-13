@@ -575,7 +575,7 @@ Children:
           default: '1'
           name: Button
           validators: null
-          value: '3'
+          value: '5'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -589,7 +589,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 3 Up
+      Name: Button 5 Up
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -606,7 +606,7 @@ Children:
           default: '1'
           name: Button
           validators: null
-          value: '5'
+          value: '3'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -620,7 +620,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: Button 5 Down
+      Name: Button 3 Down
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
