@@ -48,13 +48,13 @@ public class RobotMap
     public static Compressor chassisCompressor;
     public static Solenoid chassisTransmission;
     public static PowerDistributionPanel powerPowerDistributionPanel;
+    public static AnalogPotentiometer shooterAnalogPotentiometer;
+    public static SpeedController shooterActuator;
     public static CANTalon shooterWheelRightA;
     public static CANTalon shooterWheelRightB;
     public static CANTalon shooterWheelLeftA;
     public static CANTalon shooterWheelLeftB;
-    public static Solenoid shooterBallShooter;
-    public static AnalogPotentiometer shooterAngleAnalogPotentiometer;
-    public static SpeedController shooterAngleSpeedController;
+    public static Solenoid shooterBallShooterPiston;
     public static SpeedController boulderIntakeBoulderIntakeRight;
     public static SpeedController boulderIntakeBoulderIntakeLeft;
     public static SpeedController boulderIntakeBoulderWheel;
@@ -100,6 +100,12 @@ public class RobotMap
         powerPowerDistributionPanel = new PowerDistributionPanel(0);
         LiveWindow.addSensor("Power", "PowerDistributionPanel", powerPowerDistributionPanel);
         
+        shooterAnalogPotentiometer = new AnalogPotentiometer(1, 1.0, 0.0);
+        LiveWindow.addSensor("Shooter", "Analog Potentiometer", shooterAnalogPotentiometer);
+        
+        shooterActuator = new VictorSP(4);
+        LiveWindow.addActuator("Shooter", "Actuator", (VictorSP) shooterActuator);
+        
         shooterWheelRightA = new CANTalon(1);
         LiveWindow.addActuator("Shooter", "Wheel Right A", shooterWheelRightA);
         
@@ -112,14 +118,8 @@ public class RobotMap
         shooterWheelLeftB = new CANTalon(4);
         LiveWindow.addActuator("Shooter", "Wheel Left B", shooterWheelLeftB);
         
-        shooterBallShooter = new Solenoid(0, 1);
-        LiveWindow.addActuator("Shooter", "Ball Shooter", shooterBallShooter);
-        
-        shooterAngleAnalogPotentiometer = new AnalogPotentiometer(1, 1.0, 0.0);
-        LiveWindow.addSensor("Shooter Angle", "Analog Potentiometer", shooterAngleAnalogPotentiometer);
-        
-        shooterAngleSpeedController = new VictorSP(4);
-        LiveWindow.addActuator("Shooter Angle", "Speed Controller", (VictorSP) shooterAngleSpeedController);
+        shooterBallShooterPiston = new Solenoid(0, 1);
+        LiveWindow.addActuator("Shooter", "Ball Shooter Piston", shooterBallShooterPiston);
         
         boulderIntakeBoulderIntakeRight = new Talon(5);
         LiveWindow.addActuator("Boulder Intake", "Boulder Intake Right", (Talon) boulderIntakeBoulderIntakeRight);
