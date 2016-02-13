@@ -12,6 +12,7 @@ package org.usfirst.frc3824.BetaBot.subsystems;
 
 import java.io.IOException;
 
+import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
 import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
@@ -208,7 +209,7 @@ public class TargetCam extends Subsystem
 	public void launchImageProcessing()
 	{
 		int pid = -1;
-		ProcessBuilder pb = new ProcessBuilder("/usr/local/frc/JRE/bin/java","-jar", "/home/lvuser/grip.jar", "/home/lvuser/project.grip");
+		ProcessBuilder pb = new ProcessBuilder("/home/lvuser/grip");
 
 		try {
 			// launch the GRIP process and then get it's PID
@@ -227,7 +228,7 @@ public class TargetCam extends Subsystem
 		int pid = Preferences.getInstance().getInt("ImageProcessingPID", -1);
 		if(pid != -1)
 		{
-			ProcessBuilder pb = new ProcessBuilder("kill", String.valueOf(pid));
+			ProcessBuilder pb = new ProcessBuilder("kill", "-9", String.valueOf(pid));
 			try
 			{
 				pb.inheritIO().start();
