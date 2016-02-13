@@ -56,16 +56,16 @@ public class OI
         
         shooterButton1Off = new JoystickButton(controllerJoystick, 1);
         shooterButton1Off.whenReleased(new ShooterSetWheelSpeed(0));
-        shooterButton2Off = new JoystickButton(controllerJoystick, 1);
+        shooterButton2Off = new JoystickButton(controllerJoystick, 2);
         shooterButton2Off.whenReleased(new ShooterSetWheelSpeed(0));
-        shooterWheelsIn = new JoystickButton(controllerJoystick, 1);
+        shooterWheelsIn = new JoystickButton(controllerJoystick, 2);
         shooterWheelsIn.whenPressed(new ShooterSetWheelSpeed(-1));
         shooterWheelsOut = new JoystickButton(controllerJoystick, 1);
         shooterWheelsOut.whenPressed(new ShooterSetWheelSpeed(1));
         boulderIntakeExtend = new JoystickButton(controllerJoystick, 6);
-        boulderIntakeExtend.whileHeld(new BoulderIntakeControl(4.25, true));
+        boulderIntakeExtend.whileHeld(new BoulderIntakeControl(-4, true));
         boulderIntakeLow = new JoystickButton(controllerJoystick, 4);
-        boulderIntakeLow.whileHeld(new BoulderIntakeControl(4.5, false));
+        boulderIntakeLow.whileHeld(new BoulderIntakeControl(-5, false));
         button12Shoot4 = new JoystickButton(controllerJoystick, 12);
         button12Shoot4.whenPressed(new ShooterPositionControl(-120));
         button11Shoot3 = new JoystickButton(controllerJoystick, 11);
@@ -75,11 +75,11 @@ public class OI
         button9Shoot1 = new JoystickButton(controllerJoystick, 9);
         button9Shoot1.whenPressed(new ShooterPositionControl(-90));
         button8RestBoulder = new JoystickButton(controllerJoystick, 8);
-        button8RestBoulder.whenPressed(new BoulderIntakeControl(1.1, false));
+        button8RestBoulder.whenPressed(new BoulderIntakeControl(-1, false));
         button8Rest = new JoystickButton(controllerJoystick, 8);
         button8Rest.whenPressed(new ShooterPositionControl(-80));
         button7IntakeBoulder = new JoystickButton(controllerJoystick, 7);
-        button7IntakeBoulder.whenPressed(new BoulderIntakeControl(4.25, true));
+        button7IntakeBoulder.whenPressed(new BoulderIntakeControl(-4, true));
         button7Intake = new JoystickButton(controllerJoystick, 7);
         button7Intake.whenPressed(new ShooterPositionControl(-70));
         button5Down = new JoystickButton(controllerJoystick, 5);

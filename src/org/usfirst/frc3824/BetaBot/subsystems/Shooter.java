@@ -181,10 +181,14 @@ public class Shooter extends Subsystem
 		
 		// Remember the setpoint
 		m_PresentShooterAngle = setpointDegrees;
-				
+		
+		double A = Constants.SHOOTER_ELEVATION_POT_A;
+		double B = Constants.SHOOTER_ELEVATION_POT_B;
+		double C = Constants.SHOOTER_ELEVATION_POT_C;
+		
 		// Convert degrees to Potentiometer value
 		// Potentiometer Set Point = -0.00004(X^2) +0.011X+0.1956
-		double setPoint = -0.00004* (setpointDegrees * setpointDegrees) +0.011 * setpointDegrees +0.1956;
+		double setPoint =  A * (setpointDegrees * setpointDegrees) + (B * setpointDegrees) + C;
 		
 		SmartDashboard.putNumber("Angle Setpoint", setpointDegrees);
 		
@@ -202,8 +206,12 @@ public class Shooter extends Subsystem
 		// Get the shooter elevator potentiometer position
 		angle = analogPotentiometer.get();
 		
+		double A = Constants.SHOOTER_ELEVATION_ANGLE_A;
+		double B = Constants.SHOOTER_ELEVATION_ANGLE_B;
+		double C = Constants.SHOOTER_ELEVATION_ANGLE_C;
+		
 		// Angle = 58.01 X^2 + 64.95 X - 15.5
-		angle = 58.01 * (angle * angle) + (64.95 * angle) - 15.5;
+		angle =  A * (angle * angle) + (B * angle) + C;
 		
 		// Return the shooter elevator angle in degrees
 		return(angle);

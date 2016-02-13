@@ -50,12 +50,23 @@ public class Constants
 	
 	public static double BOULDER_INTAKE_POWER                  = 0.7;
 	public static double BOULDER_INTAKE_TOLERANCE              = 0.05;
+
+	public static double BOULDER_INTAKE_POSITION_REST          = 1.10;
+	public static double BOULDER_INTAKE_POSITION_DOWN          = 4.25;
+	public static double BOULDER_INTAKE_POSITION_INTAKE        = 4.50;
 		
 	// ***************************************************************************************
 	// Shooter Elevation constants
 	public static double SHOOTER_ELEVATION_SETPOINT_MIN        = 0.05;
 	public static double SHOOTER_ELEVATION_SETPOINT_MAX        = 0.88;
 
+	public static double SHOOTER_ELEVATION_ANGLE_A             = +56.9;
+	public static double SHOOTER_ELEVATION_ANGLE_B             = +63.0;
+	public static double SHOOTER_ELEVATION_ANGLE_C             = -7.82;
+	public static double SHOOTER_ELEVATION_POT_A               = -0.0004;
+	public static double SHOOTER_ELEVATION_POT_B               = +0.0118;
+	public static double SHOOTER_ELEVATION_POT_C               = +0.1123;
+	
 	public static double SHOOTER_ELEVATION_INTAKE              = 35.0;
 	public static double SHOOTER_ELEVATION_REST                = 45.0;
 	public static double SHOOTER_ELEVATION_SHOOT_POSITION1     = 50.0;

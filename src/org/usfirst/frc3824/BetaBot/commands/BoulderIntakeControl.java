@@ -10,10 +10,13 @@
 
 package org.usfirst.frc3824.BetaBot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3824.BetaBot.Robot;
+import org.usfirst.frc3824.BetaBot.Constants;
+
 
 /**
  *
@@ -46,8 +49,18 @@ public class BoulderIntakeControl extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
+		if (m_IntakePosition == -1) {
+			// Rest Position
+			m_IntakePosition = Preferences.getInstance().getDouble("Roller Rest", Constants.BOULDER_INTAKE_POSITION_REST);
+		} else if (m_IntakePosition == -5) {
+			// Far down
+			m_IntakePosition = Preferences.getInstance().getDouble("Roller Ground", Constants.BOULDER_INTAKE_POSITION_DOWN);
+		} else if (m_IntakePosition == -4) {
+			//Intake Position
+			m_IntakePosition = Preferences.getInstance().getDouble("Roller Intake", Constants.BOULDER_INTAKE_POSITION_INTAKE);			
+		}
 		SmartDashboard.putNumber("SETPOINT", m_IntakePosition);
-
+		
 		Robot.boulderIntake.getRightController().setSetpoint(m_IntakePosition);
 		Robot.boulderIntake.getLeftController().setSetpoint(m_IntakePosition);
 
@@ -77,6 +90,9 @@ public class BoulderIntakeControl extends Command
 	protected void end()
 	{
 		Robot.boulderIntake.setBoulderIntakeWheelSpeed(0);
+		// disable the PID
+		Robot.boulderIntake.getRightController().disable();
+		Robot.boulderIntake.getLeftController().disable();
 	}
 
 	// Called when another command which requires one or more of the same
