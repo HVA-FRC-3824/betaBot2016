@@ -195,6 +195,9 @@ public class TargetCam extends Subsystem
 		if(m_targetCam != null)
 		{
 			m_targetCam.openCamera();
+			m_targetCam.setFPS(10);
+			m_targetCam.setSize(Preferences.getInstance().getInt("ImageWidth", Constants.IMAGE_WIDTH), 
+					Preferences.getInstance().getInt("ImageHeight", Constants.IMAGE_HEIGHT));
 			setExposureValueFromPrefs();
 			setBrightnessValueFromPrefs();
 			m_targetCam.updateSettings();

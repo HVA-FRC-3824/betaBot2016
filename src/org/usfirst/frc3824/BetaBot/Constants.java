@@ -39,6 +39,9 @@ public class Constants
 	public static double IMAGE_TURN_I                          = 0.0;	// Preference name: ImageTurn_I
 	public static double IMAGE_TURN_D                          = 0.6;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
+	public static int    IMAGE_WIDTH                           = 160;	// default image width
+	public static int    IMAGE_HEIGHT                          = 120;   // default image height
+	public static double CAM_FOV                               = 90.0; 
 
 	public static double DRIVETRAIN_TURN_ANGLE_P               = 0.1;
 	public static double DRIVETRAIN_TURN_ANGLE_I               = 0.0;
