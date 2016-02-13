@@ -90,6 +90,14 @@ public class Chassis extends Subsystem
 	}
 
 	/**
+	 * Method to control the drive by providing parameters
+	 */
+	public void driveWithArcadeParameters(double drive, double turn)
+	{
+		wCDrive4.arcadeDrive(drive, turn);
+	}
+
+	/**
 	 * Method to stop the chassis drive motors
 	 */
 	public void stop()
