@@ -551,10 +551,10 @@ Children:
       Name: Shooter Retract
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: &id018 ['0', '1', '2', '3', '4', '5']
+        choices: &id016 ['0', '1', '2', '3', '4', '5']
         default: 1
         name: Number
-        validators: &id019 [Joystick]
+        validators: &id017 [Joystick]
         value: '0'
     Base: Joystick
     Name: Drive Joystick
@@ -657,16 +657,14 @@ Children:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
           name: Joystick, validators: null, value: Controller Joystick}
         Parameters: !!robotbuilder.data.properties.ParametersProperty
-          default:
-          - &id016 !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
-            type: double, value: '-4'}
-          - &id017 !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll,
-            type: boolean, value: 'true'}
+          default: []
           name: Parameters
           validators: null
           value:
-          - *id016
-          - *id017
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
+            type: double, value: '-4'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll,
+            type: boolean, value: 'true'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id013
           default: '1'
@@ -1067,10 +1065,10 @@ Children:
       Name: Shooter Button 1 Off
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: *id018
+        choices: *id016
         default: 1
         name: Number
-        validators: *id019
+        validators: *id017
         value: '1'
     Base: Joystick
     Name: Controller Joystick
@@ -1113,9 +1111,9 @@ Children:
         name: Commands
         validators: [List]
         value:
-        - &id022 !!robotbuilder.data.CommandGroupEntry
+        - &id020 !!robotbuilder.data.CommandGroupEntry
           command:
-            base: &id021
+            base: &id019
               help: A command specifies an action that the robot can perform.
               name: Command
               properties:
@@ -1129,14 +1127,14 @@ Children:
                 validators: null
                 value: []
               - !!robotbuilder.data.properties.ParameterSetProperty
-                default: &id020 []
+                default: &id018 []
                 name: Parameter presets
                 validators: null
-                value: *id020
+                value: *id018
               supports: {}
               type: Command
             name: Chassis Drive Straight Distance
-            properties: &id025
+            properties: &id023
               Parameters: !!robotbuilder.data.properties.ParametersProperty
                 default: []
                 name: Parameters
@@ -1167,11 +1165,11 @@ Children:
             - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: DriveDistance,
               type: double, value: '48.0'}
           previous: null
-        - &id023 !!robotbuilder.data.CommandGroupEntry
+        - &id021 !!robotbuilder.data.CommandGroupEntry
           command:
-            base: *id021
+            base: *id019
             name: Chassis Turn Angle
-            properties: &id027
+            properties: &id025
               Parameters: !!robotbuilder.data.properties.ParametersProperty
                 default: []
                 name: Parameters
@@ -1206,12 +1204,12 @@ Children:
               type: double, value: '90.0'}
             - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: DrivePower,
               type: double, value: '0.6'}
-          previous: *id022
-        - &id024 !!robotbuilder.data.CommandGroupEntry
+          previous: *id020
+        - &id022 !!robotbuilder.data.CommandGroupEntry
           command:
-            base: *id021
+            base: *id019
             name: Chassis Drive Target LIDAR
-            properties: &id026
+            properties: &id024
               Parameters: !!robotbuilder.data.properties.ParametersProperty
                 default: []
                 name: Parameters
@@ -1241,12 +1239,12 @@ Children:
             value:
             - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: TargetDistance,
               type: double, value: '0'}
-          previous: *id023
+          previous: *id021
         - !!robotbuilder.data.CommandGroupEntry
           command:
-            base: *id021
+            base: *id019
             name: Shoot Boulder In Goal
-            properties: &id028
+            properties: &id026
               Parameters: !!robotbuilder.data.properties.ParametersProperty
                 default: []
                 name: Parameters
@@ -1281,7 +1279,7 @@ Children:
               type: double, value: '0'}
             - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: ShooterWheelSpeed,
               type: double, value: '0'}
-          previous: *id024
+          previous: *id022
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command Group
@@ -1323,15 +1321,15 @@ Children:
     Base: Command
     Name: Chassis Drive Straight
   - Children: []
-    Properties: *id025
+    Properties: *id023
     Base: Command
     Name: Chassis Drive Straight Distance
   - Children: []
-    Properties: *id026
+    Properties: *id024
     Base: Command
     Name: Chassis Drive Target LIDAR
   - Children: []
-    Properties: *id027
+    Properties: *id025
     Base: Command
     Name: Chassis Turn Angle
   - Children: []
@@ -1432,27 +1430,9 @@ Children:
     Base: Command
     Name: Shooter Position Control
   - Children: []
-    Properties: *id028
+    Properties: *id026
     Base: Command
     Name: Shoot Boulder In Goal
-  - Children: []
-    Properties:
-      Parameters: !!robotbuilder.data.properties.ParametersProperty
-        default: []
-        name: Parameters
-        validators: null
-        value: []
-      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Requires, type: Subsystem, validators: null, value: None}
-      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: []
-        name: Parameter presets
-        validators: null
-        value: []
-      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
-    Base: Command
-    Name: CameraConnect
   - Children: []
     Properties:
       Parameters: !!robotbuilder.data.properties.ParametersProperty
@@ -1578,7 +1558,7 @@ Children:
   Base: Commands
   Name: Commands
 Properties:
-  Eclipse Workspace: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\rjsmi\workspace',
+  Eclipse Workspace: !!robotbuilder.data.properties.FileProperty {default: /Users/robert/workspace,
     extension: null, folder: true, name: Eclipse Workspace, validators: null, value: ../}
   Export Commands: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Commands, validators: null, value: true}
@@ -1597,7 +1577,7 @@ Properties:
     name: Export Subsystems, validators: null, value: true}
   Simulation World File: !!robotbuilder.data.properties.StringProperty {default: /usr/share/frcsim/worlds/GearsBotDemo.world,
     name: Simulation World File, validators: null, value: /usr/share/frcsim/worlds/GearsBotDemo.world}
-  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\rjsmi\',
+  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: /Users/robert/,
     extension: null, folder: true, name: Wiring file location, validators: null, value: ./}
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: None}
