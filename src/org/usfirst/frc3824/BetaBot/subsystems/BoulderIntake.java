@@ -11,6 +11,7 @@
 package org.usfirst.frc3824.BetaBot.subsystems;
 
 import org.usfirst.frc3824.BetaBot.Constants;
+import org.usfirst.frc3824.BetaBot.Robot;
 import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
 import org.usfirst.frc3824.BetaBot.subsystems.Chassis.AnglePIDOutput;
@@ -93,21 +94,34 @@ public class BoulderIntake extends Subsystem
 	}
 	
 	/**
-	 * Method to return a reference to the PID controller
+	 * Method to set the boulder intake pot PID set point
 	 */
-	public PIDController getRightController()
+	public void SetPID_Position(double pot_voltage)
 	{
-		return (boulderRightController);
+		// Right Pot is inverted
+		// Add an offset to the left potentiometer (positive is farther out)
+		boulderRightController.setSetpoint(5.0 - pot_voltage);
+		boulderLeftController.setSetpoint(pot_voltage - 0.3);
 	}
 	
 	/**
-	 * Method to return a reference to the PID controller
+	 * Method to enable the boulder intake PID
 	 */
-	public PIDController getLeftController()
+	public void EnableBoulderIntakePID()
 	{
-		return (boulderLeftController);
+		boulderRightController.enable();
+		boulderLeftController.enable();
 	}
-		
+	
+	/**
+	 * Method to Disable the boulder intake PID
+	 */
+	public void DisableBoulderIntakePID()
+	{
+		boulderRightController.disable();
+		boulderLeftController.disable();
+	}
+	
 	/**
 	 * Class declaration for the PIDOutput
 	 */
@@ -119,8 +133,8 @@ public class BoulderIntake extends Subsystem
 		public void pidWrite(double PIDoutput)
 		{	
 			// Determine the delta change in the position potentiometer
-			if (Math.abs(boudlerRightPosition.getVoltage() - m_previousRightVoltage) > Constants.BOULDER_POSITION_VELOCITY)
-				PIDoutput = Constants.BOULDER_VELOCITY_OUTPUT;
+//			if (Math.abs(boudlerRightPosition.getVoltage() - m_previousRightVoltage) > Constants.BOULDER_POSITION_VELOCITY)
+//				PIDoutput = Constants.BOULDER_VELOCITY_OUTPUT;
 				
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output
@@ -129,7 +143,7 @@ public class BoulderIntake extends Subsystem
 			SmartDashboard.putNumber("Right Intake Pot", boudlerRightPosition.getVoltage());
 
 			// Drive the boulder intake motor
-			boulderIntakeRight.set(PIDoutput);
+			boulderIntakeRight.set(-PIDoutput);
 			
 			// Remember the last position
 			m_previousRightVoltage = boudlerRightPosition.getVoltage();		
@@ -147,8 +161,8 @@ public class BoulderIntake extends Subsystem
 		public void pidWrite(double PIDoutput)
 		{	
 			// Determine the delta change in the position potentiometer
-			if (Math.abs(boulderLeftPosition.getVoltage() - m_previousLeftVoltage) > Constants.BOULDER_POSITION_VELOCITY)
-				PIDoutput = Constants.BOULDER_VELOCITY_OUTPUT;
+//			if (Math.abs(boulderLeftPosition.getVoltage() - m_previousLeftVoltage) > Constants.BOULDER_POSITION_VELOCITY)
+//				PIDoutput = Constants.BOULDER_VELOCITY_OUTPUT;
 				
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output

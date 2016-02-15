@@ -93,8 +93,6 @@ public class Chassis extends Subsystem
 	    
 	    // Create a dead zone for forward/backward
 	    double moveValue = stick.getY();
-//	    if (Math.abs(moveValue) < 0.5)
-//	    	moveValue = 0;
 	    if (moveValue < 0)
 	    	moveValue = -1.0 * (moveValue * moveValue);
 	    else
@@ -230,7 +228,8 @@ public class Chassis extends Subsystem
 			SmartDashboard.putNumber("PIDoutput", PIDoutput);
 
 			// Drive the robot given the speed and direction
-			wCDrive4.arcadeDrive(0, PIDoutput);
+			// Arcade drive expects a joystick which is negative forward)
+			wCDrive4.arcadeDrive(-magnitude, PIDoutput);
 		}
 	}
 	

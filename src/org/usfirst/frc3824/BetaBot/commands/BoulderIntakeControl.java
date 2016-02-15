@@ -60,13 +60,12 @@ public class BoulderIntakeControl extends Command
 			m_IntakePosition = Preferences.getInstance().getDouble("Roller Intake", Constants.BOULDER_INTAKE_POSITION_INTAKE);			
 		}
 		SmartDashboard.putNumber("SETPOINT", m_IntakePosition);
-		
-		Robot.boulderIntake.getRightController().setSetpoint(m_IntakePosition);
-		Robot.boulderIntake.getLeftController().setSetpoint(m_IntakePosition);
 
-		// enable the PID
-		Robot.boulderIntake.getRightController().enable();
-		Robot.boulderIntake.getLeftController().enable();
+		// Set the boulder intake desired potentiometer position
+		Robot.boulderIntake.SetPID_Position(m_IntakePosition);
+
+		// enable the boulder intake PIDs
+		Robot.boulderIntake.EnableBoulderIntakePID();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -90,9 +89,9 @@ public class BoulderIntakeControl extends Command
 	protected void end()
 	{
 		Robot.boulderIntake.setBoulderIntakeWheelSpeed(0);
+		
 		// disable the PID
-		Robot.boulderIntake.getRightController().disable();
-		Robot.boulderIntake.getLeftController().disable();
+		Robot.boulderIntake.DisableBoulderIntakePID();
 	}
 
 	// Called when another command which requires one or more of the same
