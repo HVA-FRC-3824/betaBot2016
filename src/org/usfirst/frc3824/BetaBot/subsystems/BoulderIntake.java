@@ -138,8 +138,6 @@ public class BoulderIntake extends Subsystem
 				
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output
-			SmartDashboard.putNumber("Right PIDoutput", PIDoutput);
-			SmartDashboard.putNumber("Right Setpoint", boulderRightController.getSetpoint());
 			SmartDashboard.putNumber("Right Intake Pot", boudlerRightPosition.getVoltage());
 
 			// Drive the boulder intake motor
@@ -166,8 +164,6 @@ public class BoulderIntake extends Subsystem
 				
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output
-			SmartDashboard.putNumber("Left PIDoutput", PIDoutput);
-			SmartDashboard.putNumber("Left Setpoint", boulderLeftController.getSetpoint());
 			SmartDashboard.putNumber("Left Intake Pot", boulderLeftPosition.getVoltage());
 
 			// Drive the boulder intake motor

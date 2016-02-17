@@ -59,7 +59,6 @@ public class BoulderIntakeControl extends Command
 			//Intake Position
 			m_IntakePosition = Preferences.getInstance().getDouble("Roller Intake", Constants.BOULDER_INTAKE_POSITION_INTAKE);			
 		}
-		SmartDashboard.putNumber("SETPOINT", m_IntakePosition);
 
 		// Set the boulder intake desired potentiometer position
 		Robot.boulderIntake.SetPID_Position(m_IntakePosition);
