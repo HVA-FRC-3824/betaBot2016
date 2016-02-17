@@ -102,7 +102,7 @@ public class Targets extends Subsystem {
 			}
 		}
 		
-		if (maxAreaIndex >= 0 && centerXs.length < maxAreaIndex)
+		if (maxAreaIndex >= 0)
 		{
 			m_targetCenterX = centerXs[maxAreaIndex];
 		}
