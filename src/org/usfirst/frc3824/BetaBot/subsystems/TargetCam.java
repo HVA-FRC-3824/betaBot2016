@@ -43,6 +43,7 @@ public class TargetCam extends Subsystem
 	private USBCamera m_targetCam;
 	private NIVision.Image m_singleFrame;
 	private boolean m_running;
+	private boolean m_imageProcessingRunning;
 	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -52,15 +53,18 @@ public class TargetCam extends Subsystem
 		m_singleFrame = null;
 		m_running = false;
 		m_targetCam = null;
+		m_imageProcessingRunning = false;
 		
 		for(int i=0; i<3 && m_targetCam == null; i++)
 		{
 			try
 			{
 				m_targetCam = new USBCamera("cam0");
+				m_imageProcessingRunning = false;
 			}
 			catch(Exception e)
 			{
+				m_imageProcessingRunning = true;
 				killImageProcessing();
 	            Timer.delay(0.5);		// 0.5 second delay to give the process a chance to die
 			}
@@ -78,6 +82,13 @@ public class TargetCam extends Subsystem
 		// setDefaultCommand(new MySpecialCommand());
 	}
 	
+	//--------------------------------------
+	// make sure that each of these is done:
+	//	- camera is opened
+	//	- frame buffer is created
+	//	- image processing is NOT running
+	// After calling this, you must call updateDashboardImage() to actually
+	// put the images on the dashboard
 	public void startStream()
 	{
 		boolean retry;
@@ -104,11 +115,19 @@ public class TargetCam extends Subsystem
 					retry = true;
 				}
 			}
-			m_targetCam.startCapture();
-			m_running = true;
+			
+			// if opening the camera succeeded, then start the capture, otherwise, do NOT start
+			if(retry == false)
+			{
+				//m_targetCam.startCapture();
+				m_running = true;
+			}
 		}
 	}
 	
+	//--------------------------
+	// after calling startStream(), call this to stop the connection
+	// to the camera
 	public void cameraDisable()
 	{
 		if(m_targetCam != null && !m_running)
@@ -121,15 +140,11 @@ public class TargetCam extends Subsystem
 
 	public void updateDashboardImage()
 	{
-		// targetCam.updateSettings();
-		// targetCam.startCapture();
-		//for(int i=0; i<1000; i++);
 		if(m_targetCam != null && m_running)
 		{
 			m_targetCam.getImage(m_singleFrame);
 			CameraServer.getInstance().setImage(m_singleFrame);
 		}
-		// targetCam.stopCapture();
 	}
 	
 	public void updateValuesOnDashboard()
@@ -182,13 +197,16 @@ public class TargetCam extends Subsystem
 		setBrightness(Preferences.getInstance().getInt("camBrightness", 50));
 	}
 	
-	public void start()
+	public void configAndStartImageProcessing()
 	{
-		// Attempt to set the camera parameters (exposure and brightness) to the preferred values
-		setCameraConfigFromPrefsWithoutCapture();
-		
-		// assume that the camera has been configured, now launch the image processing pipeline
-		launchImageProcessing();
+		if(!m_imageProcessingRunning)
+		{
+			// Attempt to set the camera parameters (exposure and brightness) to the preferred values
+			setCameraConfigFromPrefsWithoutCapture();
+			
+			// assume that the camera has been configured, now launch the image processing pipeline
+			launchImageProcessing();
+		}
 	}
 	
 	public void setCameraConfigFromPrefsWithoutCapture()
@@ -208,50 +226,34 @@ public class TargetCam extends Subsystem
 	
 	public void launchImageProcessing()
 	{
-		int pid = -1;
 		ProcessBuilder pb = new ProcessBuilder("/home/lvuser/grip");
 
 		try {
 			// launch the GRIP process and then get it's PID
 			Process process = pb.inheritIO().start();
-			pid = getPid(process);
+			m_imageProcessingRunning = true;
+			System.out.println("GRIP successfully launched");
         } catch (IOException e) {
             e.printStackTrace();
+			m_imageProcessingRunning = false;
+			System.out.println("GRIP failed to launch");
         }
-		
-		// save the PID of the GRIP process - will be used later to kill the process if needed
-		Preferences.getInstance().putInt("ImageProcessingPID", pid);
 	}
 		
 	public void killImageProcessing()
 	{
-		int pid = Preferences.getInstance().getInt("ImageProcessingPID", -1);
-		if(pid != -1)
-		{
-			ProcessBuilder pb = new ProcessBuilder("kill", "-9", String.valueOf(pid));
-			try
-			{
-				pb.inheritIO().start();
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+		int pid = -1;
+		ProcessBuilder pb = new ProcessBuilder("/home/lvuser/gripkill");
+
+		try {
+			// launch the GRIP process and then get it's PID
+			Process process = pb.inheritIO().start();
+			m_imageProcessingRunning = false;
+			System.out.println("GRIP KILLED");
+        } catch (IOException e) {
+            e.printStackTrace();
+			System.out.println("GRIP Kill FAILED");
+        }
 	}
 	
-	private int getPid(Process process) 
-	{
-	    try {
-	        Class<?> cProcessImpl = process.getClass();
-	        Field fPid = cProcessImpl.getDeclaredField("pid");
-	        if (!fPid.isAccessible()) {
-	            fPid.setAccessible(true);
-	        }
-	        return fPid.getInt(process);
-	    } catch (Exception e) {
-	        return -1;
-	    }
-	}
-
 }
