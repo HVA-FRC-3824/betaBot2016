@@ -40,7 +40,6 @@ public class Targets extends Subsystem {
 	double m_targetCenterX;
 	double m_positionFromImageCenterX;
 	double m_normalizedOffestFromImageCenter;
-	int m_imageWidth;
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -59,9 +58,7 @@ public class Targets extends Subsystem {
 	public Targets()
 	{
 		m_contoursReport = NetworkTable.getTable("GRIP/cameraTargets");
-		m_imageReport = NetworkTable.getTable("GRIP/imageSize");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
-
 	}
 	
 	public double getTargetOffsetFromCenterNormalized()
@@ -71,15 +68,20 @@ public class Targets extends Subsystem {
 		// Drive the robot given the speed and direction
 		m_targetCenterX = getCenterXOfLargestTarget();
 		
-		m_positionFromImageCenterX = m_targetCenterX - (m_imageWidth/2); // calculate offset from center in pixels
-		m_normalizedOffestFromImageCenter = m_positionFromImageCenterX / (m_imageWidth / 2); // convert to a range of -1 (left edge) to 1 (right edge)
+		m_positionFromImageCenterX = m_targetCenterX - (Constants.IMAGE_WIDTH / 2.0); // calculate offset from center in pixels
+		m_normalizedOffestFromImageCenter = m_positionFromImageCenterX / (Constants.IMAGE_WIDTH / 2.0); // convert to a range of -1 (left edge) to 1 (right edge)
 		
-		return -m_normalizedOffestFromImageCenter;
+		return m_normalizedOffestFromImageCenter;
 	}
 	
 	public double getTargetOffsetFromCenterAngle()
 	{
 		return getTargetOffsetFromCenterNormalized() * (Constants.CAM_FOV / 2.0);
+	}
+	
+	public boolean isImageProcessingRunning()
+	{
+		return (m_frameRateReport.getNumber("cameraFrameRate", 0.0) > 0);
 	}
 	
 	public void updateSmartDashboard()
@@ -88,14 +90,14 @@ public class Targets extends Subsystem {
 		SmartDashboard.putNumber("Targets X offset from image center", m_positionFromImageCenterX);
 		SmartDashboard.putNumber("Targets Normalized X offset from image center", m_normalizedOffestFromImageCenter);
 		SmartDashboard.putNumber("Targets center X", m_targetCenterX);
-		SmartDashboard.putNumber("Targets Image Width", m_imageWidth);
+		SmartDashboard.putNumber("Targets Image Width", Constants.IMAGE_WIDTH);
+		SmartDashboard.putBoolean("Image Processing Running", isImageProcessingRunning());
 	}
 	
 	private double getCenterXOfLargestTarget()
 	{
 		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
 		double[] areas = m_contoursReport.getNumberArray("area", m_defaultValue); 
-		m_imageWidth = (int)m_imageReport.getNumber("x", 640.0);
 		
 		double maxArea = 0.0;
 		int maxAreaIndex = -1;
@@ -113,7 +115,7 @@ public class Targets extends Subsystem {
 		}
 		else
 		{
-			m_targetCenterX = m_imageWidth / 2.0;
+			m_targetCenterX = Constants.IMAGE_WIDTH / 2.0;
 		}
 		
 		return m_targetCenterX;

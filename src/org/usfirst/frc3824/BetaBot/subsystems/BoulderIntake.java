@@ -55,26 +55,26 @@ public class BoulderIntake extends Subsystem
 	private PIDController boulderRightController;
 	private PIDController boulderLeftController;	
 
-	static private double m_previousRightVoltage = 0;
-	static private double m_previousLeftVoltage = 0;
+//	static private double m_previousRightVoltage = 0;
+//	static private double m_previousLeftVoltage = 0;
 
 	public BoulderIntake()
 	{
 		// Instantiate the PID controller for driving in the specified direction
-		boulderRightController = new PIDController(Constants.BOULDER_INTAKE_RIGHT_P, 
-		                                                                 Constants.BOULDER_INTAKE_RIGHT_I, 
-		                                                                 Constants.BOULDER_INTAKE_RIGHT_D, 
+		boulderRightController = new PIDController(Constants.BOULDER_INTAKE_P, 
+		                                                                 Constants.BOULDER_INTAKE_I, 
+		                                                                 Constants.BOULDER_INTAKE_D, 
 		                                                                 boudlerRightPosition, boulderRightOutput);
 		boulderRightController.setOutputRange(-Constants.BOULDER_INTAKE_POWER,Constants.BOULDER_INTAKE_POWER);
 		boulderRightController.setInputRange(0.0, 5.0);
 		boulderRightController.setAbsoluteTolerance(Constants.BOULDER_INTAKE_TOLERANCE);
 		
 		// Instantiate the PID controller for driving in the specified direction
-		boulderLeftController = new PIDController(Constants.BOULDER_INTAKE_LEFT_P, 
-		                                                                Constants.BOULDER_INTAKE_LEFT_I, 
-		                                                                Constants.BOULDER_INTAKE_LEFT_D, 
+		boulderLeftController = new PIDController(Constants.BOULDER_INTAKE_P, 
+		                                                                Constants.BOULDER_INTAKE_I, 
+		                                                                Constants.BOULDER_INTAKE_D, 
 		                                                                boulderLeftPosition, boulderLeftOutput);	
-		boulderLeftController.setOutputRange(-Constants.BOULDER_INTAKE_POWER,Constants.BOULDER_INTAKE_POWER);
+		boulderLeftController.setOutputRange(-Constants.BOULDER_INTAKE_POWER, Constants.BOULDER_INTAKE_POWER);
 		boulderLeftController.setInputRange(0.0, 5.0);
 		boulderLeftController.setAbsoluteTolerance(Constants.BOULDER_INTAKE_TOLERANCE);
 	}
@@ -96,15 +96,16 @@ public class BoulderIntake extends Subsystem
 	/**
 	 * Method to set the boulder intake pot PID set point
 	 */
-	public void SetPID_Position(double pot_voltage)
+	public void SetPID_Position(double right_pot_voltage, double left_pot_voltage)
 	{
 		// Right Pot is inverted
 		// Add an offset to the left potentiometer (positive is farther out)
-		boulderRightController.setSetpoint(5.0 - pot_voltage);
-		boulderLeftController.setSetpoint(pot_voltage - 0.3);
+		boulderRightController.setSetpoint(right_pot_voltage);
+		boulderLeftController.setSetpoint(left_pot_voltage);
 	}
 	
 	/**
+	 * 
 	 * Method to enable the boulder intake PID
 	 */
 	public void EnableBoulderIntakePID()
@@ -138,13 +139,15 @@ public class BoulderIntake extends Subsystem
 				
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output
+			SmartDashboard.putNumber("Right PIDoutput", PIDoutput);
+			SmartDashboard.putNumber("Right Setpoint", boulderRightController.getSetpoint());
 			SmartDashboard.putNumber("Right Intake Pot", boudlerRightPosition.getVoltage());
 
 			// Drive the boulder intake motor
-			boulderIntakeRight.set(-PIDoutput);
+			boulderIntakeRight.set(PIDoutput);
 			
 			// Remember the last position
-			m_previousRightVoltage = boudlerRightPosition.getVoltage();		
+//			m_previousRightVoltage = boudlerRightPosition.getVoltage();		
 		}
 	}
 	
@@ -164,13 +167,15 @@ public class BoulderIntake extends Subsystem
 				
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output
+			SmartDashboard.putNumber("Left PIDoutput", PIDoutput);
+			SmartDashboard.putNumber("Left Setpoint", boulderLeftController.getSetpoint());
 			SmartDashboard.putNumber("Left Intake Pot", boulderLeftPosition.getVoltage());
 
 			// Drive the boulder intake motor
-			boulderIntakeLeft.set(PIDoutput);
+			boulderIntakeLeft.set(-PIDoutput);
 			
 			// Remember the last position
-			m_previousLeftVoltage = boulderLeftPosition.getVoltage();
+//			m_previousLeftVoltage = boulderLeftPosition.getVoltage();
 		}
 	}
 }

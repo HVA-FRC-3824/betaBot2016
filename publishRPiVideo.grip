@@ -1,0 +1,30 @@
+<grip:Pipeline>
+  <sources>
+    <grip:Camera>
+      <property name="address" value="http://raspi2.local:1179/?action=stream"/>
+    </grip:Camera>
+  </sources>
+  <steps>
+    <grip:Step name="Publish Video">
+      <grip:Input step="0" socket="0"/>
+      <grip:Input step="0" socket="1">
+        <value>79.09909909909909</value>
+      </grip:Input>
+    </grip:Step>
+  </steps>
+  <connections>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+  </connections>
+  <settings>
+    <teamNumber>3824</teamNumber>
+    <publishAddress>roborio-3824-frc.local</publishAddress>
+    <deployAddress>raspi2.local</deployAddress>
+    <deployDir>/home/pi/vision/grip</deployDir>
+    <deployUser>pi</deployUser>
+    <deployJavaHome>/usr/</deployJavaHome>
+    <deployJvmOptions>-Xmx50m -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError</deployJvmOptions>
+  </settings>
+</grip:Pipeline>
