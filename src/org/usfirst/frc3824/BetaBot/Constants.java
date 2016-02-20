@@ -27,11 +27,23 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Autonomous parameters
-	public static int	TURN_RIGHT                             = 0;
-	public static int   TURN_NONE                              = 1;
-	public static int   TURN_LEFT                              = 2;
-	public static int   LOW_GOAL                               = 0;
-	public static int   HIGH_GOAL                              = 1;
+	// Using degrees for turn and degrees for shooter angle
+	public static double	TURN_RIGHT1                           = 50.0;
+	public static double	TURN_RIGHT2                           = 30.0;
+	public static double   TURN_NONE                              = 0.0;
+	public static double   TURN_LEFT5                             = -30.0;
+	public static double   LOW_GOAL                               = 50.0;
+	public static double   HIGH_GOAL                              = 80.0;
+	public static double   LIDAR_DISTANCE1					      = 500.0;
+	public static double   LIDAR_DISTANCE2					      = 400.0;
+	public static double   LIDAR_DISTANCE3					      = 700.0;
+	public static double   LIDAR_DISTANCE4					      = 700.0;
+	public static double   LIDAR_DISTANCE5					      = 400.0;
+	public static double   DRIVE_STRAIGHT_DISTANCE1				  = 50.0;
+	public static double   DRIVE_STRAIGHT_DISTANCE2				  = 40.0;
+	public static double   DRIVE_STRAIGHT_DISTANCE3				  = 0.0;
+	public static double   DRIVE_STRAIGHT_DISTANCE4				  = 0.0;
+	public static double   DRIVE_STRAIGHT_DISTANCE5				  = 40.0;
 
 	// ***************************************************************************************
 	// Image turn constants
