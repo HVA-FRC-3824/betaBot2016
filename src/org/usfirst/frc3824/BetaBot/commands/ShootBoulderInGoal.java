@@ -50,7 +50,7 @@ public class ShootBoulderInGoal extends Command
 	{
 		Robot.shooter.setShooterElevationEnabled(true);
 		Robot.shooter.setShooterElevationSetpoint(m_ShooterAngle);
-		Robot.shooter.ShooterWheelControl(m_ShooterWheelSpeed, 0);
+		Robot.shooter.ShooterWheelControl(m_ShooterWheelSpeed);
 		
 		isShooterPositionOut = false;
 		

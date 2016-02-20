@@ -1318,8 +1318,6 @@ Children:
                 name: Parameters
                 validators: null
                 value:
-                - !!robotbuilder.data.properties.ParameterDescriptor {name: ShooterAngle,
-                  type: double}
                 - !!robotbuilder.data.properties.ParameterDescriptor {name: ShooterWheelSpeed,
                   type: double}
               Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
