@@ -132,17 +132,8 @@ public class Robot extends IterativeRobot
 		startingLocationChooser.addObject("5 Low", new AutoParameters(Constants.TURN_LEFT, Constants.LOW_GOAL));
 		startingLocationChooser.addObject("5 High", new AutoParameters(Constants.TURN_LEFT, Constants.HIGH_GOAL));
 		SmartDashboard.putData("Starting Location & Shot", startingLocationChooser );
-
-		
-		// add a chooser to control the operation of the GRIP process on the ROBORIO
-		gripChooser = new SendableChooser();
-		gripChooser.addDefault("GRIP RUN", true);
-		gripChooser.addObject("GRIP OFF", false);
-		SmartDashboard.putData("Image Processing Control", gripChooser );
-
-		
-		RobotMap.chassisCompressor.setClosedLoopControl(true);
-		
+				
+		RobotMap.chassisCompressor.setClosedLoopControl(true);	
 	}
 
 	/**
@@ -160,19 +151,7 @@ public class Robot extends IterativeRobot
 
 		Robot.targets.getTargetOffsetFromCenterNormalized();
 		Robot.targets.updateSmartDashboard();
-		
-		boolean runGrip = (boolean) gripChooser.getSelected();
-		if(runGrip && (m_runGripPrevious == false))
-		{
-			targetCam.configAndStartImageProcessing();
-			m_runGripPrevious = true;
-		}
-		else if (!runGrip && (m_runGripPrevious == true))
-		{
-			targetCam.killImageProcessing();
-			m_runGripPrevious = false;
-		}
-}
+	}
 
 	public void autonomousInit()
 	{
