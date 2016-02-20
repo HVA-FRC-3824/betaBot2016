@@ -155,7 +155,7 @@ public class RobotMap
         chassisLidar = new Lidar(0, 1);
 //        LiveWindow.addSensor("Independent", "Lidar Range", chassisLidar);
 
-        shooterWheelRightA.setInverted(true);
-        shooterWheelRightB.setInverted(true);
+        shooterWheelLeftA.setInverted(true);
+        shooterWheelLeftB.setInverted(true);
 	}
 }

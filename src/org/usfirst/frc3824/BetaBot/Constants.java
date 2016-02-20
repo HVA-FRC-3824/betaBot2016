@@ -7,15 +7,57 @@ public class Constants
 	// Set the robot configuration (competition or practice)
 	static final boolean IS_COMP_ROBOT = false;
 
+	public static double SHOOTER_ELEVATION_ANGLE_A;
+	public static double SHOOTER_ELEVATION_ANGLE_B;
+	public static double SHOOTER_ELEVATION_ANGLE_C;
+	public static double SHOOTER_ELEVATION_POT_A;
+	public static double SHOOTER_ELEVATION_POT_B;
+	public static double SHOOTER_ELEVATION_POT_C;
+	
+	public static double BOULER_INTAKE_RETRACTED_RIGHT;
+	public static double BOULER_INTAKE_RETRACTED_LEFT;
+	public static double BOULER_INTAKE_BOULDER_INTAKE_RIGHT;
+	public static double BOULER_INTAKE_BOULDER_INTAKE_LEFT;
+	public static double BOULER_INTAKE_BOULDER_CHEVAL_RIGHT;
+	public static double BOULER_INTAKE_BOULDER_CHEVAL_LEFT;
+	
 	public static void InitConstants()
 	{
 		if (IS_COMP_ROBOT)
 		{
-			SmartDashboard.putString("Active Robot Values", "COMPETITION");
+			SmartDashboard.putString("Active Robot Values", "Thing 1");
+			
+			SHOOTER_ELEVATION_ANGLE_A             =  48.58;
+			SHOOTER_ELEVATION_ANGLE_B             =  67.00;
+			SHOOTER_ELEVATION_ANGLE_C             = -20.08;
+			SHOOTER_ELEVATION_POT_A               = -0.00004;
+			SHOOTER_ELEVATION_POT_B               =  0.0109;
+			SHOOTER_ELEVATION_POT_C               =  0.2467;
+			
+			BOULER_INTAKE_RETRACTED_RIGHT         = 0.60;
+			BOULER_INTAKE_RETRACTED_LEFT          = 0.36;
+			BOULER_INTAKE_BOULDER_INTAKE_RIGHT    = 4.14;
+			BOULER_INTAKE_BOULDER_INTAKE_LEFT     = 4.54;
+			BOULER_INTAKE_BOULDER_CHEVAL_RIGHT    = 4.15;
+			BOULER_INTAKE_BOULDER_CHEVAL_LEFT     = 4.60;
 		}
 		else // ---------- PRACTICE ROBOT ----------
 		{
-			SmartDashboard.putString("Active Robot Values", "PRACTICE");
+			SmartDashboard.putString("Active Robot Values", "Thing 2");
+			
+			SHOOTER_ELEVATION_ANGLE_A             = +49.75;
+			SHOOTER_ELEVATION_ANGLE_B             = +65.00;
+			SHOOTER_ELEVATION_ANGLE_C             = -15.00;
+			SHOOTER_ELEVATION_POT_A               = -0.00004;
+			SHOOTER_ELEVATION_POT_B               = +0.0114;
+			SHOOTER_ELEVATION_POT_C               = +0.1949;
+			
+			BOULER_INTAKE_RETRACTED_RIGHT         = 0.60;
+			BOULER_INTAKE_RETRACTED_LEFT          = 0.36;
+			BOULER_INTAKE_BOULDER_INTAKE_RIGHT    = 4.14;
+			BOULER_INTAKE_BOULDER_INTAKE_LEFT     = 4.54;
+			BOULER_INTAKE_BOULDER_CHEVAL_RIGHT    = 4.15;
+			BOULER_INTAKE_BOULDER_CHEVAL_LEFT     = 4.60;
 		}
 	}
 
@@ -51,47 +93,27 @@ public class Constants
 		
 	// ***************************************************************************************
 	// Boulder Intake constants
-	public static double BOULDER_INTAKE_RIGHT_P                = 2.0;
-	public static double BOULDER_INTAKE_RIGHT_I                = 0.0;
-	public static double BOULDER_INTAKE_RIGHT_D                = 1.0;
-	
-	public static double BOULDER_INTAKE_LEFT_P                 = 0.5;
-	public static double BOULDER_INTAKE_LEFT_I                 = 0.0;
-	public static double BOULDER_INTAKE_LEFT_D                 = 0.0;
-	
-	public static double BOULDER_INTAKE_POWER                  = 0.7;
+	public static double BOULDER_INTAKE_P                      = 1.0;
+	public static double BOULDER_INTAKE_I                      = 0.0;
+	public static double BOULDER_INTAKE_D                      = 0.0;
+
+	public static double BOULDER_INTAKE_POWER                  = 0.4;
 	public static double BOULDER_INTAKE_TOLERANCE              = 0.05;
 
-	public static double BOULDER_POSITION_VELOCITY             = 0.2;
-	public static double BOULDER_VELOCITY_OUTPUT               = 0.2;
-	
-	public static double BOULDER_ROLLER_SPEED                  = 0.7;
-	public static double BOULDER_INTAKE_POSITION_REST          = 1.10;
-	public static double BOULDER_INTAKE_POSITION_DOWN          = 4.25;
-	public static double BOULDER_INTAKE_POSITION_INTAKE        = 4.50;
+	public static double BOULDER_ROLLER_SPEED                  = 0.6;
+//	public static double BOULDER_INTAKE_POSITION_REST          = 1.10;
+//	public static double BOULDER_INTAKE_POSITION_DOWN          = 4.25;
+//	public static double BOULDER_INTAKE_POSITION_INTAKE        = 4.50;
 		
 	// ***************************************************************************************
 	// Shooter Elevation constants
-	public static double SHOOTER_ELEVATION_SETPOINT_MIN        = 0.05;
-	public static double SHOOTER_ELEVATION_SETPOINT_MAX        = 0.88;
-
-	public static double SHOOTER_ELEVATION_ANGLE_A             = +56.9;
-	public static double SHOOTER_ELEVATION_ANGLE_B             = +63.0;
-	public static double SHOOTER_ELEVATION_ANGLE_C             = -7.82;
-	public static double SHOOTER_ELEVATION_POT_A               = -0.00004;
-	public static double SHOOTER_ELEVATION_POT_B               = +0.0118;
-	public static double SHOOTER_ELEVATION_POT_C               = +0.1123;
+	public static double SHOOTER_ELEVATION_SETPOINT_MIN        = 10.0;
+	public static double SHOOTER_ELEVATION_SETPOINT_MAX        = 60.0;
 	
-	public static double SHOOTER_ELEVATION_INTAKE              = 45.0;
-	public static double SHOOTER_ELEVATION_REST                = 45.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION1     = 45.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION2     = 45.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION3     = 45.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION4     = 45.0;
-	
-	// ***************************************************************************************
-	// Shooter Wheel Speed constants
-	public static double SHOOTER_WHEEL_MIN_MULTIPLIER          = 0.8;
-	public static double SHOOTER_WHEEL_MAX_MULTIPLIER          = 1.5;
-	public static double SHOOTER_WHEEL_TELEOP_CURVE_MULTIPLIER = 0.5;
+	public static double SHOOTER_ELEVATION_INTAKE              = 10.0;
+	public static double SHOOTER_ELEVATION_REST                = 20.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION1     = 30.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION2     = 40.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION3     = 50.0;
+	public static double SHOOTER_ELEVATION_SHOOT_POSITION4     = 60.0;
 }
