@@ -143,6 +143,41 @@ public class Chassis extends Subsystem
 	}
 	
 	/**
+	 * Method to return a reference to right encoder
+	 */
+	public Encoder getEncoderRight()
+	{
+		// Return a reference to the encoder
+		return (encoderRight);
+	}
+	
+	/**
+	 * Method to return a reference to left encoder
+	 */
+	public Encoder getEncoderLeft()
+	{
+		// Return a reference to the encoder
+		return (encoderLeft);
+	}
+	
+	/**
+	 * Method to get average encoder distance
+	 */
+	public double getAverageDistance()
+	{
+		return (encoderLeft.getDistance()+encoderRight.getDistance())/2;
+	}
+	
+	/**
+	 * Method to reset both encoders
+	 */
+	public void resetEncoders()
+	{
+		encoderLeft.reset();
+		encoderRight.reset();
+	}
+	
+	/**
 	 * Method to return a reference to the chassis gyro
 	 */
 	public AnalogGyro getGyro()
