@@ -71,7 +71,7 @@ public class ChassisDriveTargetLIDAR extends Command
 		// make sure we're driving in the correct direction
 		double distanceDelta = (Robot.chassis.getLidarDistanceCentimeters() - m_TargetDistance);
 		boolean driveForward = (distanceDelta > 0.0);
-		if(distanceDelta < 100.0)
+		if(distanceDelta < 50.0)
 		{
 			Robot.chassis.setMagnitude( 0.4 * (driveForward?1.0:-1.0) );
 		}
@@ -85,7 +85,7 @@ public class ChassisDriveTargetLIDAR extends Command
 	protected boolean isFinished()
 	{
 		// might overshoot here
-		return (Math.abs(m_TargetDistance - Robot.chassis.getLidarDistanceCentimeters()) < 15.0); 
+		return (Math.abs(m_TargetDistance - Robot.chassis.getLidarDistanceCentimeters()) < 5.0); 
 	}
 
 	// Called once after isFinished returns true
