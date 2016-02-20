@@ -230,7 +230,7 @@ public class Chassis extends Subsystem
 			SmartDashboard.putNumber("PIDoutput", PIDoutput);
 
 			// Drive the robot given the speed and direction
-			wCDrive4.arcadeDrive(0, PIDoutput);
+			wCDrive4.arcadeDrive(-magnitude, PIDoutput);
 		}
 	}
 	
