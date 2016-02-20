@@ -52,12 +52,12 @@ public class Constants
 			SHOOTER_ELEVATION_POT_B               = +0.0114;
 			SHOOTER_ELEVATION_POT_C               = +0.1949;
 			
-			BOULER_INTAKE_RETRACTED_RIGHT         = 0.60;
-			BOULER_INTAKE_RETRACTED_LEFT          = 0.36;
-			BOULER_INTAKE_BOULDER_INTAKE_RIGHT    = 4.14;
-			BOULER_INTAKE_BOULDER_INTAKE_LEFT     = 4.54;
-			BOULER_INTAKE_BOULDER_CHEVAL_RIGHT    = 4.15;
-			BOULER_INTAKE_BOULDER_CHEVAL_LEFT     = 4.60;
+			BOULER_INTAKE_RETRACTED_RIGHT         = 0.234;
+			BOULER_INTAKE_RETRACTED_LEFT          = 0.078;
+			BOULER_INTAKE_BOULDER_INTAKE_RIGHT    = 3.46;
+			BOULER_INTAKE_BOULDER_INTAKE_LEFT     = 3.59;
+			BOULER_INTAKE_BOULDER_CHEVAL_RIGHT    = 3.76;
+			BOULER_INTAKE_BOULDER_CHEVAL_LEFT     = 3.84;
 		}
 	}
 
@@ -100,7 +100,7 @@ public class Constants
 	public static double BOULDER_INTAKE_POWER                  = 0.4;
 	public static double BOULDER_INTAKE_TOLERANCE              = 0.05;
 
-	public static double BOULDER_ROLLER_SPEED                  = 0.6;
+	public static double BOULDER_ROLLER_SPEED                  = 0.7;
 //	public static double BOULDER_INTAKE_POSITION_REST          = 1.10;
 //	public static double BOULDER_INTAKE_POSITION_DOWN          = 4.25;
 //	public static double BOULDER_INTAKE_POSITION_INTAKE        = 4.50;
