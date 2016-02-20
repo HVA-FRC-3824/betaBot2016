@@ -65,6 +65,8 @@ public class Targets extends Subsystem {
 	}
 	
 	public double getTargetOffsetFromCenterNormalized()
+	// if the image is positioned to the right, the robot is too far left.
+	// so this return value is flipped 
 	{
 		// Drive the robot given the speed and direction
 		m_targetCenterX = getCenterXOfLargestTarget();
@@ -89,8 +91,6 @@ public class Targets extends Subsystem {
 		SmartDashboard.putNumber("Targets Image Width", m_imageWidth);
 	}
 	
-	// if the image is positioned to the right, the robot is too far left.
-	// so this return value is flipped 
 	private double getCenterXOfLargestTarget()
 	{
 		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);

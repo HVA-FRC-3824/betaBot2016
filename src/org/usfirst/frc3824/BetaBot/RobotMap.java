@@ -19,6 +19,9 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -47,6 +50,8 @@ public class RobotMap
     public static RobotDrive chassisWCDrive4;
     public static Compressor chassisCompressor;
     public static Solenoid chassisTransmission;
+    public static Encoder chassisEncoderRight;
+    public static Encoder chassisEncoderLeft;
     public static PowerDistributionPanel powerPowerDistributionPanel;
     public static AnalogPotentiometer shooterAnalogPotentiometer;
     public static SpeedController shooterActuator;
@@ -97,6 +102,14 @@ public class RobotMap
         chassisTransmission = new Solenoid(0, 2);
         LiveWindow.addActuator("Chassis", "Transmission", chassisTransmission);
         
+        chassisEncoderRight = new Encoder(2, 3, false, EncodingType.k4X);
+        LiveWindow.addSensor("Chassis", "Encoder Right", chassisEncoderRight);
+        chassisEncoderRight.setDistancePerPulse(1.0);
+        chassisEncoderRight.setPIDSourceType(PIDSourceType.kRate);
+        chassisEncoderLeft = new Encoder(4, 5, false, EncodingType.k4X);
+        LiveWindow.addSensor("Chassis", "Encoder Left", chassisEncoderLeft);
+        chassisEncoderLeft.setDistancePerPulse(1.0);
+        chassisEncoderLeft.setPIDSourceType(PIDSourceType.kRate);
         powerPowerDistributionPanel = new PowerDistributionPanel(0);
         LiveWindow.addSensor("Power", "PowerDistributionPanel", powerPowerDistributionPanel);
         
