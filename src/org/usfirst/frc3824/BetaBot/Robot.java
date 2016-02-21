@@ -150,6 +150,8 @@ public class Robot extends IterativeRobot
 
 		Robot.targets.getTargetOffsetFromCenterNormalized();
 		Robot.targets.updateSmartDashboard();
+		
+		SmartDashboard.putNumber("getX", Robot.oi.getControllerJoystick().getX());
 	}
 
 	public void autonomousInit()

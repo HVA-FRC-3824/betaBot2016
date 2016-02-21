@@ -39,7 +39,7 @@ public class AutonomousLowBarShootBoulder extends CommandGroup
 		// arm.
         
         addSequential(new ChassisDriveStraightDistance(300, 0.8));
-        addSequential(new ChassisTurnAngle(50.0, 0.5));
+        addSequential(new ChassisTurnAngle(50.0, 0.0));
         
 //        addSequential(new ChassisDriveTargetLIDAR(100.0));
 //        addSequential(new ShootBoulderInGoal(50.0, 1.0));

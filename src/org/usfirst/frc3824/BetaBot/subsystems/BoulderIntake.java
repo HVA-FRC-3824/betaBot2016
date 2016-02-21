@@ -11,10 +11,8 @@
 package org.usfirst.frc3824.BetaBot.subsystems;
 
 import org.usfirst.frc3824.BetaBot.Constants;
-import org.usfirst.frc3824.BetaBot.Robot;
 import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
-import org.usfirst.frc3824.BetaBot.subsystems.Chassis.AnglePIDOutput;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
@@ -22,6 +20,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -57,21 +56,30 @@ public class BoulderIntake extends Subsystem
 	{
 		// Instantiate the PID controller for driving in the specified direction
 		boulderRightController = new PIDController(Constants.BOULDER_INTAKE_P, 
-		                                                                 Constants.BOULDER_INTAKE_I, 
-		                                                                 Constants.BOULDER_INTAKE_D, 
-		                                                                 boudlerRightPosition, boulderRightOutput);
-		boulderRightController.setOutputRange(-Constants.BOULDER_INTAKE_POWER,Constants.BOULDER_INTAKE_POWER);
+		                                           Constants.BOULDER_INTAKE_I, 
+		                                           Constants.BOULDER_INTAKE_D, 
+		                                           boudlerRightPosition, boulderRightOutput);
+		boulderRightController.setOutputRange(Constants.BOULDER_INTAKE_RETRACT_POWER, Constants.BOULDER_INTAKE_EXTEND_POWER);
 		boulderRightController.setInputRange(0.0, 5.0);
 		boulderRightController.setAbsoluteTolerance(Constants.BOULDER_INTAKE_TOLERANCE);
 		
 		// Instantiate the PID controller for driving in the specified direction
 		boulderLeftController = new PIDController(Constants.BOULDER_INTAKE_P, 
-		                                                                Constants.BOULDER_INTAKE_I, 
-		                                                                Constants.BOULDER_INTAKE_D, 
-		                                                                boulderLeftPosition, boulderLeftOutput);	
-		boulderLeftController.setOutputRange(-Constants.BOULDER_INTAKE_POWER, Constants.BOULDER_INTAKE_POWER);
+		                                          Constants.BOULDER_INTAKE_I, 
+		                                          Constants.BOULDER_INTAKE_D, 
+		                                          boulderLeftPosition, boulderLeftOutput);	
+		boulderLeftController.setOutputRange(Constants.BOULDER_INTAKE_RETRACT_POWER, Constants.BOULDER_INTAKE_EXTEND_POWER);
 		boulderLeftController.setInputRange(0.0, 5.0);
 		boulderLeftController.setAbsoluteTolerance(Constants.BOULDER_INTAKE_TOLERANCE);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setBoulderControlPowerRange(double retract, double extend)
+	{
+		boulderRightController.setOutputRange(retract, extend);	
+		boulderLeftController.setOutputRange(retract, extend);	
 	}
 	
 	public void setBoulderIntakeWheelSpeed(double speed)
@@ -91,16 +99,27 @@ public class BoulderIntake extends Subsystem
 	/**
 	 * Method to set the boulder intake pot PID set point
 	 */
-	public void SetPID_Position(double right_pot_voltage, double left_pot_voltage)
+	public void SetPID_Position(double position)
 	{
-		// Right Pot is inverted
-		// Add an offset to the left potentiometer (positive is farther out)
-		boulderRightController.setSetpoint(right_pot_voltage);
-		boulderLeftController.setSetpoint(left_pot_voltage);
+		double right_pot;
+		double left_pot;
+		
+		// Determine the desired potentiometer levels based on desired position
+		right_pot = (Constants.BOUDLER_INTAKE_EXTENDED_RIGHT - Constants.BOUDLER_INTAKE_RETRACTED_RIGHT) *
+				position + Constants.BOUDLER_INTAKE_RETRACTED_RIGHT;
+		
+		left_pot  = (Constants.BOUDLER_INTAKE_EXTENDED_LEFT - Constants.BOUDLER_INTAKE_RETRACTED_LEFT) *
+				position + Constants.BOUDLER_INTAKE_RETRACTED_LEFT;
+			
+		SmartDashboard.putNumber("Right Boulder Pot", right_pot);
+		SmartDashboard.putNumber("Left Boulder Pot", left_pot);
+		
+		// Set the boulder PIDs
+		boulderRightController.setSetpoint(right_pot);
+		boulderLeftController.setSetpoint(left_pot);
 	}
 	
 	/**
-	 * 
 	 * Method to enable the boulder intake PID
 	 */
 	public void EnableBoulderIntakePID()

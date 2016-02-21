@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Constants
 {
 	// Set the robot configuration (competition or practice)
-	static final boolean IS_COMP_ROBOT = false;
+	// Thing 1 - true
+	// Thing 2 - false
+	static final boolean IS_COMP_ROBOT = true;
 
 	public static double SHOOTER_ELEVATION_ANGLE_A;
 	public static double SHOOTER_ELEVATION_ANGLE_B;
@@ -14,50 +16,48 @@ public class Constants
 	public static double SHOOTER_ELEVATION_POT_B;
 	public static double SHOOTER_ELEVATION_POT_C;
 	
-	public static double BOULER_INTAKE_RETRACTED_RIGHT;
-	public static double BOULER_INTAKE_RETRACTED_LEFT;
-	public static double BOULER_INTAKE_BOULDER_INTAKE_RIGHT;
-	public static double BOULER_INTAKE_BOULDER_INTAKE_LEFT;
-	public static double BOULER_INTAKE_BOULDER_CHEVAL_RIGHT;
-	public static double BOULER_INTAKE_BOULDER_CHEVAL_LEFT;
+	public static double BOUDLER_INTAKE_RETRACTED_RIGHT;
+	public static double BOUDLER_INTAKE_RETRACTED_LEFT;
+	public static double BOUDLER_INTAKE_EXTENDED_RIGHT;
+	public static double BOUDLER_INTAKE_EXTENDED_LEFT;
 	
 	public static void InitConstants()
 	{
-		if (IS_COMP_ROBOT)
+		if (IS_COMP_ROBOT)  // Thing 1
 		{
 			SmartDashboard.putString("Active Robot Values", "Thing 1");
 			
 			SHOOTER_ELEVATION_ANGLE_A             =  48.58;
 			SHOOTER_ELEVATION_ANGLE_B             =  67.00;
 			SHOOTER_ELEVATION_ANGLE_C             = -20.08;
+			
 			SHOOTER_ELEVATION_POT_A               = -0.00004;
 			SHOOTER_ELEVATION_POT_B               =  0.0109;
 			SHOOTER_ELEVATION_POT_C               =  0.2467;
 			
-			BOULER_INTAKE_RETRACTED_RIGHT         = 0.60;
-			BOULER_INTAKE_RETRACTED_LEFT          = 0.36;
-			BOULER_INTAKE_BOULDER_INTAKE_RIGHT    = 4.14;
-			BOULER_INTAKE_BOULDER_INTAKE_LEFT     = 4.54;
-			BOULER_INTAKE_BOULDER_CHEVAL_RIGHT    = 4.15;
-			BOULER_INTAKE_BOULDER_CHEVAL_LEFT     = 4.60;
+			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.60;
+			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.36;
+			
+			BOUDLER_INTAKE_EXTENDED_RIGHT          = 4.14;
+			BOUDLER_INTAKE_EXTENDED_LEFT           = 4.54;
 		}
-		else // ---------- PRACTICE ROBOT ----------
+		else // Thing 2
 		{
 			SmartDashboard.putString("Active Robot Values", "Thing 2");
 			
 			SHOOTER_ELEVATION_ANGLE_A             = +49.75;
 			SHOOTER_ELEVATION_ANGLE_B             = +65.00;
 			SHOOTER_ELEVATION_ANGLE_C             = -15.00;
+			
 			SHOOTER_ELEVATION_POT_A               = -0.00004;
 			SHOOTER_ELEVATION_POT_B               = +0.0114;
 			SHOOTER_ELEVATION_POT_C               = +0.1949;
 			
-			BOULER_INTAKE_RETRACTED_RIGHT         = 0.234;
-			BOULER_INTAKE_RETRACTED_LEFT          = 0.078;
-			BOULER_INTAKE_BOULDER_INTAKE_RIGHT    = 3.46;
-			BOULER_INTAKE_BOULDER_INTAKE_LEFT     = 3.59;
-			BOULER_INTAKE_BOULDER_CHEVAL_RIGHT    = 3.76;
-			BOULER_INTAKE_BOULDER_CHEVAL_LEFT     = 3.84;
+			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.234;
+			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.078;
+		
+			BOUDLER_INTAKE_EXTENDED_RIGHT          = 3.76;
+			BOUDLER_INTAKE_EXTENDED_LEFT           = 3.84;
 		}
 	}
 
@@ -99,20 +99,37 @@ public class Constants
 	public static double BOULDER_INTAKE_I                      = 0.0;
 	public static double BOULDER_INTAKE_D                      = 0.0;
 
-	public static double BOULDER_INTAKE_POWER                  = 0.4;
-	public static double BOULDER_INTAKE_TOLERANCE              = 0.05;
+	public static double BOULDER_INTAKE_EXTEND_POWER           =  0.6;
+	public static double BOULDER_INTAKE_RETRACT_POWER          = -0.5;
+	public static double BOULDER_INTAKE_TOLERANCE              =  0.05;
 
 	public static double BOULDER_ROLLER_SPEED                  = 0.7;
 		
+	public static double BOULDER_INTAKE_HOME_BUTTON            = -1700.0;  // Button 17
+	public static double BOULDER_INTAKE_BOULDER_BUTTON         = -1800.0;  // Button 18
+    public static double BOULDER_INTAKE_MAX_EXTEND_BUTTON      = -1400.0;  // Button 14
+    public static double BOULDER_INTAKE_MANUFAL_BUTTON         =  -600.0;  // Button  6
+	
 	// ***************************************************************************************
 	// Shooter Elevation constants
 	public static double SHOOTER_ELEVATION_SETPOINT_MIN        = 10.0;
 	public static double SHOOTER_ELEVATION_SETPOINT_MAX        = 60.0;
 	
-	public static double SHOOTER_ELEVATION_INTAKE              = 10.0;
-	public static double SHOOTER_ELEVATION_REST                = 20.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION1     = 30.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION2     = 40.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION3     = 50.0;
-	public static double SHOOTER_ELEVATION_SHOOT_POSITION4     = 60.0;
+	public static double SHOOTER_ELEVATION_BOULDER_INTAKE      = -7.0;
+	public static double SHOOTER_ELEVATION_HOME                = -4.7;
+	public static double SHOOTER_ELEVATION_POSITION1           = 43.5;
+	public static double SHOOTER_ELEVATION_POSITION2           = 18.0;
+	public static double SHOOTER_ELEVATION_POSITION3           = 65.0;
+	public static double SHOOTER_ELEVATION_POSITION4           = 69.0;
+	public static double SHOOTER_ELEVATION_POSITION5           = 45.0;
+	
+	public static double SHOOTER_JOG_UP_BUTTON                 = -1100.0;  // Button 11
+	public static double SHOOTER_JOG_DOWN_BUTTON               = -1000.0;  // Button 10
+	public static double SHOOTER_HOME_BUTTON                   = -1700.0;  // Button 17
+	public static double SHOOTER_BOULDER_INTAKE_BUTTON         = -1800.0;  // Button 18
+	public static double SHOOTER_SHOOT_1_BUTTON                =  -200.0;  // Button  2
+	public static double SHOOTER_SHOOT_2_BUTTON                =  -300.0;  // Button  3
+	public static double SHOOTER_SHOOT_3_BUTTON                =  -400.0;  // Button  4
+	public static double SHOOTER_SHOOT_4_BUTTON                =  -500.0;  // Button  5
+	public static double SHOOTER_SHOOT_5_BUTTON                =  -100.0;  // Button  1
 }
