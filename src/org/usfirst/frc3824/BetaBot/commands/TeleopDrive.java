@@ -13,7 +13,6 @@ package org.usfirst.frc3824.BetaBot.commands;
 import org.usfirst.frc3824.BetaBot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -47,8 +46,6 @@ public class TeleopDrive extends Command
 	protected void execute()
 	{
 		Robot.chassis.driveWithJoystick(Robot.oi.driveJoystick);
-		
-		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

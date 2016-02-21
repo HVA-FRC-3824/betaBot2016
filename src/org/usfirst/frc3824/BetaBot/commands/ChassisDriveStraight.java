@@ -13,7 +13,6 @@ package org.usfirst.frc3824.BetaBot.commands;
 import org.usfirst.frc3824.BetaBot.Constants;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc3824.BetaBot.Robot;
@@ -47,7 +46,7 @@ public class ChassisDriveStraight extends Command
 		// instantiate a timer
         m_Timer = new Timer();
 
-		// default test values when called from the SmartDashboard
+		// default test values
         m_DriveDuration  = 3.0;
         m_DrivePower     = 0.7;
         m_DriveDirection = 0.0;
@@ -86,7 +85,7 @@ public class ChassisDriveStraight extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		SmartDashboard.putNumber("Gyro", Robot.chassis.getCurrentHeading());
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

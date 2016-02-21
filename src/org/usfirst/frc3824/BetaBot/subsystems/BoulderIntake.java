@@ -20,10 +20,8 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -130,12 +128,6 @@ public class BoulderIntake extends Subsystem
 		 */
 		public void pidWrite(double PIDoutput)
 		{				
-			// Push values to the smart dashboard for debugging
-			// Note: The magnitude should not change, but the direction is from the PID output
-			SmartDashboard.putNumber("Right PIDoutput", PIDoutput);
-			SmartDashboard.putNumber("Right Setpoint", boulderRightController.getSetpoint());
-			SmartDashboard.putNumber("Right Intake Pot", boudlerRightPosition.getVoltage());
-
 			// Drive the boulder intake motor
 			boulderIntakeRight.set(PIDoutput);	
 		}
@@ -151,12 +143,6 @@ public class BoulderIntake extends Subsystem
 		 */
 		public void pidWrite(double PIDoutput)
 		{	
-			// Push values to the smart dashboard for debugging
-			// Note: The magnitude should not change, but the direction is from the PID output
-			SmartDashboard.putNumber("Left PIDoutput", PIDoutput);
-			SmartDashboard.putNumber("Left Setpoint", boulderLeftController.getSetpoint());
-			SmartDashboard.putNumber("Left Intake Pot", boulderLeftPosition.getVoltage());
-
 			// Drive the boulder intake motor
 			boulderIntakeLeft.set(-PIDoutput);
 		}

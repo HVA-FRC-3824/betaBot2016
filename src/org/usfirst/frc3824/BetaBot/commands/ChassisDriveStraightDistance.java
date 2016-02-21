@@ -11,7 +11,6 @@
 package org.usfirst.frc3824.BetaBot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
@@ -56,9 +55,6 @@ public class ChassisDriveStraightDistance extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		SmartDashboard.putNumber("Gyro", Robot.chassis.getCurrentHeading());
-		SmartDashboard.putNumber("Distance", Robot.chassis.getDistance());
-		
 		// Slow down when reaching the desired position
 		if (Math.abs(m_DriveDistance - Robot.chassis.getDistance()) < 50.0)
 			Robot.chassis.setMagnitude(0.5);			

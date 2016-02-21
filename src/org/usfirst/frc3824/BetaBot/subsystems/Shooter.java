@@ -167,8 +167,8 @@ public class Shooter extends Subsystem
 		// Potentiometer Set Point = -0.00004(X^2) +0.011X+0.1956
 		double setPoint = A * (setpointDegrees * setpointDegrees) + (B * setpointDegrees) + C;
 
-		SmartDashboard.putNumber("Angle Setpoint", setpointDegrees);
-		SmartDashboard.putNumber("Angle Pot Setpoint", setPoint);
+		SmartDashboard.putNumber("Shooter Angle Setpoint", setpointDegrees);
+		SmartDashboard.putNumber("Shooter Angle Pot Setpoint", setPoint);
 
 		// Set the shooter elevation set point
 		shooterAngleController.setSetpoint(setPoint);

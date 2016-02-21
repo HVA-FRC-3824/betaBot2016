@@ -72,8 +72,8 @@ public class BoulderIntakeControl extends Command
 			right_position = Constants.BOULER_INTAKE_BOULDER_INTAKE_RIGHT;
 			left_position  = Constants.BOULER_INTAKE_BOULDER_INTAKE_LEFT;
 		}
-		SmartDashboard.putNumber("right_position", right_position);
-		SmartDashboard.putNumber("left_position", left_position);
+		SmartDashboard.putNumber("Boulder Right", right_position);
+		SmartDashboard.putNumber("Boulder Left", left_position);
 
 		// Set the boulder intake desired potentiometer position
 		Robot.boulderIntake.SetPID_Position(right_position, left_position);

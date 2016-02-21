@@ -16,7 +16,6 @@ import org.usfirst.frc3824.BetaBot.utilities.Lidar;
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
@@ -271,11 +270,6 @@ public class Chassis extends Subsystem
 		 */
 		public void pidWrite(double PIDoutput)
 		{	
-			// Push values to the smart dashboard for debugging
-			// Note: The magnitude should not change, but the direction is from the PID output
-			SmartDashboard.putNumber("magnitude", m_magnitude);
-			SmartDashboard.putNumber("PIDoutput", PIDoutput);
-
 			// Drive the robot given the speed and direction
 			// Arcade drive expects a joystick which is negative forward)
 			wCDrive4.arcadeDrive(-m_magnitude, PIDoutput);

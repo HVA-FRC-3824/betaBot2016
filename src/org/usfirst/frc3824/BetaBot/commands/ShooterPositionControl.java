@@ -114,10 +114,7 @@ public class ShooterPositionControl extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-
-		// SmartDashboard.putNumber("Control Y:
-		// ",Robot.oi.controllerJoystick.getY());
-		SmartDashboard.putNumber("Angle Position", Robot.shooter.GetShooterElevatorAngle());
+		SmartDashboard.putNumber("Shooter Angle", Robot.shooter.GetShooterElevatorAngle());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
