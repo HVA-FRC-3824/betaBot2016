@@ -103,12 +103,12 @@ public class RobotMap
         
         chassisEncoderRight = new Encoder(2, 3, false, EncodingType.k4X);
         LiveWindow.addSensor("Chassis", "Encoder Right", chassisEncoderRight);
-        chassisEncoderRight.setDistancePerPulse(1.0);
-        chassisEncoderRight.setPIDSourceType(PIDSourceType.kRate);
+        chassisEncoderRight.setDistancePerPulse(0.058994);
+        chassisEncoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
         chassisEncoderLeft = new Encoder(4, 5, false, EncodingType.k4X);
         LiveWindow.addSensor("Chassis", "Encoder Left", chassisEncoderLeft);
-        chassisEncoderLeft.setDistancePerPulse(1.0);
-        chassisEncoderLeft.setPIDSourceType(PIDSourceType.kRate);
+        chassisEncoderLeft.setDistancePerPulse(0.058994);
+        chassisEncoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
         powerPowerDistributionPanel = new PowerDistributionPanel(0);
         LiveWindow.addSensor("Power", "PowerDistributionPanel", powerPowerDistributionPanel);
         

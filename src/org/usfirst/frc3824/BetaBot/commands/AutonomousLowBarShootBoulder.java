@@ -38,11 +38,12 @@ public class AutonomousLowBarShootBoulder extends CommandGroup
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
         
-        addSequential(new ChassisDriveStraight(1.5, 0.5, 0.0));
+
+        addSequential(new ChassisDriveStraightDistance(300, 0.8));
 //        addSequential(new ChassisDriveTargetLIDAR(100));
-        addSequential(new ChassisDriveTargetLIDAR(500.0));
+//        addSequential(new ChassisDriveTargetLIDAR(500.0));
         addSequential(new ChassisTurnAngle(50.0, 0.5));
-        addSequential(new ChassisDriveTargetLIDAR(100.0));
-        addSequential(new ShootBoulderInGoal(50.0, 1.0));
+//        addSequential(new ChassisDriveTargetLIDAR(100.0));
+//        addSequential(new ShootBoulderInGoal(50.0, 1.0));
 	}
 }

@@ -127,7 +127,7 @@ public class Robot extends IterativeRobot
 		startingLocationChooser.addObject("3/4 (High)", new AutoParameters(Constants.TURN_NONE, Constants.HIGH_GOAL));
 		startingLocationChooser.addObject("5 Low", new AutoParameters(Constants.TURN_LEFT, Constants.LOW_GOAL));
 		startingLocationChooser.addObject("5 High", new AutoParameters(Constants.TURN_LEFT, Constants.HIGH_GOAL));
-		SmartDashboard.putData("Starting Location & Shot", startingLocationChooser );
+		SmartDashboard.putData("Starting Location and Shot", startingLocationChooser );
 
 		RobotMap.chassisCompressor.setClosedLoopControl(true);
 		

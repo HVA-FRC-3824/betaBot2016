@@ -55,26 +55,21 @@ public class ChassisTurnToImageTarget extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		// Set the PID up for driving straight
-		Robot.chassis.getAngleGyroController().setPID(Preferences.getInstance().getDouble("ImageTurn_P", Constants.DRIVETRAIN_DRIVE_STRAIGHT_P), 
-													  Preferences.getInstance().getDouble("ImageTurn_I", Constants.DRIVETRAIN_DRIVE_STRAIGHT_I), 
-													  Preferences.getInstance().getDouble("ImageTurn_D", Constants.DRIVETRAIN_DRIVE_STRAIGHT_D));
-
-		Robot.chassis.getAngleGyroController().reset();
-		double gyroVal = Robot.chassis.getGyroValue();
+		double heading = Robot.chassis.getCurrentHeading();
 		double targetOffset = Robot.targets.getTargetOffsetFromCenterAngle();
-		Robot.chassis.getAngleGyroController().setSetpoint(gyroVal + targetOffset);
-		SmartDashboard.putNumber("ImageTurn Angle SetPoint", gyroVal + targetOffset);
+		
+		// Set the PID up for driving straight
+		Robot.chassis.configurePIDs(Preferences.getInstance().getDouble("ImageTurn_P", Constants.DRIVETRAIN_DRIVE_STRAIGHT_P), 
+									Preferences.getInstance().getDouble("ImageTurn_I", Constants.DRIVETRAIN_DRIVE_STRAIGHT_I), 
+									Preferences.getInstance().getDouble("ImageTurn_D", Constants.DRIVETRAIN_DRIVE_STRAIGHT_D), 
+									heading + targetOffset, 0);	
+
+		SmartDashboard.putNumber("ImageTurn Angle SetPoint", heading + targetOffset);
 		SmartDashboard.putNumber("ImageTurn Target Offset", targetOffset);
 
 		m_finished = false;
 		m_state = 1;
-		// update the PID direction and power
-		Robot.chassis.setDirection(0);
-		Robot.chassis.setMagnitude(0);
 
-		// enable the PID
-		Robot.chassis.getAngleGyroController().enable();
 		m_onTargetCount = 0;
 		m_Timer.reset();
 		m_Timer.start();
@@ -91,7 +86,7 @@ public class ChassisTurnToImageTarget extends Command
 			if(m_Timer.get() > 1.0)
 			{
 				m_Timer.reset();
-				Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue() + offsetAngle);
+				Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getCurrentHeading() + offsetAngle);
 				if(error < 2.5)
 				{
 					m_state = 4;
@@ -112,7 +107,7 @@ public class ChassisTurnToImageTarget extends Command
 			if(m_Timer.get() > 1.0)
 			{
 				m_Timer.reset();
-				Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue() + offsetAngle);
+				Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getCurrentHeading() + offsetAngle);
 				if(error < 2.5)
 				{
 					m_state = 4;
@@ -137,7 +132,7 @@ public class ChassisTurnToImageTarget extends Command
 			m_Timer.reset();
 		}
 				
-		SmartDashboard.putNumber("ImageTurn Current Angle", Robot.chassis.getGyroValue());
+		SmartDashboard.putNumber("ImageTurn Current Angle", Robot.chassis.getCurrentHeading());
 		SmartDashboard.putNumber("ImageTurn PID Error", Robot.chassis.getAngleGyroController().getError());
 		SmartDashboard.putNumber("ImageTurn OnTarget Count", m_onTargetCount);
 		SmartDashboard.putNumber("ImageTurn OffsetFromCenterAngle", offsetAngle);

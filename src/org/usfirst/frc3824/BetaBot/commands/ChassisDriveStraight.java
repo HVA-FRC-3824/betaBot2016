@@ -73,19 +73,10 @@ public class ChassisDriveStraight extends Command
 	protected void initialize()
 	{
 		// Set the PID up for driving straight
-		Robot.chassis.getAngleGyroController().setPID(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
-		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
-		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_D);
-
-		Robot.chassis.getAngleGyroController().reset();
-		Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue());
-
-		// update the PID direction and power
-		Robot.chassis.setDirection(m_DriveDirection);
-		Robot.chassis.setMagnitude(m_DrivePower);
-
-		// enable the PID
-		Robot.chassis.getAngleGyroController().enable();
+		Robot.chassis.configurePIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
+	                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+	                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+	                                Robot.chassis.getCurrentHeading(), m_DrivePower);
 
 		// reset and start the timer
 		m_Timer.reset();
@@ -95,7 +86,7 @@ public class ChassisDriveStraight extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		SmartDashboard.putNumber("Gyro", Robot.chassis.getGyroValue());
+		SmartDashboard.putNumber("Gyro", Robot.chassis.getCurrentHeading());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

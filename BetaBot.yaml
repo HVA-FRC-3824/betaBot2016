@@ -164,13 +164,13 @@ Children:
           validators: &id005 [DigitalChannel]
           value: '2'
         Distance Per Pulse: !!robotbuilder.data.properties.DoubleProperty {default: 1,
-          name: Distance Per Pulse, validators: null, value: 1.0}
+          name: Distance Per Pulse, validators: null, value: 0.058994}
         PID Source: !!robotbuilder.data.properties.ChoicesProperty
           choices: &id006 [kDisplacement, kRate]
           default: kRate
           name: PID Source
           validators: null
-          value: kRate
+          value: kDisplacement
         Encoding Type: !!robotbuilder.data.properties.ChoicesProperty
           choices: &id007 [k4X, k2X, k1X]
           default: k4X
@@ -198,13 +198,13 @@ Children:
           validators: *id005
           value: '4'
         Distance Per Pulse: !!robotbuilder.data.properties.DoubleProperty {default: 1,
-          name: Distance Per Pulse, validators: null, value: 1.0}
+          name: Distance Per Pulse, validators: null, value: 0.058994}
         PID Source: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id006
           default: kRate
           name: PID Source
           validators: null
-          value: kRate
+          value: kDisplacement
         Encoding Type: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id007
           default: k4X
@@ -928,7 +928,7 @@ Children:
           default: '1'
           name: Button
           validators: null
-          value: '8'
+          value: '14'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -1179,6 +1179,8 @@ Children:
                 value:
                 - !!robotbuilder.data.properties.ParameterDescriptor {name: DriveDistance,
                   type: double}
+                - !!robotbuilder.data.properties.ParameterDescriptor {name: DrivePower,
+                  type: double}
               Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
                 name: Requires, type: Subsystem, validators: null, value: Chassis}
               Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
@@ -1187,9 +1189,10 @@ Children:
                 validators: null
                 value:
                 - !!robotbuilder.data.properties.ParameterSet
-                  name: FourFeet
+                  name: TwoMeters
                   parameters:
-                  - {name: DriveDistance, type: double, value: '48.0'}
+                  - {name: DriveDistance, type: double, value: '200.0'}
+                  - {name: DrivePower, type: double, value: '1.0'}
               Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {
                 default: true, name: Button on SmartDashboard, validators: null, value: true}
           hasMatch: true

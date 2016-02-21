@@ -56,8 +56,7 @@ public class Chassis extends Subsystem
     
 	// Parameters used for drive while running under PIDControl. The values
 	// not set by the controller constructor can be set by a command directly
-	private double magnitude;
-	private double direction;
+	private double m_magnitude;
 
 	// Declare the PID Output class prototype
 	// (See class at the end of the source file)
@@ -105,6 +104,26 @@ public class Chassis extends Subsystem
 		wCDrive4.arcadeDrive(moveValue, twist, false);
 	}
 
+	/**
+	 * 
+	 */
+	public void configurePIDs(double P, double I, double D, double desiredHeading, double power)
+	{
+		angleGyroController.setPID(P, I, D);
+		angleGyroController.reset();
+		
+		angleGyroController.setSetpoint(desiredHeading);
+		
+		// update the drive power
+		m_magnitude = power;
+
+		// enable the PID
+		angleGyroController.enable();
+
+		// Reset Encoder Distance
+		resetEncoders();
+	}
+	
 	/**
 	 * Method to control the drive by providing parameters
 	 */
@@ -163,9 +182,10 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to get average encoder distance
 	 */
-	public double getAverageDistance()
+	public double getDistance()
 	{
-		return (encoderLeft.getDistance()+encoderRight.getDistance())/2;
+		// Return the maximum encoder distance in case the other is not working
+		return (Math.max(encoderLeft.getDistance(), encoderRight.getDistance()));
 	}
 	
 	/**
@@ -189,7 +209,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to return the present gyro angle
 	 */
-	public double getGyroValue()
+	public double getCurrentHeading()
 	{
 		// Return the gyro angle
 		return (gyro.getAngle());
@@ -230,17 +250,7 @@ public class Chassis extends Subsystem
 	 */
 	public void setMagnitude(double magnitude)
 	{
-		this.magnitude = magnitude;
-	}
-
-	/**
-	 * Method to set the desired chassis curve (angle) for PID controlled moves.
-	 * Only to be used while controlled by PID controller
-	 */
-	public void setDirection(double direction)
-	{
-		// Set the desired gyro angle
-		this.direction = direction;
+		m_magnitude = magnitude;
 	}
 
 	/**
@@ -263,13 +273,12 @@ public class Chassis extends Subsystem
 		{	
 			// Push values to the smart dashboard for debugging
 			// Note: The magnitude should not change, but the direction is from the PID output
-			SmartDashboard.putNumber("magnitude", magnitude);
-			SmartDashboard.putNumber("direction", direction);
+			SmartDashboard.putNumber("magnitude", m_magnitude);
 			SmartDashboard.putNumber("PIDoutput", PIDoutput);
 
 			// Drive the robot given the speed and direction
 			// Arcade drive expects a joystick which is negative forward)
-			wCDrive4.arcadeDrive(-magnitude, PIDoutput);
+			wCDrive4.arcadeDrive(-m_magnitude, PIDoutput);
 		}
 	}
 	

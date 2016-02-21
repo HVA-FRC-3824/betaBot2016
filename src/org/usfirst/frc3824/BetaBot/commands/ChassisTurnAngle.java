@@ -76,7 +76,7 @@ public class ChassisTurnAngle extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		SmartDashboard.putNumber("Angle", Robot.chassis.getGyroValue());
+		SmartDashboard.putNumber("Angle", Robot.chassis.getCurrentHeading());
 		SmartDashboard.putNumber("Error", Robot.chassis.getAngleGyroController().getError());
 		SmartDashboard.putNumber("Setpoint", Robot.chassis.getAngleGyroController().getSetpoint());
 	}

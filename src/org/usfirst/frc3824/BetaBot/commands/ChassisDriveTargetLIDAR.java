@@ -55,7 +55,7 @@ public class ChassisDriveTargetLIDAR extends Command
 		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_D);
 
 		Robot.chassis.getAngleGyroController().reset();
-		Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue());
+		Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getCurrentHeading());
 
 		// update the PID direction and power
 		boolean driveForward = (Robot.chassis.getLidarDistanceCentimeters() - m_TargetDistance > 0.0);

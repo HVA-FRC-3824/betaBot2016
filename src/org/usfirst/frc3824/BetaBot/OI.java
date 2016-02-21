@@ -63,7 +63,7 @@ public class OI
         shooterWheelsOut.whenPressed(new ShooterSetWheelSpeed(1));
         boulderIntakeExtend = new JoystickButton(controllerJoystick, 6);
         boulderIntakeExtend.whileHeld(new BoulderIntakeControl(-4, true));
-        boulderIntakeLow = new JoystickButton(controllerJoystick, 8);
+        boulderIntakeLow = new JoystickButton(controllerJoystick, 14);
         boulderIntakeLow.whileHeld(new BoulderIntakeControl(-5, false));
         shoot3 = new JoystickButton(controllerJoystick, 4);
         shoot3.whenPressed(new ShooterPositionControl(-120));
@@ -98,7 +98,7 @@ public class OI
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Low Bar Shoot Boulder", new AutonomousLowBarShootBoulder());
         SmartDashboard.putData("Chassis Drive Straight", new ChassisDriveStraight());
-        SmartDashboard.putData("Chassis Drive Straight Distance: FourFeet", new ChassisDriveStraightDistance(48.0));
+        SmartDashboard.putData("Chassis Drive Straight Distance: TwoMeters", new ChassisDriveStraightDistance(200.0, 1.0));
         SmartDashboard.putData("Chassis Drive Target LIDAR: BaseOfTower", new ChassisDriveTargetLIDAR(100.0));
         SmartDashboard.putData("Chassis Turn Angle: Turn90", new ChassisTurnAngle(90.0, 0.6));
         SmartDashboard.putData("ShiftGear: highGear", new ShiftGear(true));
