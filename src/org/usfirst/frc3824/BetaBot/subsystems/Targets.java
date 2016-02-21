@@ -38,8 +38,9 @@ public class Targets extends Subsystem {
 	NetworkTable m_frameRateReport;
 	double[] m_defaultValue = new double[0];
 	double m_targetCenterX;
-	double m_positionFromImageCenterX;
-	double m_normalizedOffestFromImageCenter;
+	private double m_positionFromOnTargetX;
+	private double m_positionFromOnTargetXNormalized;
+	private int m_onTargetX;					// "Center of Image" on the X-axis
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -59,41 +60,74 @@ public class Targets extends Subsystem {
 	{
 		m_contoursReport = NetworkTable.getTable("GRIP/cameraTargets");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
+		m_onTargetX = Constants.IMAGE_ON_TARGET_X_POSITION;
 	}
 	
+	/* ***********************************************************************
+	 * Return the position of the target, offset from our desired center point
+	 * The return value will be in the range of -2 to 2, where -2 a full image
+	 * width to the left of "onTarget" and 2 is a full image width to the right
+	 * of "onTarget".  In the ideal case of the "onTarget" position being
+	 * exactly in the center of the image, then the left edge would be -1 and 
+	 * the right edge would be 1.
+	 ***/
 	public double getTargetOffsetFromCenterNormalized()
 	// if the image is positioned to the right, the robot is too far left.
 	// so this return value is flipped 
 	{
-		// Drive the robot given the speed and direction
+		// get the center of the largest target in view.  We are assuming that the
+		// largest target is the one we are facing most directly
 		m_targetCenterX = getCenterXOfLargestTarget();
 		
-		m_positionFromImageCenterX = m_targetCenterX - (Constants.IMAGE_WIDTH / 2.0); // calculate offset from center in pixels
-		m_normalizedOffestFromImageCenter = m_positionFromImageCenterX / (Constants.IMAGE_WIDTH / 2.0); // convert to a range of -1 (left edge) to 1 (right edge)
+		// calculate offset from "OnTarget" in pixels
+		m_positionFromOnTargetX = m_targetCenterX - m_onTargetX;
 		
-		return m_normalizedOffestFromImageCenter;
+		// convert the offset in pixels to a normalized range where -1 is one half an
+		// image width to the left and 1 is one half an image width to the right.
+		m_positionFromOnTargetXNormalized = m_positionFromOnTargetX / (Constants.IMAGE_WIDTH / 2.0); 
+		
+		return m_positionFromOnTargetXNormalized;
 	}
 	
+	/* ***********************************************************************
+	 * Convert the normalized value into an angle based on the camera's FOV
+	 * Technically, this should be a trigonometric function, but we are using
+	 * a linear approximation, which is good enough for our purposes.  To use
+	 * the trig function, we would have to know our distance as well
+	 ***/
 	public double getTargetOffsetFromCenterAngle()
 	{
 		return getTargetOffsetFromCenterNormalized() * (Constants.CAM_FOV / 2.0);
 	}
 	
+	/* ***********************************************************************
+	 * Determine if the GRIP image processing pipeline is running on the 
+	 * RaspberryPi.  We assume that if the frame rate is non-zero, then the
+	 * pipeline is running.  If the frame rate is 0, it is not running
+	 ***/
 	public boolean isImageProcessingRunning()
 	{
 		return (m_frameRateReport.getNumber("cameraFrameRate", 0.0) > 0);
 	}
 	
+	/* ***********************************************************************
+	 * Display data values on the smart dashboard
+	 ***/
 	public void updateSmartDashboard()
 	{
 		SmartDashboard.putNumber("Targets FrameRate", m_frameRateReport.getNumber("cameraFrameRate", 0.0));
-		SmartDashboard.putNumber("Targets X offset from image center", m_positionFromImageCenterX);
-		SmartDashboard.putNumber("Targets Normalized X offset from image center", m_normalizedOffestFromImageCenter);
+		SmartDashboard.putNumber("Targets X offset from image center", m_positionFromOnTargetX);
+		SmartDashboard.putNumber("Targets Normalized X offset from image center", m_positionFromOnTargetXNormalized);
 		SmartDashboard.putNumber("Targets center X", m_targetCenterX);
 		SmartDashboard.putNumber("Targets Image Width", Constants.IMAGE_WIDTH);
 		SmartDashboard.putBoolean("Image Processing Running", isImageProcessingRunning());
 	}
 	
+	/* ***********************************************************************
+	 * Calculate the center of the largest target in the list of targets
+	 * NOTE: I THINK this will always be the first object in the array, but
+	 * until this can be confirmed, need to do this calculation
+	 ***/
 	private double getCenterXOfLargestTarget()
 	{
 		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
