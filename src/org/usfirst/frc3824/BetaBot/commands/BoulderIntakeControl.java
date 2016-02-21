@@ -57,21 +57,18 @@ public class BoulderIntakeControl extends Command
 		if (m_IntakePosition == -1)
 		{
 			// Rest Position
-//			m_IntakePosition = Preferences.getInstance().getDouble("Roller Rest", Constants.BOULDER_INTAKE_POSITION_REST);
 			right_position = Constants.BOULER_INTAKE_RETRACTED_RIGHT;
 			left_position  = Constants.BOULER_INTAKE_RETRACTED_LEFT;
 		}
 		else if (m_IntakePosition == -5)
 		{
 			// Far down
-//			m_IntakePosition = Preferences.getInstance().getDouble("Roller Ground", Constants.BOULDER_INTAKE_POSITION_DOWN);
 			right_position = Constants.BOULER_INTAKE_BOULDER_CHEVAL_RIGHT;
 			left_position  = Constants.BOULER_INTAKE_BOULDER_CHEVAL_LEFT;
 		}
 		else if (m_IntakePosition == -4)
 		{
 			// Intake Position
-//			m_IntakePosition = Preferences.getInstance().getDouble("Roller Intake", Constants.BOULDER_INTAKE_POSITION_INTAKE);
 			right_position = Constants.BOULER_INTAKE_BOULDER_INTAKE_RIGHT;
 			left_position  = Constants.BOULER_INTAKE_BOULDER_INTAKE_LEFT;
 		}
