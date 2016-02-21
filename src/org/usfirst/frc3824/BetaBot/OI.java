@@ -35,7 +35,6 @@ public class OI
     public JoystickButton home;
     public JoystickButton homeBoulder;
     public JoystickButton shoot1;
-    public JoystickButton button10Shoot2;
     public JoystickButton shoot2;
     public JoystickButton shoot3;
     public JoystickButton boulderIntakeLow;
@@ -70,8 +69,6 @@ public class OI
         shoot3.whenPressed(new ShooterPositionControl(-120));
         shoot2 = new JoystickButton(controllerJoystick, 3);
         shoot2.whenPressed(new ShooterPositionControl(-110));
-        button10Shoot2 = new JoystickButton(controllerJoystick, 10);
-        button10Shoot2.whenPressed(new ShooterPositionControl(-100));
         shoot1 = new JoystickButton(controllerJoystick, 2);
         shoot1.whenPressed(new ShooterPositionControl(-90));
         homeBoulder = new JoystickButton(controllerJoystick, 17);
