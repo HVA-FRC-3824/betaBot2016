@@ -88,12 +88,12 @@ public class Constants
 
 	// ***************************************************************************************
 	// Image turn constants
-	public static double IMAGE_TURN_P                          = 0.08;	// Preference name: ImageTurn_P
+	public static double IMAGE_TURN_P                          = 0.07;	// Preference name: ImageTurn_P
 	public static double IMAGE_TURN_I                          = 0.008;	// Preference name: ImageTurn_I
-	public static double IMAGE_TURN_D                          = 0.01;	// Preference name: ImageTurn_D
+	public static double IMAGE_TURN_D                          = 0.008;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
 	
-	public static int    IMAGE_ON_TARGET_X_POSITION            = 160;   // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_X_POSITION            = 170;   // X location of the "onTarget" position
 	public static int    IMAGE_WIDTH                           = 320;	// default image width
 	public static int    IMAGE_HEIGHT                          = 240;   // default image height
 	public static double CAM_FOV                               = 48.0; 

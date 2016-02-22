@@ -183,7 +183,7 @@ public class Targets extends Subsystem
 		if (areas.length == 1)
 		{
 			// Only one target so return X center
-			m_targetCenterX = centerXs[0];
+			m_targetCenterX = centerXs[0];  // TODO: EXCEPTION
 		}
 		else if (areas.length == 2)
 		{

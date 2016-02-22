@@ -65,8 +65,8 @@ public class Shooter extends Subsystem
 
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		shooterAngleController = new PIDController(10.0, 0, 0, analogPotentiometer, actuator);
-		shooterAngleController.setAbsoluteTolerance(0.02);
+		shooterAngleController = new PIDController(20.0, 0, 0, analogPotentiometer, actuator);
+		shooterAngleController.setAbsoluteTolerance(0.001);
 		shooterAngleController.setContinuous(false);
 		LiveWindow.addActuator("Shooter Angle", "Angle PID", shooterAngleController);
 

@@ -110,12 +110,12 @@ public class Robot extends IterativeRobot
 		// - this tells us what we need to do to get past the defense
 		defenseChooser = new SendableChooser();
 		defenseChooser.addDefault("1) Do Nothing", new AutonomousDoNothing());
-		defenseChooser.addObject("1) Low Bar", new AutonomousLowBar());
-		defenseChooser.addObject("2) Drive Over Defense", new AutonomousDoNothing());
-		defenseChooser.addObject("3) Cheval de Frise", new AutonomousDoNothing());
-		defenseChooser.addObject("4) Portcullis", new AutonomousDoNothing());
-		defenseChooser.addObject("5) Drawbridge", new AutonomousDoNothing());
-		defenseChooser.addObject("6) Sally Port", new AutonomousDoNothing());
+		defenseChooser.addObject("2) Low Bar", new AutonomousLowBar());
+		defenseChooser.addObject("3) Drive Over Defense", new AutonomousDoNothing());
+		defenseChooser.addObject("4) Cheval de Frise", new AutonomousDoNothing());
+		defenseChooser.addObject("5) Portcullis", new AutonomousDoNothing());
+		defenseChooser.addObject("6) Drawbridge", new AutonomousDoNothing());
+		defenseChooser.addObject("7) Sally Port", new AutonomousDoNothing());
 		SmartDashboard.putData("Defense to cross", defenseChooser);
 		
 		// set up the chooser for the starting location and high goal vs low goal shot
