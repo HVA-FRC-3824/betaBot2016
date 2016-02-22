@@ -1318,7 +1318,7 @@ Children:
         validators: null
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: Chassis Drive Straight
   - Children: []
@@ -1344,7 +1344,7 @@ Children:
           - {name: DriveDistance, type: double, value: '200.0'}
           - {name: DrivePower, type: double, value: '1.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: Chassis Drive Straight Distance
   - Children: []
@@ -1368,7 +1368,7 @@ Children:
           parameters:
           - {name: TargetDistance, type: double, value: '100.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: Chassis Drive Target LIDAR
   - Children: []
@@ -1393,7 +1393,7 @@ Children:
           - {name: TurnDegrees, type: double, value: '90.0'}
           - {name: DrivePower, type: double, value: '0.6'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: Chassis Turn Angle
   - Children: []
@@ -1415,6 +1415,10 @@ Children:
           name: CenterTarget
           parameters:
           - {name: whichTarget, type: int, value: '1'}
+        - !!robotbuilder.data.properties.ParameterSet
+          name: LeftTarget
+          parameters:
+          - {name: whichTarget, type: int, value: '0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -1572,6 +1576,29 @@ Children:
         name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Shoot Boulder In Goal
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: DelayTime, type: double}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: None}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id025
+        - !!robotbuilder.data.properties.ParameterSet
+          name: OneSecond
+          parameters:
+          - {name: DelayTime, type: double, value: '1.0'}
+        name: Parameter presets
+        validators: null
+        value: *id025
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command
+    Name: Delay
   Properties: {}
   Base: Commands
   Name: Commands

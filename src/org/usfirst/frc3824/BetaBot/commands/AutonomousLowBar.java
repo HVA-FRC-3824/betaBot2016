@@ -52,21 +52,23 @@ public class AutonomousLowBar extends CommandGroup
 		addParallel(new ShooterPositionControl(45.0));
 		addSequential(new ChassisTurnAngle(50.0, 0.0));
 
+		addSequential(new Delay(2.0));
+		
 		// addSequential(new ChassisDriveStraightDistance(100, 0.8));
 
 		// Line up based on camera
-		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_CENTER));
+		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_LEFT));
 
-		// Determine if the Robot should shoot the boulder
-		if (Robot.autoParameters.getGoal() == Constants.LOW_GOAL)
-		{
-
-		}
-		else if (Robot.autoParameters.getGoal() == Constants.HIGH_GOAL)
-		{
-			// Shoot into the goal
-			addSequential(new ShootBoulderInGoal(45.0, 1.0));
-			addSequential(new ShooterSetWheelSpeed(0.0));
-		}
+//		// Determine if the Robot should shoot the boulder
+//		if (Robot.autoParameters.getGoal() == Constants.LOW_GOAL)
+//		{
+//
+//		}
+//		else if (Robot.autoParameters.getGoal() == Constants.HIGH_GOAL)
+//		{
+//			// Shoot into the goal
+//			addSequential(new ShootBoulderInGoal(45.0, 1.0));
+//			addSequential(new ShooterSetWheelSpeed(0.0));
+//		}
 	}
 }

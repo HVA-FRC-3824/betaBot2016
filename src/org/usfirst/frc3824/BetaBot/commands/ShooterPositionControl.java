@@ -53,12 +53,12 @@ public class ShooterPositionControl extends Command
 		// Determine if the command was called from a button
 		if (m_ShooterSetPoint == Constants.SHOOTER_JOG_UP_BUTTON)
 		{ 
-			m_ActualShooterSetPoint += 5.0;
+			m_ActualShooterSetPoint += 2.0;  // TODO: Change back to 5
 			wheelSpeed = Robot.shooter.GetShooterWheelSpeed(); // Keep current Wheel Speed when Jogging
 		} 
 		else if (m_ShooterSetPoint == Constants.SHOOTER_JOG_DOWN_BUTTON)
 		{ 
-			m_ActualShooterSetPoint -= 5.0;
+			m_ActualShooterSetPoint -= 2.0;  // TODO: Change back to 5
 			wheelSpeed = Robot.shooter.GetShooterWheelSpeed();
 		} 
 		else if (m_ShooterSetPoint == Constants.SHOOTER_HOME_BUTTON)

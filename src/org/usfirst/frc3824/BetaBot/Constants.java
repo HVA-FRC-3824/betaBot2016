@@ -88,9 +88,9 @@ public class Constants
 
 	// ***************************************************************************************
 	// Image turn constants
-	public static double IMAGE_TURN_P                          = 0.03;	// Preference name: ImageTurn_P
+	public static double IMAGE_TURN_P                          = 0.2;	// Preference name: ImageTurn_P
 	public static double IMAGE_TURN_I                          = 0.0;	// Preference name: ImageTurn_I
-	public static double IMAGE_TURN_D                          = 0.25;	// Preference name: ImageTurn_D
+	public static double IMAGE_TURN_D                          = 0.0;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
 	
 	public static int    IMAGE_ON_TARGET_X_POSITION            = 160;   // X location of the "onTarget" position
