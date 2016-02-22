@@ -71,7 +71,7 @@ public class TargetCam extends Subsystem
 	 */
 	public void setExposure(int exposure)
 	{
-		ProcessBuilder pb = new ProcessBuilder("ssh pi@raspi2.local v4l2-ctl -c exposure=" + String.valueOf(exposure));
+		ProcessBuilder pb = new ProcessBuilder("ssh", "pi@raspi2.local","v4l2-ctl","-c","exposure=" + String.valueOf(exposure));
 
 		try {
 			// launch the GRIP process and then get it's PID
@@ -88,7 +88,7 @@ public class TargetCam extends Subsystem
 	 */
 	public void setBrightness(int brightness)
 	{
-		ProcessBuilder pb = new ProcessBuilder("ssh pi@raspi2.local v4l2-ctl -c brightness=" + String.valueOf(brightness));
+		ProcessBuilder pb = new ProcessBuilder("ssh", "pi@raspi2.local","v4l2-ctl","-c","brightness=" + String.valueOf(brightness));
 
 		try {
 			// launch the GRIP process and then get it's PID
@@ -105,7 +105,7 @@ public class TargetCam extends Subsystem
 	 */
 	public void setSaturation(int saturation)
 	{
-		ProcessBuilder pb = new ProcessBuilder("ssh pi@raspi2.local v4l2-ctl -c saturation=" + String.valueOf(saturation));
+		ProcessBuilder pb = new ProcessBuilder("ssh", "pi@raspi2.local","v4l2-ctl","-c","saturation=" + String.valueOf(saturation));
 
 		try {
 			// launch the GRIP process and then get it's PID
@@ -143,7 +143,7 @@ public class TargetCam extends Subsystem
 	 */
 	public static void startVision()
 	{
-		ProcessBuilder pb = new ProcessBuilder("ssh pi@raspi2.local /home/pi/vision/start_vision.sh");
+		ProcessBuilder pb = new ProcessBuilder("ssh","pi@raspi2.local","/home/pi/vision/start_vision.sh");
 
 		try {
 			// launch the GRIP process and then get it's PID
@@ -160,7 +160,7 @@ public class TargetCam extends Subsystem
 	 */
 	public static void stopVision()
 	{
-		ProcessBuilder pb = new ProcessBuilder("ssh pi@raspi2.local /home/pi/vision/stop_vision.sh");
+		ProcessBuilder pb = new ProcessBuilder("ssh","pi@raspi2.local","/home/pi/vision/stop_vision.sh");
 
 		try {
 			// launch the GRIP process and then get it's PID
