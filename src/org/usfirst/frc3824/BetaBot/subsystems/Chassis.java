@@ -14,10 +14,8 @@ import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
 import org.usfirst.frc3824.BetaBot.utilities.Lidar;
 import org.usfirst.frc3824.BetaBot.Constants;
-import org.usfirst.frc3824.BetaBot.Robot;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -104,13 +102,19 @@ public class Chassis extends Subsystem
 	}
 
 	/**
-	 * 
+	 * Method to configure the gyro based turn/drive straight PID controller
 	 */
-	public void configurePIDs(double P, double I, double D, double desiredHeading, double power)
+	public void configurePIDs(double P, double I, double D, double desiredHeading, double tolerance, double power)
 	{
+		// Set the PID gains
 		angleGyroController.setPID(P, I, D);
+		
+		angleGyroController.setAbsoluteTolerance(tolerance);
+
+		// Reset the gyro
 		angleGyroController.reset();
 		
+		// Set the PID desired heading
 		angleGyroController.setSetpoint(desiredHeading);
 		
 		// update the drive power
@@ -124,11 +128,45 @@ public class Chassis extends Subsystem
 	}
 	
 	/**
-	 * Method to control the drive by providing parameters
+	 * Method to set the PID heading
 	 */
-	public void driveWithArcadeParameters(double drive, double turn)
+	public void setPID_Heading(double desiredHeading)
 	{
-		wCDrive4.arcadeDrive(drive, turn);
+		// Set the PID desired heading
+		angleGyroController.setSetpoint(desiredHeading);
+	}
+	
+	/**
+	 *  Method to get the PID target value (heading)
+	 */
+	public double getHeadingSetpoint()
+	{
+		return angleGyroController.getSetpoint();
+	}
+	
+	/**
+	 * Method to get the PID target value (heading)
+	 */
+	public double getPID_Heading()
+	{
+		return gyro.pidGet();
+	}
+	
+	/**
+	 * Method to get the PID error
+	 */
+	public double getPID_Error()
+	{
+		return angleGyroController.getError();
+	}
+	
+	/**
+	 * Method to disable the angle PId controller
+	 */
+	public void disablePIDs()
+	{
+		// disable the PID
+		angleGyroController.disable();
 	}
 
 	/**
@@ -151,33 +189,6 @@ public class Chassis extends Subsystem
 		// Control the gear shift piston
 		transmission.set(gearHigh);
 	}
-
-	/**
-	 * Method to return a reference to the Robot Drive
-	 */
-	public RobotDrive getRobotDrive()
-	{
-		// Return a reference to the Robot Drive
-		return(wCDrive4);
-	}
-	
-	/**
-	 * Method to return a reference to right encoder
-	 */
-	public Encoder getEncoderRight()
-	{
-		// Return a reference to the encoder
-		return (encoderRight);
-	}
-	
-	/**
-	 * Method to return a reference to left encoder
-	 */
-	public Encoder getEncoderLeft()
-	{
-		// Return a reference to the encoder
-		return (encoderLeft);
-	}
 	
 	/**
 	 * Method to get average encoder distance
@@ -197,15 +208,6 @@ public class Chassis extends Subsystem
 		encoderRight.reset();
 	}
 	
-	/**
-	 * Method to return a reference to the chassis gyro
-	 */
-	public AnalogGyro getGyro()
-	{
-		// Return a reference to the gryo
-		return (gyro);
-	}
-
 	/**
 	 * Method to return the present gyro angle
 	 */
@@ -251,14 +253,6 @@ public class Chassis extends Subsystem
 	public void setMagnitude(double magnitude)
 	{
 		m_magnitude = magnitude;
-	}
-
-	/**
-	 * Method to return a reference to the PID controller
-	 */
-	public PIDController getAngleGyroController()
-	{
-		return (angleGyroController);
 	}
 
 	/**

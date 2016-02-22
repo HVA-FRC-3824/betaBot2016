@@ -47,9 +47,9 @@ public class ChassisDriveStraightDistance extends Command
 	{
 		// Set the PID up for driving straight
 		Robot.chassis.configurePIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
-		                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
-		                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
-		                                Robot.chassis.getCurrentHeading(), m_DrivePower);
+		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+		                            Robot.chassis.getCurrentHeading(), 0.0, m_DrivePower);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -70,8 +70,8 @@ public class ChassisDriveStraightDistance extends Command
 	protected void end()
 	{
 		// disable the PID and stop the robot
-		Robot.chassis.getAngleGyroController().disable();
-		Robot.chassis.getRobotDrive().arcadeDrive(0, 0);
+		Robot.chassis.disablePIDs();
+		Robot.chassis.stop();
 	}
 
 	// Called when another command which requires one or more of the same

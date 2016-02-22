@@ -69,11 +69,22 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Autonomous parameters
-	public static int	TURN_RIGHT                             = 0;
-	public static int   TURN_NONE                              = 1;
-	public static int   TURN_LEFT                              = 2;
-	public static int   LOW_GOAL                               = 0;
-	public static int   HIGH_GOAL                              = 1;
+	public static int TURN_RIGHT                               = 0;
+	public static int TURN_NONE                                = 1;
+	public static int TURN_LEFT                                = 2;
+	
+	public static int NO_GOAL                                  = 0;
+	public static int LOW_GOAL                                 = 1;
+	public static int HIGH_GOAL                                = 2;
+
+	// ***************************************************************************************
+	// Chassis turn constants
+	
+	public static double DRIVETRAIN_TURN_ANGLE_P               = 0.1;
+	public static double DRIVETRAIN_TURN_ANGLE_I               = 0.0;
+	public static double DRIVETRAIN_TURN_ANGLE_D               = 0.0;
+	
+	public static double TURN_THRESHOLD                        = 3.0;
 
 	// ***************************************************************************************
 	// Image turn constants
@@ -91,12 +102,6 @@ public class Constants
 	public static int    TARGET_CENTER                         = 1;
 	public static int    TARGET_RIGHT                          = 2;
 
-	public static double DRIVETRAIN_TURN_ANGLE_P               = 0.1;
-	public static double DRIVETRAIN_TURN_ANGLE_I               = 0.0;
-	public static double DRIVETRAIN_TURN_ANGLE_D               = 0.0;
-	
-	public static double TURN_THRESHOLD                        = 3.0;
-		
 	// ***************************************************************************************
 	// Boulder Intake constants
 	public static double BOULDER_INTAKE_P                      = 1.0;

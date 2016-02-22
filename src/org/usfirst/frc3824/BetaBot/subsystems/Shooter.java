@@ -11,7 +11,6 @@
 package org.usfirst.frc3824.BetaBot.subsystems;
 
 import org.usfirst.frc3824.BetaBot.RobotMap;
-import org.usfirst.frc3824.BetaBot.commands.*;
 import org.usfirst.frc3824.BetaBot.Constants;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -20,7 +19,6 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -175,7 +173,7 @@ public class Shooter extends Subsystem
 	}
 
 	/**
-	 * 
+	 * Method to get teh shooter elecation angel
 	 */
 	public double GetShooterElevatorAngle()
 	{
@@ -210,5 +208,4 @@ public class Shooter extends Subsystem
 	{
 		return (m_PresentWheelSpeed);
 	}
-
 }
