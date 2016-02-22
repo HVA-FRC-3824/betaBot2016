@@ -114,8 +114,7 @@ public class Robot extends IterativeRobot
 		defenseChooser.addDefault("4) Portcullis", new AutonomousDoNothing());
 		defenseChooser.addDefault("5) Drawbridge", new AutonomousDoNothing());
 		defenseChooser.addDefault("6) Sally Port", new AutonomousDoNothing());
-		defenseChooser.addDefault("7) Low Bar", new AutonomousLowBarShootBoulder());
-		defenseChooser.addDefault("8) Turn To Image Target", new ChassisTurnToImageTarget());
+		defenseChooser.addDefault("7) Turn To Image Target", new ChassisTurnToImageTarget());
 		SmartDashboard.putData("Defense to cross", defenseChooser);
 		
 		// set up the chooser for the starting location and high goal vs low goal shot
