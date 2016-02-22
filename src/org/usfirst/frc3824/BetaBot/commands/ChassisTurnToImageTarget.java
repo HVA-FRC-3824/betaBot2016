@@ -33,9 +33,9 @@ public class ChassisTurnToImageTarget extends Command
     public static final int kTargetCenter = 1;
     public static final int kTargetRight  = 2;
     
-    private static final int STATE_1     = 0;
-    private static final int STATE_2     = 1;
-    private static final int STATE_FINAL = 2;
+    private static final int STATE_1     = 1;
+    private static final int STATE_2     = 2;
+    private static final int STATE_FINAL = 3;
     
     private int   m_state;
     private Timer m_Timer;  
@@ -61,12 +61,20 @@ public class ChassisTurnToImageTarget extends Command
 		double heading      = Robot.chassis.getCurrentHeading();
 		double targetOffset = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
 		
-		// Set the PID up for driving straight
-		Robot.chassis.configurePIDs(Preferences.getInstance().getDouble("ImageTurn_P", Constants.DRIVETRAIN_DRIVE_STRAIGHT_P), 
-									Preferences.getInstance().getDouble("ImageTurn_I", Constants.DRIVETRAIN_DRIVE_STRAIGHT_I), 
-									Preferences.getInstance().getDouble("ImageTurn_D", Constants.DRIVETRAIN_DRIVE_STRAIGHT_D), 
-									heading + targetOffset, 0.0, 0.0);	
+		System.out.println("Chassis turn to image initialize");
+		
+//		// Set the PID up for driving straight
+//		Robot.chassis.configurePIDs(Preferences.getInstance().getDouble("ImageTurn_P", Constants.DRIVETRAIN_DRIVE_STRAIGHT_P), 
+//									Preferences.getInstance().getDouble("ImageTurn_I", Constants.DRIVETRAIN_DRIVE_STRAIGHT_I), 
+//									Preferences.getInstance().getDouble("ImageTurn_D", Constants.DRIVETRAIN_DRIVE_STRAIGHT_D), 
+//									heading + targetOffset, 0.0, 0.0);	
 
+		// Set the PID up for driving straight
+		Robot.chassis.configurePIDs(Constants.IMAGE_TURN_P, 
+									Constants.IMAGE_TURN_I, 
+									Constants.IMAGE_TURN_D, 
+									heading + targetOffset, 0.0, 0.0);	
+		
 		SmartDashboard.putNumber("ImageTurn Angle SetPoint", Robot.chassis.getHeadingSetpoint());
 		SmartDashboard.putNumber("ImageTurn Target Offset", targetOffset);
 
@@ -89,9 +97,6 @@ public class ChassisTurnToImageTarget extends Command
 	{
 		double offsetAngle = 0;
 		double error       = Math.abs(Robot.chassis.getPID_Error());
-		
-		// Determine the image offset angle
-		offsetAngle = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
 
 		// The first state uses a large acceptance angle
 		if ((m_state == STATE_1) && (error < 7.0))
@@ -99,32 +104,39 @@ public class ChassisTurnToImageTarget extends Command
 			// Ensure on target error holds for the specified time
 			if (m_Timer.get() > 1.0)
 			{
-				// Stop is error is less than 2.5
-				if (error < 2.5)
-				{
-					// Complete so set the state to three
-					m_state = STATE_FINAL;
-				}
-				else
-				{
+				System.out.println("Completed State 1");
+				
+//				// Stop is error is less than 1.5
+//				if (error < 1.5)
+//				{
+//					// Complete so set the state to three
+//					m_state = STATE_FINAL;
+//				}
+//				else
+//				{
 					// Go to the next state
 					m_state = STATE_2;
 					
+					// Determine the image offset angle
+					offsetAngle = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
+
 					// Update the heading PID with the new gyro heading and target offset angle
 					Robot.chassis.setPID_Heading(Robot.chassis.getCurrentHeading() + offsetAngle);
 					
 					// Reset the timer to hold the next error tolerance
 					m_Timer.reset();
-				}
+//				}
 			}
 		}
 		
 		// State 2 is for an error less than 2.5 degrees
-		else if ((m_state == STATE_2) && (error < 2.5))
+		else if ((m_state == STATE_2) && (error < 1.5))
 		{
 			// Ensure on target error holds for the specified time
 			if (m_Timer.get() > 1.0)
 			{
+				System.out.println("Completed State 2");
+				
 				// Complete so set the state to three
 				m_state = STATE_FINAL;
 			}
@@ -154,6 +166,8 @@ public class ChassisTurnToImageTarget extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
+		System.out.println("Chassis turn to image end");
+		
 		// disable the PID and stop the robot
 		Robot.chassis.disablePIDs();
 		Robot.chassis.stop();

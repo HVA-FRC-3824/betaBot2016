@@ -46,6 +46,8 @@ public class ShooterPositionControl extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
+		System.out.println("Shooter Position initialize");
+		
 		// Get the present shooter elevator set point and wheel speed
 		m_ActualShooterSetPoint = Robot.shooter.GetShooterAngleSetPoint();
 		double wheelSpeed = 0.0;
@@ -122,7 +124,8 @@ public class ShooterPositionControl extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-
+		System.out.println("Shooter Position end");
+		
 	}
 
 	// Called when another command which requires one or more of the same

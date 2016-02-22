@@ -62,12 +62,6 @@ public class Constants
 	}
 
 	// ***************************************************************************************
-	// Drive train turn constants
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_P           = 0.1;
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_I           = 0.0;
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_D           = 0.0;
-	
-	// ***************************************************************************************
 	// Autonomous parameters
 	public static int TURN_RIGHT                               = 0;
 	public static int TURN_NONE                                = 1;
@@ -78,19 +72,25 @@ public class Constants
 	public static int HIGH_GOAL                                = 2;
 
 	// ***************************************************************************************
+	// Drive train turn constants
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_P           = 0.1;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_I           = 0.0;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_D           = 0.0;
+
+	// ***************************************************************************************
 	// Chassis turn constants
 	
-	public static double DRIVETRAIN_TURN_ANGLE_P               = 0.1;
-	public static double DRIVETRAIN_TURN_ANGLE_I               = 0.0;
-	public static double DRIVETRAIN_TURN_ANGLE_D               = 0.0;
+	public static double TURN_ANGLE_P                          = 0.05;
+	public static double TURN_ANGLE_I                          = 0.0;
+	public static double TURN_ANGLE_D                          = 0.0;
 	
 	public static double TURN_THRESHOLD                        = 3.0;
 
 	// ***************************************************************************************
 	// Image turn constants
-	public static double IMAGE_TURN_P                          = 0.2;	// Preference name: ImageTurn_P
-	public static double IMAGE_TURN_I                          = 0.0;	// Preference name: ImageTurn_I
-	public static double IMAGE_TURN_D                          = 0.0;	// Preference name: ImageTurn_D
+	public static double IMAGE_TURN_P                          = 0.08;	// Preference name: ImageTurn_P
+	public static double IMAGE_TURN_I                          = 0.008;	// Preference name: ImageTurn_I
+	public static double IMAGE_TURN_D                          = 0.01;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
 	
 	public static int    IMAGE_ON_TARGET_X_POSITION            = 160;   // X location of the "onTarget" position

@@ -131,7 +131,9 @@ public class Robot extends IterativeRobot
 		RobotMap.chassisCompressor.setClosedLoopControl(true);
 		
 		// Add a USB camera
-		CameraServer.getInstance().startAutomaticCapture("cam0");
+		CameraServer.getInstance().startAutomaticCapture("cam1");
+		
+		SmartDashboard.putNumber("Calculated Gryo Center", RobotMap.chassisGyro.getCenter());
 	}
 
 	/**
@@ -146,6 +148,9 @@ public class Robot extends IterativeRobot
 	public void disabledPeriodic()
 	{
 		Scheduler.getInstance().run();
+
+		// Add current gyro angle to smart dashboard
+		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
 
 		Robot.targets.updateSmartDashboard();
 	}
@@ -198,6 +203,9 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
+		
+		// Add current gyro angle to smart dashboard
+		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
 		
 		// Show the Lidar range on the SmartDashboard
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());

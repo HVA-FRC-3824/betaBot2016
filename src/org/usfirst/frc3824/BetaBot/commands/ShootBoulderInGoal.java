@@ -48,6 +48,8 @@ public class ShootBoulderInGoal extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
+		System.out.println("ShootBoudler in Goal initialize");
+		
 		Robot.shooter.setShooterElevationEnabled(true);
 		Robot.shooter.setShooterElevationSetpoint(m_ShooterAngle);
 		Robot.shooter.ShooterWheelControl(m_ShooterWheelSpeed);
@@ -78,6 +80,8 @@ public class ShootBoulderInGoal extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
+		System.out.println("ShootBoudler in Goal end");
+		
 		Robot.shooter.ShooterShootBallControl(false);
 		m_Timer.stop();
 	}
