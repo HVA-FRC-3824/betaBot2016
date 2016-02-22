@@ -79,6 +79,7 @@ public class ShootBoulderInGoal extends Command
 	protected void end()
 	{
 		Robot.shooter.ShooterShootBallControl(false);
+		Robot.shooter.ShooterWheelControl(0);
 		m_Timer.stop();
 	}
 

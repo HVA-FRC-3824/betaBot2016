@@ -56,12 +56,14 @@ public class Robot extends IterativeRobot
 		public double m_shootAngle;
 		public double m_lidarDistance;
 		public double m_driveStraightDistance;
+		public int m_whichTarget;
 		
-		AutoParameters(double turnAngle, double shootAngle, double lidarDistance, double driveStraightDistance)
+		AutoParameters(double turnAngle, double shootAngle, double lidarDistance, double driveStraightDistance, int whichTarget)
 		{
 			m_turnAngle = turnAngle;
 			m_shootAngle = shootAngle;
 			m_lidarDistance = lidarDistance;
+			m_whichTarget = whichTarget;
 		}
 		
 		public double getTurnAngle()
@@ -77,6 +79,11 @@ public class Robot extends IterativeRobot
 		public double getLIDARDistance()
 		{
 			return m_lidarDistance;
+		}
+		
+		public int getTarget()
+		{
+			return m_whichTarget;
 		}
 		
 		public double getDriveStraightDistance()
@@ -122,7 +129,7 @@ public class Robot extends IterativeRobot
 		defenseChooser = new SendableChooser();
 		defenseChooser.addDefault("1) Do Nothing", new AutonomousDoNothing());
 		defenseChooser.addObject("1) Low Bar", new AutonomousLowBar());
-		defenseChooser.addObject("2) Drive Over Defense", new AutonomousDoNothing());
+		defenseChooser.addObject("2) Drive Over Defense", new AutonomousShootBoulder());
 		defenseChooser.addObject("3) Cheval de Frise", new AutonomousDoNothing());
 		defenseChooser.addObject("4) Portcullis", new AutonomousDoNothing());
 		defenseChooser.addObject("5) Drawbridge", new AutonomousDoNothing());
@@ -133,15 +140,18 @@ public class Robot extends IterativeRobot
 		// - this tells us what direction we need to turn to get the goal in sight and
 		//   whether we're shooting high or low.
 		startingLocationChooser = new SendableChooser();
-		startingLocationChooser.addDefault("No Shot", new AutoParameters(Constants.TURN_RIGHT, Constants.NO_GOAL));
-		startingLocationChooser.addDefault("1 Low", new AutoParameters(Constants.TURN_RIGHT1, Constants.LOW_GOAL, Constants.LIDAR_DISTANCE1, Constants.DRIVE_STRAIGHT_DISTANCE1));
-		startingLocationChooser.addObject("1 High", new AutoParameters(Constants.TURN_RIGHT1, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE1, Constants.DRIVE_STRAIGHT_DISTANCE1));
-		startingLocationChooser.addDefault("2 Low", new AutoParameters(Constants.TURN_RIGHT2, Constants.LOW_GOAL, Constants.LIDAR_DISTANCE2, Constants.DRIVE_STRAIGHT_DISTANCE2));
-		startingLocationChooser.addObject("2 High", new AutoParameters(Constants.TURN_RIGHT2, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE2, Constants.DRIVE_STRAIGHT_DISTANCE2));
-		startingLocationChooser.addObject("3 (High)", new AutoParameters(Constants.TURN_NONE, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE3, Constants.DRIVE_STRAIGHT_DISTANCE3));
-		startingLocationChooser.addObject("4 (High)", new AutoParameters(Constants.TURN_NONE, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE4, Constants.DRIVE_STRAIGHT_DISTANCE4));
-		startingLocationChooser.addObject("5 Low", new AutoParameters(Constants.TURN_LEFT5, Constants.LOW_GOAL, Constants.LIDAR_DISTANCE5, Constants.DRIVE_STRAIGHT_DISTANCE5));
-		startingLocationChooser.addObject("5 High", new AutoParameters(Constants.TURN_LEFT5, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE5, Constants.DRIVE_STRAIGHT_DISTANCE5));
+		
+		startingLocationChooser.addDefault("1 No Shot", new AutoParameters(Constants.TURN_RIGHT1, Constants.NO_GOAL, Constants.LIDAR_DISTANCE1, Constants.DRIVE_STRAIGHT_DISTANCE1, Constants.TARGET_LEFT));
+		startingLocationChooser.addDefault("1 Low", new AutoParameters(Constants.TURN_RIGHT1, Constants.LOW_GOAL, Constants.LIDAR_DISTANCE1, Constants.DRIVE_STRAIGHT_DISTANCE1, Constants.TARGET_LEFT));
+		startingLocationChooser.addObject("1 High", new AutoParameters(Constants.TURN_RIGHT1, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE1, Constants.DRIVE_STRAIGHT_DISTANCE1, Constants.TARGET_LEFT));
+		startingLocationChooser.addDefault("2 No Shot", new AutoParameters(Constants.TURN_RIGHT2, Constants.NO_GOAL, Constants.LIDAR_DISTANCE2, Constants.DRIVE_STRAIGHT_DISTANCE2, Constants.TARGET_LEFT));
+		startingLocationChooser.addDefault("2 Low", new AutoParameters(Constants.TURN_RIGHT2, Constants.LOW_GOAL, Constants.LIDAR_DISTANCE2, Constants.DRIVE_STRAIGHT_DISTANCE2, Constants.TARGET_LEFT));
+		startingLocationChooser.addObject("2 High", new AutoParameters(Constants.TURN_RIGHT2, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE2, Constants.DRIVE_STRAIGHT_DISTANCE2, Constants.TARGET_LEFT));
+		startingLocationChooser.addObject("3 (High)", new AutoParameters(Constants.TURN_NONE, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE3, Constants.DRIVE_STRAIGHT_DISTANCE3, Constants.TARGET_CENTER));
+		startingLocationChooser.addObject("4 (High)", new AutoParameters(Constants.TURN_NONE, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE4, Constants.DRIVE_STRAIGHT_DISTANCE4, Constants.TARGET_CENTER));
+		startingLocationChooser.addDefault("5 No Shot", new AutoParameters(Constants.TURN_LEFT5, Constants.NO_GOAL, Constants.LIDAR_DISTANCE5, Constants.DRIVE_STRAIGHT_DISTANCE5, Constants.TARGET_RIGHT));
+		startingLocationChooser.addObject("5 Low", new AutoParameters(Constants.TURN_LEFT5, Constants.LOW_GOAL, Constants.LIDAR_DISTANCE5, Constants.DRIVE_STRAIGHT_DISTANCE5, Constants.TARGET_RIGHT));
+		startingLocationChooser.addObject("5 High", new AutoParameters(Constants.TURN_LEFT5, Constants.HIGH_GOAL, Constants.LIDAR_DISTANCE5, Constants.DRIVE_STRAIGHT_DISTANCE5, Constants.TARGET_RIGHT));
 		SmartDashboard.putData("Starting Location and Shot", startingLocationChooser );
 
 		RobotMap.chassisCompressor.setClosedLoopControl(true);
