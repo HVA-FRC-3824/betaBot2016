@@ -11,6 +11,9 @@
 
 package org.usfirst.frc3824.BetaBot.subsystems;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
@@ -71,13 +74,13 @@ public class Targets extends Subsystem {
 	 * exactly in the center of the image, then the left edge would be -1 and 
 	 * the right edge would be 1.
 	 ***/
-	public double getTargetOffsetFromCenterNormalized()
+	public double getTargetOffsetFromCenterNormalized(int whichTarget)
 	// if the image is positioned to the right, the robot is too far left.
 	// so this return value is flipped 
 	{
 		// get the center of the largest target in view.  We are assuming that the
 		// largest target is the one we are facing most directly
-		m_targetCenterX = getCenterXOfLargestTarget();
+		m_targetCenterX = getCenterXOfWhichTarget(whichTarget);
 		
 		// calculate offset from "OnTarget" in pixels
 		m_positionFromOnTargetX = m_targetCenterX - m_onTargetX;
@@ -95,9 +98,9 @@ public class Targets extends Subsystem {
 	 * a linear approximation, which is good enough for our purposes.  To use
 	 * the trig function, we would have to know our distance as well
 	 ***/
-	public double getTargetOffsetFromCenterAngle()
+	public double getTargetOffsetFromCenterAngle(int whichTarget)
 	{
-		return getTargetOffsetFromCenterNormalized() * (Constants.CAM_FOV / 2.0);
+		return getTargetOffsetFromCenterNormalized(whichTarget) * (Constants.CAM_FOV / 2.0);
 	}
 	
 	/* ***********************************************************************
@@ -154,7 +157,66 @@ public class Targets extends Subsystem {
 		
 		return m_targetCenterX;
 	}
-
-
+	
+	private double getCenterXOfWhichTarget(int whichTarget)
+	{
+		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
+		double[] areas = m_contoursReport.getNumberArray("area", m_defaultValue); 
+		
+		if(areas.length == 1)
+		{
+			m_targetCenterX = centerXs[0];
+		}
+		else if (areas.length == 2)
+		{
+			// ----- TWO TARGETS DETECTED -------
+			switch(whichTarget)
+			{
+			case 0:	// LEFT - take the left target
+				m_targetCenterX = Math.min(centerXs[0], centerXs[1]);
+				break;
+			
+			case 1: // CENTER - take the LARGEST target
+				if(areas[0] > areas[1])
+				{
+					m_targetCenterX = centerXs[0];
+				}
+				else
+				{
+					m_targetCenterX = centerXs[1];
+				}
+				break;
+				
+			case 2: // RIGHT - take the right target
+				m_targetCenterX = Math.max(centerXs[0], centerXs[1]);
+				break;
+			}
+		}
+		else if (areas.length == 3)
+		{
+			// ----- THREE TARGETS DETECTED -------
+			switch(whichTarget)
+			{
+			case 0:	// LEFT - take the left target
+				m_targetCenterX = Math.min(Math.min(centerXs[0], centerXs[1]), centerXs[2]);
+				break;
+			
+			case 1: // CENTER - take the LARGEST target
+				m_targetCenterX = getCenterXOfLargestTarget();
+				break;
+				
+			case 2: // RIGHT - take the right target
+				m_targetCenterX = Math.max(Math.max(centerXs[0], centerXs[1]), centerXs[2]);
+				break;
+			}			
+		}
+		else
+		{
+			m_targetCenterX = getCenterXOfLargestTarget();
+		}
+		
+		return m_targetCenterX;
+		
+	}
 }
 

@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 
-		Robot.targets.getTargetOffsetFromCenterNormalized();
+		Robot.targets.getTargetOffsetFromCenterNormalized(Constants.TARGET_CENTER);
 		Robot.targets.updateSmartDashboard();
 		
 		SmartDashboard.putNumber("getX", Robot.oi.getControllerJoystick().getX());
@@ -183,7 +183,7 @@ public class Robot extends IterativeRobot
 		
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
 
-		Robot.targets.getTargetOffsetFromCenterNormalized();
+		Robot.targets.getTargetOffsetFromCenterNormalized(Constants.TARGET_CENTER);
 		Robot.targets.updateSmartDashboard();
 }
 
@@ -209,7 +209,7 @@ public class Robot extends IterativeRobot
 		
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
 
-		Robot.targets.getTargetOffsetFromCenterNormalized();
+		Robot.targets.getTargetOffsetFromCenterNormalized(Constants.TARGET_CENTER);
 		Robot.targets.updateSmartDashboard();
 	}
 

@@ -86,6 +86,10 @@ public class Constants
 	public static int    IMAGE_WIDTH                           = 320;	// default image width
 	public static int    IMAGE_HEIGHT                          = 240;   // default image height
 	public static double CAM_FOV                               = 48.0; 
+	
+	public static int    TARGET_LEFT                           = 0;
+	public static int    TARGET_CENTER                         = 1;
+	public static int    TARGET_RIGHT                          = 2;
 
 	public static double DRIVETRAIN_TURN_ANGLE_P               = 0.1;
 	public static double DRIVETRAIN_TURN_ANGLE_I               = 0.0;
