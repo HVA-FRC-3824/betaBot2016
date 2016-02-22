@@ -13,7 +13,6 @@ package org.usfirst.frc3824.BetaBot.commands;
 import org.usfirst.frc3824.BetaBot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -42,7 +41,6 @@ public class ShiftGear extends Command
 	protected void initialize()
 	{
 		Robot.chassis.shiftGear(m_highGear);
-		SmartDashboard.putBoolean("Zoom Zoom", m_highGear);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

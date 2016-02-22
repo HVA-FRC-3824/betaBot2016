@@ -61,7 +61,8 @@ public class ShootBoulderInGoal extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		if (!isShooterPositionOut && (m_Timer.get() >= 0.5))
+		// Allow time for shooter wheels to come to speed
+		if ((isShooterPositionOut == false )&& (m_Timer.get() >= 1.0))
 		{
 			Robot.shooter.ShooterShootBallControl(true);
 			isShooterPositionOut = true;
@@ -71,7 +72,7 @@ public class ShootBoulderInGoal extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{	
-		return isShooterPositionOut && (m_Timer.get() >= 0.5 + 0.2);
+		return isShooterPositionOut && (m_Timer.get() >= 1.5);
 	}
 
 	// Called once after isFinished returns true

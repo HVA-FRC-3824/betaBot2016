@@ -13,7 +13,6 @@ package org.usfirst.frc3824.BetaBot.commands;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
@@ -54,21 +53,14 @@ public class ChassisTurnAngle extends Command
 	{
 		// Set the target turn angle based on the present gyro value and the
 		// desired turn degrees
-		double goToGyro = Robot.chassis.getGyro().getAngle() + m_TurnDegrees;
+		double desiredHeading = Robot.chassis.getCurrentHeading() + m_TurnDegrees;
 
-		// Set angle for turning
-		Robot.chassis.getAngleGyroController().setPID(	
-		Preferences.getInstance().getDouble("Turn P", Constants.DRIVETRAIN_TURN_ANGLE_P), 
-		Preferences.getInstance().getDouble("Turn I", Constants.DRIVETRAIN_TURN_ANGLE_I),
-		Preferences.getInstance().getDouble("Turn D", Constants.DRIVETRAIN_TURN_ANGLE_D));
-
-		Robot.chassis.setMagnitude(m_DrivePower);
-
-		Robot.chassis.getAngleGyroController().reset();
-		Robot.chassis.getAngleGyroController().setAbsoluteTolerance(Constants.TURN_THRESHOLD);
-		Robot.chassis.getAngleGyroController().setSetpoint(goToGyro);
-		Robot.chassis.getAngleGyroController().enable();
-
+		// Set the PID up for driving straight
+		Robot.chassis.configurePIDs(Preferences.getInstance().getDouble("Turn P", Constants.DRIVETRAIN_TURN_ANGLE_P), 
+		                    		Preferences.getInstance().getDouble("Turn I", Constants.DRIVETRAIN_TURN_ANGLE_I),
+		                    		Preferences.getInstance().getDouble("Turn D", Constants.DRIVETRAIN_TURN_ANGLE_D), 
+	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
+		
 		m_Timer.reset();
 		m_Timer.start();
 	}
@@ -76,19 +68,15 @@ public class ChassisTurnAngle extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		SmartDashboard.putNumber("Angle", Robot.chassis.getGyroValue());
-		SmartDashboard.putNumber("Error", Robot.chassis.getAngleGyroController().getError());
-		SmartDashboard.putNumber("Setpoint", Robot.chassis.getAngleGyroController().getSetpoint());
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
-		SmartDashboard.putNumber("Timer", m_Timer.get());
-		
 		// return PIDcontroller.OnTarget();
-		if (Math.abs(Robot.chassis.getAngleGyroController().getSetpoint() - 
-		             Robot.chassis.getGyro().pidGet()) < Constants.TURN_THRESHOLD)
+		if (Math.abs(Robot.chassis.getHeadingSetpoint() - 
+		             Robot.chassis.getPID_Heading()) < Constants.TURN_THRESHOLD)
 		{
 			// Ensure hold position for time out time
 			if (m_Timer.get() > 0.1)
@@ -110,8 +98,8 @@ public class ChassisTurnAngle extends Command
 	protected void end()
 	{
 		// disable the PID controller
-		Robot.chassis.getAngleGyroController().disable();
-		Robot.chassis.getRobotDrive().arcadeDrive(0, 0);
+		Robot.chassis.disablePIDs();
+		Robot.chassis.stop();
 		m_Timer.stop();
 	}
 

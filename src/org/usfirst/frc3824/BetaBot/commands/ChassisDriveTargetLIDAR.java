@@ -49,20 +49,15 @@ public class ChassisDriveTargetLIDAR extends Command
 	//-------------------------------------------------------------------------
 	protected void initialize()
 	{
-		// Set the PID up for driving straight
-		Robot.chassis.getAngleGyroController().setPID(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
-		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
-		                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_D);
-
-		Robot.chassis.getAngleGyroController().reset();
-		Robot.chassis.getAngleGyroController().setSetpoint(Robot.chassis.getGyroValue());
-
-		// update the PID direction and power
+		// Determine the PID direction and power
 		boolean driveForward = (Robot.chassis.getLidarDistanceCentimeters() - m_TargetDistance > 0.0);
-		Robot.chassis.setMagnitude( 0.8 * (driveForward?1.0:-1.0) );
 
-		// enable the PID
-		Robot.chassis.getAngleGyroController().enable();
+		// Set the PID up for driving straight
+		Robot.chassis.configurePIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
+		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+		                            Robot.chassis.getCurrentHeading(), 0.0, 
+		                            0.8 * (driveForward?1.0:-1.0));
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -71,7 +66,8 @@ public class ChassisDriveTargetLIDAR extends Command
 		// make sure we're driving in the correct direction
 		double distanceDelta = (Robot.chassis.getLidarDistanceCentimeters() - m_TargetDistance);
 		boolean driveForward = (distanceDelta > 0.0);
-		if(distanceDelta < 50.0)
+		
+		if (distanceDelta < 50.0)
 		{
 			Robot.chassis.setMagnitude( 0.4 * (driveForward?1.0:-1.0) );
 		}
