@@ -62,12 +62,6 @@ public class Constants
 	}
 
 	// ***************************************************************************************
-	// Drive train turn constants
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_P           = 0.1;
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_I           = 0.0;
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_D           = 0.0;
-	
-	// ***************************************************************************************
 	// Autonomous parameters
 	// Using degrees for turn and degrees for shooter angle
 	public static double TURN_RIGHT1                            = 50.0;
@@ -90,22 +84,28 @@ public class Constants
 	public static double DRIVE_STRAIGHT_DISTANCE5				  = 40.0;
 
 	// ***************************************************************************************
+	// Drive train turn constants
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_P           = 0.1;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_I           = 0.0;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_D           = 0.0;
+
+	// ***************************************************************************************
 	// Chassis turn constants
 	
-	public static double DRIVETRAIN_TURN_ANGLE_P               = 0.1;
-	public static double DRIVETRAIN_TURN_ANGLE_I               = 0.0;
-	public static double DRIVETRAIN_TURN_ANGLE_D               = 0.0;
+	public static double TURN_ANGLE_P                          = 0.05;
+	public static double TURN_ANGLE_I                          = 0.0;
+	public static double TURN_ANGLE_D                          = 0.0;
 	
 	public static double TURN_THRESHOLD                        = 3.0;
 
 	// ***************************************************************************************
 	// Image turn constants
-	public static double IMAGE_TURN_P                          = 0.2;	// Preference name: ImageTurn_P
-	public static double IMAGE_TURN_I                          = 0.0;	// Preference name: ImageTurn_I
-	public static double IMAGE_TURN_D                          = 0.0;	// Preference name: ImageTurn_D
+	public static double IMAGE_TURN_P                          = 0.07;	// Preference name: ImageTurn_P
+	public static double IMAGE_TURN_I                          = 0.008;	// Preference name: ImageTurn_I
+	public static double IMAGE_TURN_D                          = 0.008;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
 	
-	public static int    IMAGE_ON_TARGET_X_POSITION            = 160;   // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_X_POSITION            = 170;   // X location of the "onTarget" position
 	public static int    IMAGE_WIDTH                           = 320;	// default image width
 	public static int    IMAGE_HEIGHT                          = 240;   // default image height
 	public static double CAM_FOV                               = 48.0; 
