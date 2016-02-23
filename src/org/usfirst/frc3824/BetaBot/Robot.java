@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -50,6 +51,7 @@ public class Robot extends IterativeRobot
 	public static SendableChooser defenseChooser;
 	public static SendableChooser startingLocationChooser;
 	public static AutoParameters autoParameters;
+	public static USBCamera driverCam;
 	
 	public class AutoParameters
 	{
@@ -140,18 +142,23 @@ public class Robot extends IterativeRobot
 		{
 			try
 			{
-				CameraServer.getInstance().startAutomaticCapture("cam" + String.valueOf(camNum));
+				System.out.println("Driver camera: attempting to connect to cam" + String.valueOf(camNum));
+				driverCam = new USBCamera("cam" + String.valueOf(camNum));
 				camConnected = true;
+				System.out.println("Driver camera: successfully connected to cam" + String.valueOf(camNum));
 			}
 			catch(Exception e)
 			{
-				
+				System.out.println("Driver camera: exception: " + e);
 			}
 			
 			if(camConnected == true)
 				break;
 		}
 		
+		if(camConnected == true)
+			CameraServer.getInstance().startAutomaticCapture(driverCam);
+
 		// Do a clean start of the image processing
 		TargetCam.cleanAndStartVision();
 	}
