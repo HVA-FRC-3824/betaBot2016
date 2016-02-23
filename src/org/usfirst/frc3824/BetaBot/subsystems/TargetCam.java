@@ -12,19 +12,9 @@ package org.usfirst.frc3824.BetaBot.subsystems;
 
 import java.io.IOException;
 
-import org.usfirst.frc3824.BetaBot.Constants;
-import org.usfirst.frc3824.BetaBot.Robot;
-import org.usfirst.frc3824.BetaBot.RobotMap;
-import org.usfirst.frc3824.BetaBot.commands.*;
-
-import com.ni.vision.NIVision;
-import java.lang.reflect.Field;
-
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
@@ -75,7 +65,7 @@ public class TargetCam extends Subsystem
 
 		try {
 			// launch the GRIP process and then get it's PID
-			Process process = pb.inheritIO().start();
+			pb.inheritIO().start();
 			System.out.println("Exposure successfully set");
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,7 +82,7 @@ public class TargetCam extends Subsystem
 
 		try {
 			// launch the GRIP process and then get it's PID
-			Process process = pb.inheritIO().start();
+			pb.inheritIO().start();
 			System.out.println("Brightness successfully set");
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,7 +99,7 @@ public class TargetCam extends Subsystem
 
 		try {
 			// launch the GRIP process and then get it's PID
-			Process process = pb.inheritIO().start();
+			pb.inheritIO().start();
 			System.out.println("Saturation successfully set");
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,9 +125,52 @@ public class TargetCam extends Subsystem
 	public static void cleanAndStartVision()
 	{
 		stopVision();
-		Timer.delay(2.0);
+
+		// clear the FrameRate in the network table so we can more easily tell
+		// when the image processing has started
+		NetworkTable frameRateReport = NetworkTable.getTable("GRIP");
+		frameRateReport.putNumber("cameraFrameRate", 0.0);
+		
 		startVision();
 	}
+	
+	/*
+	 * Wait for the raspberry pi to boot and allow a connection
+	 */
+	public static void waitForVisionSystem()
+	{
+		int result;
+		int tryCount = 1;
+		boolean connected = false;
+		ProcessBuilder pb = new ProcessBuilder("ping","raspi2.local","-c","1");
+
+		System.out.println("vvv Waiting to connect to RaspberryPi vvv");
+
+		while(connected == false)
+		{
+			try {
+				System.out.println("\t---> Attempt "+String.valueOf(tryCount));
+				pb.redirectErrorStream(true);
+				Process process = pb.inheritIO().start();
+				result = process.waitFor();	// wait for the ping to return
+				if(result == 0)
+				{
+					System.out.println("^^^ Ping succeeded: result=" + String.valueOf(result)+" ^^^");
+					connected = true;
+				}
+				else
+				{
+					System.out.println("\t---> Ping failed: result=" + String.valueOf(result));
+				}
+					
+	        } catch (Exception e) {
+	            e.printStackTrace();
+				System.out.println("\t---> Ping threw an exception trying to launch");
+	        }
+			tryCount++;
+		}
+	}
+
 	
 	/*
 	 * Start the image processing on the RPi
@@ -145,14 +178,15 @@ public class TargetCam extends Subsystem
 	public static void startVision()
 	{
 		ProcessBuilder pb = new ProcessBuilder("ssh","pi@raspi2.local","/home/pi/vision/start_vision.sh");
-
+		
 		try {
-			// launch the GRIP process and then get it's PID
-			Process process = pb.inheritIO().start();
-			System.out.println("Image processing successfully launched");
-        } catch (IOException e) {
+			// launch the GRIP process - don't wait - it doesn't appear to return, not sure why though
+			pb.redirectErrorStream(true);
+			pb.inheritIO().start();
+			System.out.println("*** Image processing successfully launched ***");				
+        } catch (Exception e) {
             e.printStackTrace();
-			System.out.println("Image processing failed to launch");
+			System.out.println("*** Image processing threw an exception trying to launch ***");
         }
 	}
 		
@@ -161,15 +195,25 @@ public class TargetCam extends Subsystem
 	 */
 	public static void stopVision()
 	{
+		int result;
 		ProcessBuilder pb = new ProcessBuilder("ssh","pi@raspi2.local","/home/pi/vision/stop_vision.sh");
 
 		try {
 			// launch the GRIP process and then get it's PID
+			pb.redirectErrorStream(true);
 			Process process = pb.inheritIO().start();
-			System.out.println("Image processing successfully stopped");
-        } catch (IOException e) {
+			result = process.waitFor();	// wait for the ssh to return, but it might return saying it couldn't connect
+			if(result == 0)
+			{
+				System.out.println("*** Image processing successfully stopped: result=" + String.valueOf(result)+" ***");
+			}
+			else
+			{
+				System.out.println("*** Image processing failed to stop: result=" + String.valueOf(result)+" ***");
+			}
+        } catch (Exception e) {
             e.printStackTrace();
-			System.out.println("Image processing failed to stop");
+			System.out.println("*** Image processing threw an exception trying to stop ***");
         }
 	}
 	

@@ -165,6 +165,7 @@ public class Robot extends IterativeRobot
 			CameraServer.getInstance().startAutomaticCapture(driverCam);
 
 		// Do a clean start of the image processing
+		TargetCam.waitForVisionSystem();
 		TargetCam.cleanAndStartVision();
 	}
 
