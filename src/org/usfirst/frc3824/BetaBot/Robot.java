@@ -138,7 +138,7 @@ public class Robot extends IterativeRobot
 
 		// Add a USB camera for the Driver
 		boolean camConnected = false;
-		for(int camNum = 0; camNum < 2; camNum++)
+		for(int camNum = 0; camNum <= 2; camNum++)
 		{
 			try
 			{
