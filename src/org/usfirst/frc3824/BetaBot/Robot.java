@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot
 
 	public static SendableChooser defenseChooser;
 	public static SendableChooser startingLocationChooser;
-	public static AutoParameters autoParameters;
+	public static SendableChooser shotChooser;
 	public static USBCamera driverCam;
 	
 	public class AutoParameters
@@ -111,27 +111,32 @@ public class Robot extends IterativeRobot
 		// set up the chooser for the defense class 
 		// - this tells us what we need to do to get past the defense
 		defenseChooser = new SendableChooser();
-		defenseChooser.addDefault("1) Do Nothing", new AutonomousDoNothing());
-		defenseChooser.addObject("2) Low Bar", new AutonomousLowBar());
-		defenseChooser.addObject("3) Drive Over Defense", new AutonomousDoNothing());
-		defenseChooser.addObject("4) Cheval de Frise", new AutonomousDoNothing());
-		defenseChooser.addObject("5) Portcullis", new AutonomousDoNothing());
-		defenseChooser.addObject("6) Drawbridge", new AutonomousDoNothing());
-		defenseChooser.addObject("7) Sally Port", new AutonomousDoNothing());
+		defenseChooser.addDefault("1) Do Nothing",     Constants.DEFENSE_DO_NOTHING);
+		defenseChooser.addObject("2) Low Bar",         Constants.DEFENSE_LOW_BAR);
+		defenseChooser.addObject("3) Rough Terrian",   Constants.DEFENSE_ROUGH_TERRIAN);
+		defenseChooser.addObject("4) Ramparts",        Constants.DEFENSE_RAMPARTS);
+		defenseChooser.addObject("5) Rock Wall",       Constants.DEFENSE_ROCK_WALL);
+		defenseChooser.addObject("6) Cheval de Frise", Constants.DEFENSE_CHEVAL_DE_FRISE);
+		defenseChooser.addObject("7) Portcullis",      Constants.DEFENSE_PORTCULLIS);
 		SmartDashboard.putData("Defense to cross", defenseChooser);
 		
-		// set up the chooser for the starting location and high goal vs low goal shot
-		// - this tells us what direction we need to turn to get the goal in sight and
-		//   whether we're shooting high or low.
+		// set up the chooser for the starting location a
 		startingLocationChooser = new SendableChooser();
-		startingLocationChooser.addDefault("No Shot", new AutoParameters(Constants.TURN_RIGHT, Constants.NO_GOAL));
-		startingLocationChooser.addDefault("1/2 Low", new AutoParameters(Constants.TURN_RIGHT, Constants.LOW_GOAL));
-		startingLocationChooser.addObject("1/2 High", new AutoParameters(Constants.TURN_RIGHT, Constants.HIGH_GOAL));
-		startingLocationChooser.addObject("3/4 (High)", new AutoParameters(Constants.TURN_NONE, Constants.HIGH_GOAL));
-		startingLocationChooser.addObject("5 Low", new AutoParameters(Constants.TURN_LEFT, Constants.LOW_GOAL));
-		startingLocationChooser.addObject("5 High", new AutoParameters(Constants.TURN_LEFT, Constants.HIGH_GOAL));
-		SmartDashboard.putData("Starting Location and Shot", startingLocationChooser );
-
+		startingLocationChooser.addDefault("1", 1);
+		startingLocationChooser.addDefault("2", 2);
+		startingLocationChooser.addDefault("3", 3);
+		startingLocationChooser.addDefault("4", 4);
+		startingLocationChooser.addDefault("5", 5);
+		startingLocationChooser.addDefault("6", 6);
+		SmartDashboard.putData("Starting Location", startingLocationChooser );
+		
+		// set up the chooser for the shooting.
+		shotChooser = new SendableChooser();
+		shotChooser.addDefault("No Shot", Constants.NO_GOAL);
+		shotChooser.addDefault("Low", Constants.LOW_GOAL);
+		shotChooser.addDefault("High", Constants.HIGH_GOAL);
+		SmartDashboard.putData("Shot", shotChooser);
+		
 		RobotMap.chassisCompressor.setClosedLoopControl(true);
 		
 		SmartDashboard.putNumber("Calculated Gryo Center", RobotMap.chassisGyro.getCenter());
@@ -184,17 +189,51 @@ public class Robot extends IterativeRobot
 
 	public void autonomousInit()
 	{
+		int startingLocation = 0;
+		int shotChoice = Constants.NO_GOAL;
+		
+		// Determine the starting location
+		if (startingLocationChooser.getSelected() != null)
+			startingLocation = (int) startingLocationChooser.getSelected();
+
+		// Determine the shoot parameter
+		if (shotChooser.getSelected() != null)
+			shotChoice = (int) shotChooser.getSelected();
+			
 		// Determine the autonomous command
 		if (defenseChooser.getSelected() != null)
 		{
+			switch((int) defenseChooser.getSelected())
+			{
+			case Constants.DEFENSE_DO_NOTHING:
+				autonomousCommand = new AutonomousDoNothing();
+				break;
+			case Constants.DEFENSE_LOW_BAR:
+				autonomousCommand = new AutonomousLowBar(shotChoice);
+				break;
+			case Constants.DEFENSE_ROUGH_TERRIAN:
+				autonomousCommand = new AutonomousRoughTerrian(startingLocation, shotChoice);
+				break;
+			case Constants.DEFENSE_RAMPARTS:
+				autonomousCommand = new AutonomousRamparts(startingLocation, shotChoice);
+				break;
+			case Constants.DEFENSE_ROCK_WALL:
+				autonomousCommand = new AutonomousRockWall(startingLocation, shotChoice);
+				break;
+			case Constants.DEFENSE_CHEVAL_DE_FRISE:
+				autonomousCommand = new AutonomousChevaldeFrise(startingLocation, shotChoice);
+				break;	
+			case Constants.DEFENSE_PORTCULLIS:
+				autonomousCommand = new AutonomousPortcullis(startingLocation, shotChoice);
+				break;		
+			default:
+				autonomousCommand = new AutonomousDoNothing();
+				break;				
+			}
+				
 			// Reset the gyro before the start of autonomous
 			Robot.chassis.resetGyro();
-
-			// Get the autonomous command
-			autonomousCommand = (edu.wpi.first.wpilibj.command.Command) defenseChooser.getSelected();
-
-			autoParameters = (AutoParameters) startingLocationChooser.getSelected();
-						
+				
 			// schedule the autonomous command
 			autonomousCommand.start();
 		}

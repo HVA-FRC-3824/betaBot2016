@@ -7,7 +7,7 @@ public class Constants
 	// Set the robot configuration (competition or practice)
 	// Thing 1 - true
 	// Thing 2 - false
-	static final boolean IS_COMP_ROBOT = false;
+	static final boolean IS_COMP_ROBOT = true;
 
 	public static double SHOOTER_ELEVATION_ANGLE_A;
 	public static double SHOOTER_ELEVATION_ANGLE_B;
@@ -63,9 +63,20 @@ public class Constants
 
 	// ***************************************************************************************
 	// Autonomous parameters
-	public static int TURN_RIGHT                               = 0;
-	public static int TURN_NONE                                = 1;
-	public static int TURN_LEFT                                = 2;
+	public static final int DEFENSE_DO_NOTHING                 = 0;
+	public static final int DEFENSE_LOW_BAR                    = 1;
+	public static final int DEFENSE_ROUGH_TERRIAN              = 2;
+	public static final int DEFENSE_RAMPARTS                   = 3;
+	public static final int DEFENSE_ROCK_WALL                  = 4;
+	public static final int DEFENSE_CHEVAL_DE_FRISE            = 5;
+	public static final int DEFENSE_PORTCULLIS                 = 6;
+	
+	public static int STARTING_POSITION_1                      = 1;
+	public static int STARTING_POSITION_2                      = 2;
+	public static int STARTING_POSITION_3                      = 3;
+	public static int STARTING_POSITION_4                      = 4;
+	public static int STARTING_POSITION_5                      = 5;
+	public static int STARTING_POSITION_6                      = 6;
 	
 	public static int NO_GOAL                                  = 0;
 	public static int LOW_GOAL                                 = 1;

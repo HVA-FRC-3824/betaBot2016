@@ -1278,19 +1278,24 @@ Children:
         default: []
         name: Parameters
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
         default: []
         name: Parameter presets
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterSet
+          name: NoShot
+          parameters:
+          - {name: ShotChoice, type: int, value: '0'}
       Commands: !!robotbuilder.data.properties.ListProperty
         default: []
         name: Commands
         validators: &id024 [List]
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command Group
     Name: Autonomous Low Bar
   - Children: []
@@ -1299,19 +1304,27 @@ Children:
         default: []
         name: Parameters
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: StartingLocation,
+          type: int}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
         default: []
         name: Parameter presets
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterSet
+          name: StartLocation2
+          parameters:
+          - {name: StartingLocation, type: int, value: '0'}
+          - {name: ShotChoice, type: int, value: '0'}
       Commands: !!robotbuilder.data.properties.ListProperty
         default: []
         name: Commands
         validators: *id024
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command Group
     Name: Autonomous Rough Terrian
   - Children: []
@@ -1320,21 +1333,145 @@ Children:
         default: []
         name: Parameters
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: StartingLocation,
+          type: int}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
         default: []
         name: Parameter presets
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterSet
+          name: StartingLocation2
+          parameters:
+          - {name: StartingLocation, type: int, value: '2'}
+          - {name: ShotChoice, type: int, value: '0'}
       Commands: !!robotbuilder.data.properties.ListProperty
         default: []
         name: Commands
         validators: *id024
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command Group
     Name: Autonomous Ramparts
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: StartingLocation,
+          type: int}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterSet
+          name: StartingLocation2
+          parameters:
+          - {name: StartingLocation, type: int, value: '2'}
+          - {name: ShotChoice, type: int, value: '0'}
+      Commands: !!robotbuilder.data.properties.ListProperty
+        default: []
+        name: Commands
+        validators: *id024
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command Group
+    Name: Autonomous Rock Wall
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: StartingLocation,
+          type: int}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterSet
+          name: StartingLocation2
+          parameters:
+          - {name: StartingLocation, type: int, value: '2'}
+          - {name: ShotChoice, type: int, value: '0'}
+      Commands: !!robotbuilder.data.properties.ListProperty
+        default: []
+        name: Commands
+        validators: *id024
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command Group
+    Name: Autonomous Moat
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: StartingPosition,
+          type: int}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id025
+        - !!robotbuilder.data.properties.ParameterSet
+          name: StartingPosition2
+          parameters:
+          - {name: StartingPosition, type: int, value: '2'}
+          - {name: ShotChoice, type: int, value: '0'}
+        name: Parameter presets
+        validators: null
+        value: *id025
+      Commands: !!robotbuilder.data.properties.ListProperty
+        default: &id026 []
+        name: Commands
+        validators: *id024
+        value: *id026
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command Group
+    Name: Autonomous Cheval de Frise
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: StartingPosition,
+          type: int}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: ShotChoice, type: int}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id027
+        - !!robotbuilder.data.properties.ParameterSet
+          name: StartingPosition2
+          parameters:
+          - {name: StartingPosition, type: int, value: '2'}
+          - {name: ShotChoice, type: int, value: '0'}
+        name: Parameter presets
+        validators: null
+        value: *id027
+      Commands: !!robotbuilder.data.properties.ListProperty
+        default: &id028 []
+        name: Commands
+        validators: *id024
+        value: *id028
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command Group
+    Name: Autonomous Portcullis
   - Children: []
     Properties:
       Parameters: !!robotbuilder.data.properties.ParametersProperty
@@ -1389,7 +1526,7 @@ Children:
         validators: null
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Chassis Drive Straight
   - Children: []
@@ -1415,7 +1552,7 @@ Children:
           - {name: DriveDistance, type: double, value: '200.0'}
           - {name: DrivePower, type: double, value: '1.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Chassis Drive Straight Distance
   - Children: []
@@ -1439,7 +1576,7 @@ Children:
           parameters:
           - {name: TargetDistance, type: double, value: '100.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Chassis Drive Target LIDAR
   - Children: []
@@ -1464,7 +1601,7 @@ Children:
           - {name: TurnDegrees, type: double, value: '90.0'}
           - {name: DrivePower, type: double, value: '0.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Chassis Turn Angle
   - Children: []
@@ -1491,7 +1628,7 @@ Children:
           parameters:
           - {name: whichTarget, type: int, value: '0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: ChassisTurnToImageTarget
   - Children: []
@@ -1724,7 +1861,7 @@ Children:
         validators: *id024
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command Group
     Name: VisionAimAndShoot
   - Children: []
@@ -1742,7 +1879,7 @@ Children:
         validators: null
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Vision Shooter Height
   - Children: []
@@ -1757,14 +1894,14 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Chassis}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id025
+        default: []
+        name: Parameter presets
+        validators: null
+        value:
         - !!robotbuilder.data.properties.ParameterSet
           name: NoJog
           parameters:
           - {name: DirectionAngle, type: double, value: '0.0'}
-        name: Parameter presets
-        validators: null
-        value: *id025
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
