@@ -33,16 +33,23 @@ public class Targets extends Subsystem
 	NetworkTable m_contoursReport;
 	NetworkTable m_imageReport;
 	NetworkTable m_frameRateReport;
-	
+
 	// Used to clear the target arrays before reading target information
 	double[] m_defaultValue = new double[0];
-	double   m_targetCenterX;
-	
+	double m_targetCenterX;
+
 	private double m_positionFromOnTargetX;
 	private double m_positionFromOnTargetXNormalized;
-	
+
 	// Allows off setting the target to compensate for camera angle
-	private int  m_onTargetX;  // "Center of Image" on the X-axis
+	private int m_onTargetX; // "Center of Image" on the X-axis
+
+	public class target
+	{
+		int centerX;
+		int centerY;
+		int area;
+	}
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -57,9 +64,9 @@ public class Targets extends Subsystem
 
 	public Targets()
 	{
-		m_contoursReport  = NetworkTable.getTable("GRIP/cameraTargets");
+		m_contoursReport = NetworkTable.getTable("GRIP/cameraTargets");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
-		m_onTargetX       = Constants.IMAGE_ON_TARGET_X_POSITION;
+		m_onTargetX = Constants.IMAGE_ON_TARGET_X_POSITION;
 	}
 
 	/*
@@ -72,20 +79,32 @@ public class Targets extends Subsystem
 	 * edge would be 1.
 	 ***/
 	public double getTargetOffsetFromCenterNormalized(int whichTarget)
-	// if the image is positioned to the right, the robot is too far left.
-	// so this return value is flipped
 	{
-		// get the center of the largest target in view. We are assuming that the
+		// if the image is positioned to the right, the robot is too far left.
+		// so this return value is flipped
+		m_positionFromOnTargetXNormalized = 0.0;
+		target found_target;
+		
+//		System.out.println("In getTargetOffsetFromCenterNormalized: " + whichTarget);	
+		
+		// get the center of the largest target in view. We are assuming that
+		// the
 		// largest target is the one we are facing most directly
-		m_targetCenterX = getCenterXOfWhichTarget(whichTarget);
+		found_target = getSelectedTarget(whichTarget);
 
-		// calculate offset from "OnTarget" in pixels
-		m_positionFromOnTargetX = m_targetCenterX - m_onTargetX;
+		if (found_target != null)
+		{
+			// Get the center X
+			m_targetCenterX = found_target.centerX;
+			
+			// calculate offset from "OnTarget" in pixels
+			m_positionFromOnTargetX = m_targetCenterX - m_onTargetX;
 
-		// convert the offset in pixels to a normalized range where -1 is one half an
-		// image width to the left and 1 is one half an image width to the right.
-		m_positionFromOnTargetXNormalized = m_positionFromOnTargetX / (Constants.IMAGE_WIDTH / 2.0);
-
+			// convert the offset in pixels to a normalized range where -1 is one half an
+			// image width to the left and 1 is one half an image width to the right.
+			m_positionFromOnTargetXNormalized = m_positionFromOnTargetX / (Constants.IMAGE_WIDTH / 2.0);
+		}
+		
 		return m_positionFromOnTargetXNormalized;
 	}
 
@@ -119,7 +138,7 @@ public class Targets extends Subsystem
 	public void updateSmartDashboard()
 	{
 		Robot.targets.getTargetOffsetFromCenterNormalized(Constants.TARGET_CENTER);
-		
+
 		SmartDashboard.putNumber("Targets FrameRate", m_frameRateReport.getNumber("cameraFrameRate", 0.0));
 		SmartDashboard.putNumber("Targets X offset from image center", m_positionFromOnTargetX);
 		SmartDashboard.putNumber("Targets Normalized X offset from image center", m_positionFromOnTargetXNormalized);
@@ -134,107 +153,210 @@ public class Targets extends Subsystem
 	 * THINK this will always be the first object in the array, but until this
 	 * can be confirmed, need to do this calculation
 	 ***/
-	private double getCenterXOfLargestTarget()
+	private target getLargestTarget()
 	{
 		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
-		double[] areas    = m_contoursReport.getNumberArray("area",    m_defaultValue);
-		double maxArea    = 0.0;
-		int maxAreaIndex  = -1;
-		
-		// Loop through all targets
-		for (int areaIndex = 0; areaIndex < areas.length; areaIndex++)
+		double[] centerYs = m_contoursReport.getNumberArray("centerY", m_defaultValue);
+		double[] areas = m_contoursReport.getNumberArray("area", m_defaultValue);
+		double[] widths = m_contoursReport.getNumberArray("width", m_defaultValue);
+		double[] heights = m_contoursReport.getNumberArray("height", m_defaultValue);
+		double maxArea = 0.0;
+		int maxAreaIndex = -1;
+		target largest_target = new target();
+
+		try
 		{
-			// Determine if the area is the largest
-			if (areas[areaIndex] > maxArea)
+			// Loop through all targets
+			for (int areaIndex = 0; areaIndex < areas.length; areaIndex++)
 			{
-				// Remember the maximum area index
-				maxAreaIndex = areaIndex;
-				
-				// Update the new maximum area
-				maxArea = areas[areaIndex];	
+				// Determine if the area is the largest
+				if (areas[areaIndex] > maxArea)
+				{
+					// Remember the maximum area index
+					maxAreaIndex = areaIndex;
+
+					// Update the new maximum area
+					maxArea = areas[areaIndex];
+				}
+			}
+
+			// Determine if a target area was found
+			if (maxAreaIndex >= 0)
+			{
+				// remember the X position of the maximum area target
+				largest_target.centerX = (int) centerXs[maxAreaIndex];
+				largest_target.centerY = (int) centerYs[maxAreaIndex];
+				largest_target.area = (int) (widths[maxAreaIndex] * heights[maxAreaIndex]);
+			}
+			else
+			{
+				// No target found so return center
+				largest_target = null;
 			}
 		}
-
-		// Determine if a target area was found
-		if (maxAreaIndex >= 0)
+		catch (Exception e)
 		{
-			// remember the X position of the maximum area target
-			m_targetCenterX = centerXs[maxAreaIndex];
-		}
-		else
-		{
-			// No target found so return center
-			// TODO: Need to indicate not target found
-			m_targetCenterX = Constants.IMAGE_WIDTH / 2.0;
+//			System.out.println("Exception getLargestTarget: " + e);
+			largest_target = null;
 		}
 
 		// return the X position of the maximum area target
-		return m_targetCenterX;
+		return largest_target;
 	}
+
 	/**
-	 * Method to select the specified target when there are multiple targets 
+	 * Method to select the specified target when there are multiple targets
 	 */
-	private double getCenterXOfWhichTarget(int whichTarget)
+	private target getSelectedTarget(int whichTarget)
 	{
-		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
-		double[] areas    = m_contoursReport.getNumberArray("area",    m_defaultValue);
-
-		// Determine the number of found targets
-		if (areas.length == 1)
+		int target_index    = 0; 
+		double[] centerXs   = m_contoursReport.getNumberArray("centerX", m_defaultValue);
+		double[] centerYs   = m_contoursReport.getNumberArray("centerY", m_defaultValue);
+		double[] areas      = m_contoursReport.getNumberArray("area", m_defaultValue);
+		double[] widths     = m_contoursReport.getNumberArray("width", m_defaultValue);
+		double[] heights    = m_contoursReport.getNumberArray("height", m_defaultValue);
+		target found_target = new target();
+		
+//		System.out.println("In getSelectedTarget: " + whichTarget);
+		
+		try
 		{
-			// Only one target so return X center
-			m_targetCenterX = centerXs[0];  // TODO: EXCEPTION
-		}
-		else if (areas.length == 2)
-		{
-			// ----- TWO TARGETS DETECTED -------
-			switch (whichTarget)
+			// Determine the number of found targets
+			if (areas.length == 1)
 			{
-			case 0: // LEFT - take the left target
-				m_targetCenterX = Math.min(centerXs[0], centerXs[1]);
-				break;
+//				System.out.println("areas.length == 1");
 
-			case 1: // CENTER - take the LARGEST target
-				if (areas[0] > areas[1])
-				{
-					m_targetCenterX = centerXs[0];
-				}
-				else
-				{
-					m_targetCenterX = centerXs[1];
-				}
-				break;
-
-			case 2: // RIGHT - take the right target
-				m_targetCenterX = Math.max(centerXs[0], centerXs[1]);
-				break;
+				// Only one target so return X center
+				target_index = 0;
 			}
-		}
-		else if (areas.length == 3)
-		{
-			// ----- THREE TARGETS DETECTED -------
-			switch (whichTarget)
+			else if (areas.length == 2)
 			{
-			case 0: // LEFT - take the left target
-				m_targetCenterX = Math.min(Math.min(centerXs[0], centerXs[1]), centerXs[2]);
-				break;
+//				System.out.println("areas.length == 2");
+			
+				// ----- TWO TARGETS DETECTED -------
+				switch (whichTarget)
+				{
+				case 0: // LEFT - take the left target
+					 if (centerXs[0] < centerXs[1])
+						 target_index = 0;
+					 else 
+						 target_index = 1;
+					break;
 
-			case 1: // CENTER - take the LARGEST target
-				m_targetCenterX = getCenterXOfLargestTarget();
-				break;
+				case 1: // CENTER - take the LARGEST target
+					if (areas[0] > areas[1])
+					{
+						 target_index = 0;
+					}
+					else
+					{
+						 target_index = 1;
+					}
+					break;
 
-			case 2: // RIGHT - take the right target
-				m_targetCenterX = Math.max(Math.max(centerXs[0], centerXs[1]), centerXs[2]);
-				break;
+				case 2: // RIGHT - take the right target
+					 if (centerXs[0] >= centerXs[1])
+						 target_index = 0;
+					 else 
+						 target_index = 1;
+					break;
+				}
 			}
-		}
-		else
-		{
-			// No target found so return center
-			// TODO: Need to indicate not target found
-			m_targetCenterX = Constants.IMAGE_WIDTH / 2.0;
-		}
+			else if (areas.length == 3)
+			{
+//				System.out.println("areas.length == 3");
 
-		return m_targetCenterX;
+				// ----- THREE TARGETS DETECTED -------
+				switch (whichTarget)
+				{
+				case 0: // LEFT - take the left target
+					 if ((centerXs[0] < centerXs[1]) && (centerXs[0] < centerXs[2]))
+						 target_index = 0;
+					 else if ((centerXs[1] < centerXs[0]) && (centerXs[1] < centerXs[2]))
+						 target_index = 1;
+					 else
+						 target_index = 2; 
+					break;
+
+				case 1: // CENTER - take the LARGEST target
+					 if ((areas[0] >= areas[1]) && (areas[0] >= areas[2]))
+						 target_index = 0;
+					 else if ((areas[1] >= areas[0]) && (areas[1] >= areas[2]))
+						 target_index = 1;
+					 else
+						 target_index = 2;
+					break;
+
+				case 2: // RIGHT - take the right target
+					 if ((centerXs[0] >= centerXs[1]) && (centerXs[0] >= centerXs[2]))
+						 target_index = 0;
+					 else if ((centerXs[1] >= centerXs[0]) && (centerXs[1] >= centerXs[2]))
+						 target_index = 1;
+					 else
+						 target_index = 2;
+					break;
+				}
+			}
+			else
+			{
+				// No target found so return center
+				found_target = null;
+			}
+			
+			found_target.centerX = (int) centerXs[target_index];
+			found_target.centerY = (int) centerYs[target_index];
+			found_target.area    = (int) (widths[target_index] * heights[target_index]);
+		
+//			System.out.println("****** target_index = " + target_index);
+//			System.out.println("       area = " + found_target.area);
+			
+		}
+		catch (Exception e)
+		{
+			found_target = null;
+//			System.out.println("Exception getSelectedTarget: " + e);
+		}
+		
+		return found_target;
+	}
+	
+	public double getDistanceFromLargestTarget()
+	{
+		target found_target;
+		double area;
+		double distanceFromTarget = -1.0;
+		
+		found_target= getLargestTarget();
+		
+		if (found_target != null)
+		{
+			// get the area of the selected target
+			area = found_target.area;
+		
+			//	y = 9E-06x2 - 0.0896x + 267.23
+			distanceFromTarget = (9e-6 * area * area) - (0.0896 * area) + 267.23;
+		}
+		
+		return distanceFromTarget;
+	}
+	
+	public double getDistanceFromTarget(int whichTarget)
+	{
+		target found_target;
+		double area;
+		double distanceFromTarget = -1.0;
+		
+		// get the area of the selected target
+		found_target = getSelectedTarget(whichTarget);
+		
+		if (found_target != null)
+		{
+			area = found_target.area;		
+			
+			//y = 9E-06x2 - 0.0896x + 267.23
+			distanceFromTarget = (9e-6 * area * area) - (0.0896 * area) + 267.23;
+		}
+		
+		return distanceFromTarget;
 	}
 }

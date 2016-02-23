@@ -61,7 +61,7 @@ public class ChassisTurnToImageTarget extends Command
 		double heading      = Robot.chassis.getCurrentHeading();
 		double targetOffset = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
 		
-		System.out.println("Chassis turn to image initialize");
+//		System.out.println("Chassis turn to image initialize");
 		
 //		// Set the PID up for driving straight
 //		Robot.chassis.configurePIDs(Preferences.getInstance().getDouble("ImageTurn_P", Constants.DRIVETRAIN_DRIVE_STRAIGHT_P), 
@@ -104,7 +104,7 @@ public class ChassisTurnToImageTarget extends Command
 			// Ensure on target error holds for the specified time
 			if (m_Timer.get() > 1.0)
 			{
-				System.out.println("Completed State 1");
+//				System.out.println("Completed State 1");
 				
 //				// Stop is error is less than 1.5
 //				if (error < 1.5)
@@ -135,7 +135,7 @@ public class ChassisTurnToImageTarget extends Command
 			// Ensure on target error holds for the specified time
 			if (m_Timer.get() > 1.0)
 			{
-				System.out.println("Completed State 2");
+//				System.out.println("Completed State 2");
 				
 				// Complete so set the state to three
 				m_state = STATE_FINAL;
@@ -166,7 +166,7 @@ public class ChassisTurnToImageTarget extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-		System.out.println("Chassis turn to image end");
+//		System.out.println("Chassis turn to image end");
 		
 		// disable the PID and stop the robot
 		Robot.chassis.disablePIDs();

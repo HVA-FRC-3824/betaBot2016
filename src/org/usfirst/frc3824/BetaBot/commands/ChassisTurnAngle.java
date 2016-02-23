@@ -87,7 +87,7 @@ public class ChassisTurnAngle extends Command
 	protected boolean isFinished()
 	{
 		// Ensure the command ends after the watchdog time even if not on target
-		if (m_WatchdogTimer.get() > 2.0)
+		if (m_WatchdogTimer.get() > 1.5)
 			return(true);
 		
 		// return PIDcontroller.OnTarget();

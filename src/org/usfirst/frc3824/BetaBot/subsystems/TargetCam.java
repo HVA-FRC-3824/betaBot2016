@@ -135,6 +135,7 @@ public class TargetCam extends Subsystem
 	public static void cleanAndStartVision()
 	{
 		stopVision();
+		Timer.delay(2.0);
 		startVision();
 	}
 	
