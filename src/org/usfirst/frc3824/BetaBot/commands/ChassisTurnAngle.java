@@ -53,7 +53,7 @@ public class ChassisTurnAngle extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		System.out.println("Chassis turn angle initialize");
+//		System.out.println("Chassis turn angle initialize");
 		
 		// Set the target turn angle based on the present gyro value and the
 		// desired turn degrees
@@ -70,9 +70,11 @@ public class ChassisTurnAngle extends Command
 		                    		Constants.TURN_ANGLE_D, 
 	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
 
+		// Reset and start the on target timer
 		m_OnTargetTimer.reset();
 		m_OnTargetTimer.start();
 		
+		// Reset and start the on watch dog timer
 		m_WatchdogTimer.reset();
 		m_WatchdogTimer.start();
 	}
@@ -113,7 +115,7 @@ public class ChassisTurnAngle extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-		System.out.println("Chassis turn angle end");
+//		System.out.println("Chassis turn angle end");
 		
 		// disable the PID controller
 		Robot.chassis.disablePIDs();

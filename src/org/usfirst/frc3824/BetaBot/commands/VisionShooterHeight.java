@@ -47,12 +47,6 @@ public class VisionShooterHeight extends Command
 		
 		if (distance > 0.0)
 		{
-//			// y = 0.0005x2 - 0.353x + 85.581
-//			shooterHeight = (0.0005 * distance * distance) - (0.353 * distance) + 85.581;		
-		
-//			// y = 0.0018x2 - 0.6531x + 101.44
-//			shooterHeight = (0.0018 * distance * distance) - (0.6531 * distance) + 101.44;		
-
 			// y = 0.0017x2 - 0.6417x + 106.2
 			shooterHeight = (0.0017 * distance * distance) - (0.6417 * distance) + 106.2;		
 					

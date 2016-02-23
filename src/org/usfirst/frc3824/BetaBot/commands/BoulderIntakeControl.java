@@ -86,7 +86,7 @@ public class BoulderIntakeControl extends Command
 			desired_position = (Robot.oi.controllerJoystick.getX() + 1.0) / 2.0;
 		}
 		
-		SmartDashboard.putNumber("Boulder Position", desired_position);
+//		SmartDashboard.putNumber("Boulder Position", desired_position);
 
 		// Set the boulder intake desired potentiometer position
 		Robot.boulderIntake.SetPID_Position(desired_position);

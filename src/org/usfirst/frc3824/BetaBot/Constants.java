@@ -89,7 +89,7 @@ public class Constants
 	// ***************************************************************************************
 	// Image turn constants
 	public static double IMAGE_TURN_P                          = 0.07;	// Preference name: ImageTurn_P
-	public static double IMAGE_TURN_I                          = 0.008;	// Preference name: ImageTurn_I
+	public static double IMAGE_TURN_I                          = 0.004;	// Preference name: ImageTurn_I
 	public static double IMAGE_TURN_D                          = 0.008;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
 	
@@ -141,4 +141,10 @@ public class Constants
 	public static double SHOOTER_SHOOT_3_BUTTON                =  -400.0;  // Button  4
 	public static double SHOOTER_SHOOT_4_BUTTON                =  -500.0;  // Button  5
 	public static double SHOOTER_SHOOT_5_BUTTON                =  -100.0;  // Button  1
+
+	// ***************************************************************************************
+	// Chassis Turn Jog constants
+	public static double JOG_TURN_WATCHDOG_TIME                =  1.0;
+	public static double JOG_TURN_WHEEL_POWER                  =  0.3;
+	public static double JOG_TURN_ENCODER_TURN_VALUE           =   20;  // integer	
 }

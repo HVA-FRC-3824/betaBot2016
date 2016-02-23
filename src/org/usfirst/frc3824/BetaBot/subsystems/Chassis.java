@@ -16,7 +16,6 @@ import org.usfirst.frc3824.BetaBot.utilities.HVAGyro;
 import org.usfirst.frc3824.BetaBot.utilities.Lidar;
 import org.usfirst.frc3824.BetaBot.Constants;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -130,9 +129,9 @@ public class Chassis extends Subsystem
 		// enable the PID
 		angleGyroController.enable();
 
-		SmartDashboard.putNumber("angle P", angleGyroController.getP());
-		SmartDashboard.putNumber("angle I", angleGyroController.getI());
-		SmartDashboard.putNumber("angle D", angleGyroController.getD());
+//		SmartDashboard.putNumber("angle P", angleGyroController.getP());
+//		SmartDashboard.putNumber("angle I", angleGyroController.getI());
+//		SmartDashboard.putNumber("angle D", angleGyroController.getD());
 	}
 	
 	/**
@@ -263,6 +262,33 @@ public class Chassis extends Subsystem
 		m_magnitude = magnitude;
 	}
 
+	/**
+	 * Set the chassis drive motor
+	 */
+	public void setWheelOutput(double rightWheel, double leftWheel)
+	{
+		rightMotorA.set(rightWheel);
+		rightMotorB.set(rightWheel);
+		leftMotorA.set(-leftWheel);
+		leftMotorB.set(-leftWheel);
+	}
+	
+	/**
+	 * Get the Right encoder value
+	 */
+	public int getRightEncoder()
+	{
+		return encoderRight.get();
+	}
+	
+	/**
+	 * Get the Left encoder value
+	 */
+	public int getLeftEncoder()
+	{
+		return encoderLeft.get();
+	}
+	
 	/**
 	 * Class declaration for the PIDOutput
 	 */

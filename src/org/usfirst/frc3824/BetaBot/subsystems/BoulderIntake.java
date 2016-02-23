@@ -117,8 +117,8 @@ public class BoulderIntake extends Subsystem
 		left_pot  = (Constants.BOUDLER_INTAKE_EXTENDED_LEFT - Constants.BOUDLER_INTAKE_RETRACTED_LEFT) *
 				position + Constants.BOUDLER_INTAKE_RETRACTED_LEFT;
 			
-		SmartDashboard.putNumber("Right Boulder Pot", right_pot);
-		SmartDashboard.putNumber("Left Boulder Pot", left_pot);
+//		SmartDashboard.putNumber("Right Boulder Pot", right_pot);
+//		SmartDashboard.putNumber("Left Boulder Pot", left_pot);
 		
 		// Set the boulder PIDs
 		boulderRightController.setSetpoint(right_pot);

@@ -143,7 +143,7 @@ public class Targets extends Subsystem
 		SmartDashboard.putNumber("Targets X offset from image center", m_positionFromOnTargetX);
 		SmartDashboard.putNumber("Targets Normalized X offset from image center", m_positionFromOnTargetXNormalized);
 		SmartDashboard.putNumber("Targets center X", m_targetCenterX);
-		SmartDashboard.putNumber("Targets Image Width", Constants.IMAGE_WIDTH);
+//		SmartDashboard.putNumber("Targets Image Width", Constants.IMAGE_WIDTH);
 		SmartDashboard.putBoolean("Image Processing Running", isImageProcessingRunning());
 	}
 

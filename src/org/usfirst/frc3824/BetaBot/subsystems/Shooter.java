@@ -82,7 +82,7 @@ public class Shooter extends Subsystem
 	{
 		// Remember the requested state of the shooter wheels
 		m_enabled = enable;
-		SmartDashboard.putBoolean("Shooter Enabled", enable);
+//		SmartDashboard.putBoolean("Shooter Enabled", enable);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class Shooter extends Subsystem
 		double setPoint = A * (setpointDegrees * setpointDegrees) + (B * setpointDegrees) + C;
 
 		SmartDashboard.putNumber("Shooter Angle Setpoint", setpointDegrees);
-		SmartDashboard.putNumber("Shooter Angle Pot Setpoint", setPoint);
+//		SmartDashboard.putNumber("Shooter Angle Pot Setpoint", setPoint);
 
 		// Set the shooter elevation set point
 		shooterAngleController.setSetpoint(setPoint);

@@ -614,10 +614,8 @@ Children:
           name: Parameters
           validators: null
           value:
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: TurnDegrees,
-            type: double, value: '5.0'}
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: DrivePower,
-            type: double, value: '0'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: DirectionAngle,
+            type: double, value: '1.0'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id019
           default: '1'
@@ -629,7 +627,7 @@ Children:
           name: Command
           type: Command
           validators: *id020
-          value: Chassis Turn Angle
+          value: Chassis Turn Jog
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id021
           default: whileHeld
@@ -647,10 +645,8 @@ Children:
           name: Parameters
           validators: null
           value:
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: TurnDegrees,
-            type: double, value: '-5.0'}
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: DrivePower,
-            type: double, value: '0'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: DirectionAngle,
+            type: double, value: '-1.0'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id019
           default: '1'
@@ -662,7 +658,7 @@ Children:
           name: Command
           type: Command
           validators: *id020
-          value: Chassis Turn Angle
+          value: Chassis Turn Jog
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id021
           default: whileHeld
@@ -1749,6 +1745,30 @@ Children:
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: Vision Shooter Height
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: DirectionAngle,
+          type: double}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Chassis}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id025
+        - !!robotbuilder.data.properties.ParameterSet
+          name: NoJog
+          parameters:
+          - {name: DirectionAngle, type: double, value: '0.0'}
+        name: Parameter presets
+        validators: null
+        value: *id025
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command
+    Name: Chassis Turn Jog
   Properties: {}
   Base: Commands
   Name: Commands
