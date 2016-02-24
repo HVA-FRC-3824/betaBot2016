@@ -20,7 +20,8 @@ import org.usfirst.frc3824.BetaBot.subsystems.*;
  */
 public class AutonomousMoat extends CommandGroup
 {
-	public double shooterHeight      = 48.0;
+	public double shooterHeight      = Constants.AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE;
+	public double driveDistance      = 280.0;
 	public double position2TurnAngle = 80.0;
 	public double positionTurnAngle  = 20.0;
 	public double LiDarDistance      = 340.0;
@@ -38,16 +39,16 @@ public class AutonomousMoat extends CommandGroup
 		// Raise the shooter allowing time for the shooter to raise 
 		addParallel(new ShooterPositionControl(20.0));
 		addSequential(new Delay(0.2));
-		
+
 		// Set the drive train to high speed
 		addSequential(new ShiftGear(true));
-		
+
 		// Drive over the Moat
-		addSequential(new ChassisDriveStraightDistance(380.0, 1.0));
-		
+		addSequential(new ChassisDriveStraightDistance(driveDistance, 1.0));
+
 		// Set the drive train to low speed
 		addSequential(new ShiftGear(false));
-		
+				
 		// Determine the starting position
 		if (StartingLocation == Constants.STARTING_POSITION_2)
 		{
@@ -63,38 +64,41 @@ public class AutonomousMoat extends CommandGroup
 		}
 		else if (StartingLocation == Constants.STARTING_POSITION_3)
 		{
+			// Raise the shooter while turning towards the goal
+			addParallel(new ShooterPositionControl(shooterHeight));
+
 			// Turn towards the goal
 			addSequential(new ChassisTurnAngle(positionTurnAngle, 0.0));
 		}
 		else if (StartingLocation == Constants.STARTING_POSITION_4)
 		{
-			// Drive over the Moat
-			addSequential(new ChassisDriveStraightDistance(380.0, 1.0));
+			// Raise the shooter while turning towards the goal
+			addParallel(new ShooterPositionControl(shooterHeight));
 
-			// Should be facing the goal
+			// Should be facing the goal, but wait for shooter to reach position
+			addSequential(new Delay(0.5));
 		}
 		else if (StartingLocation == Constants.STARTING_POSITION_5)
 		{
+			// Raise the shooter while turning towards the goal
+			addParallel(new ShooterPositionControl(shooterHeight));
+
 			// Turn towards the goal
 			addSequential(new ChassisTurnAngle(-positionTurnAngle, 0.0));
 		}
 
+		// Line up based on camera
+		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_CENTER));
+
+		// Drive to shoot distance
+		addSequential(new ChassisDriveTargetLIDAR(LiDarDistance));
+
+		// Line up based on camera
+		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_CENTER));
+
 		// Determine if the boulder should to shot
 		if (ShotChoice == Constants.HIGH_GOAL)
 		{
-			// Set the shooter height and allow time for the shooter to raise
-			addParallel(new ShooterPositionControl(shooterHeight));
-			addSequential(new Delay(0.5));
-
-			// Line up based on camera
-			addSequential(new ChassisTurnToImageTarget(Constants.TARGET_CENTER));
-
-			// Drive to shoot distance
-			addSequential(new ChassisDriveTargetLIDAR(LiDarDistance));
-
-			// Line up based on camera
-			addSequential(new ChassisTurnToImageTarget(Constants.TARGET_CENTER));
-
 			// Shoot into the goal
 			addSequential(new ShootBoulderInGoal(shooterHeight, 1.0));
 			addSequential(new ShooterSetWheelSpeed(0.0));

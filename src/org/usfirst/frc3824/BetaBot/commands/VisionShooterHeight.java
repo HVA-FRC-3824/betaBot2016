@@ -46,10 +46,10 @@ public class VisionShooterHeight extends Command
 		distance = Robot.targets.getDistanceFromLargestTarget();
 		
 		if (distance > 0.0)
-		{
-			// y = 0.0017x2 - 0.6417x + 106.2
-			shooterHeight = (0.0017 * distance * distance) - (0.6417 * distance) + 106.2;		
-					
+		{		
+			// y = 5E-05x2 - 0.0929x + 64.981
+			shooterHeight = (0.00005 * distance * distance) - (0.0929 * distance) + 64.981;		
+
 			// Set the shooter PID set point
 			Robot.shooter.setShooterElevationSetpoint(shooterHeight);
 		}

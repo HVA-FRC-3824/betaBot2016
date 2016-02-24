@@ -57,7 +57,7 @@ public class ChassisDriveTargetLIDAR extends Command
 		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
 		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
 		                            Robot.chassis.getCurrentHeading(), 0.0, 
-		                            0.8 * (driveForward?1.0:-1.0));
+		                            0.8 * (driveForward ? 1.0:-1.0));
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -67,7 +67,8 @@ public class ChassisDriveTargetLIDAR extends Command
 		double distanceDelta = (Robot.chassis.getLidarDistanceCentimeters() - m_TargetDistance);
 		boolean driveForward = (distanceDelta > 0.0);
 		
-		if (distanceDelta < 50.0)
+		// Slow down when close to stop point
+		if (Math.abs(distanceDelta) < 50.0)
 		{
 			Robot.chassis.setMagnitude( 0.4 * (driveForward?1.0:-1.0) );
 		}

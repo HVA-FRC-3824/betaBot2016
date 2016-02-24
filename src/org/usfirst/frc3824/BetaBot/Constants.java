@@ -27,16 +27,16 @@ public class Constants
 		{
 			SmartDashboard.putString("Active Robot Values", "Thing 1");
 			
-			SHOOTER_ELEVATION_ANGLE_A             =  48.58;
-			SHOOTER_ELEVATION_ANGLE_B             =  67.00;
-			SHOOTER_ELEVATION_ANGLE_C             = -20.08;
+			SHOOTER_ELEVATION_ANGLE_A             =  66.893;
+			SHOOTER_ELEVATION_ANGLE_B             =  46.043;
+			SHOOTER_ELEVATION_ANGLE_C             = -17.92;
 			
-			SHOOTER_ELEVATION_POT_A               = -0.00004;
-			SHOOTER_ELEVATION_POT_B               =  0.0109;
-			SHOOTER_ELEVATION_POT_C               =  0.2467;
+			SHOOTER_ELEVATION_POT_A               = -0.00005;
+			SHOOTER_ELEVATION_POT_B               =  0.0115;
+			SHOOTER_ELEVATION_POT_C               =  0.2713;
 			
-			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.60;
-			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.36;
+			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.538;
+			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.262;
 			
 			BOUDLER_INTAKE_EXTENDED_RIGHT          = 4.14;
 			BOUDLER_INTAKE_EXTENDED_LEFT           = 4.54;
@@ -68,8 +68,9 @@ public class Constants
 	public static final int DEFENSE_ROUGH_TERRIAN              = 2;
 	public static final int DEFENSE_RAMPARTS                   = 3;
 	public static final int DEFENSE_ROCK_WALL                  = 4;
-	public static final int DEFENSE_CHEVAL_DE_FRISE            = 5;
-	public static final int DEFENSE_PORTCULLIS                 = 6;
+	public static final int DEFENSE_MOAT                       = 5;
+	public static final int DEFENSE_CHEVAL_DE_FRISE            = 6;
+	public static final int DEFENSE_PORTCULLIS                 = 7;
 	
 	public static int STARTING_POSITION_1                      = 1;
 	public static int STARTING_POSITION_2                      = 2;
@@ -103,8 +104,8 @@ public class Constants
 	public static double IMAGE_TURN_I                          = 0.004;	// Preference name: ImageTurn_I
 	public static double IMAGE_TURN_D                          = 0.008;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
-	
-	public static int    IMAGE_ON_TARGET_X_POSITION            = 170;   // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_X_POSITION_CENTER     = 168;   // X location of the "onTarget" position
+
 	public static int    IMAGE_WIDTH                           = 320;	// default image width
 	public static int    IMAGE_HEIGHT                          = 240;   // default image height
 	public static double CAM_FOV                               = 48.0; 
@@ -158,4 +159,8 @@ public class Constants
 	public static double JOG_TURN_WATCHDOG_TIME                =  1.0;
 	public static double JOG_TURN_WHEEL_POWER                  =  0.3;
 	public static double JOG_TURN_ENCODER_TURN_VALUE           =   20;  // integer	
+	
+	// ***************************************************************************************
+	// Autonomous constants
+	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE = 38.5;
 }

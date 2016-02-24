@@ -116,8 +116,9 @@ public class Robot extends IterativeRobot
 		defenseChooser.addObject("3) Rough Terrian",   Constants.DEFENSE_ROUGH_TERRIAN);
 		defenseChooser.addObject("4) Ramparts",        Constants.DEFENSE_RAMPARTS);
 		defenseChooser.addObject("5) Rock Wall",       Constants.DEFENSE_ROCK_WALL);
-		defenseChooser.addObject("6) Cheval de Frise", Constants.DEFENSE_CHEVAL_DE_FRISE);
-		defenseChooser.addObject("7) Portcullis",      Constants.DEFENSE_PORTCULLIS);
+		defenseChooser.addObject("6) Moat",            Constants.DEFENSE_MOAT);
+//		defenseChooser.addObject("7) Cheval de Frise", Constants.DEFENSE_CHEVAL_DE_FRISE);
+//		defenseChooser.addObject("8) Portcullis",      Constants.DEFENSE_PORTCULLIS);
 		SmartDashboard.putData("Defense to cross", defenseChooser);
 		
 		// set up the chooser for the starting location a
@@ -127,7 +128,7 @@ public class Robot extends IterativeRobot
 		startingLocationChooser.addDefault("3", 3);
 		startingLocationChooser.addDefault("4", 4);
 		startingLocationChooser.addDefault("5", 5);
-		startingLocationChooser.addDefault("6", 6);
+//		startingLocationChooser.addDefault("6", 6);
 		SmartDashboard.putData("Starting Location", startingLocationChooser );
 		
 		// set up the chooser for the shooting.
@@ -220,6 +221,9 @@ public class Robot extends IterativeRobot
 				break;
 			case Constants.DEFENSE_ROCK_WALL:
 				autonomousCommand = new AutonomousRockWall(startingLocation, shotChoice);
+				break;
+			case Constants.DEFENSE_MOAT:
+				autonomousCommand = new AutonomousMoat(startingLocation, shotChoice);
 				break;
 			case Constants.DEFENSE_CHEVAL_DE_FRISE:
 				autonomousCommand = new AutonomousChevaldeFrise(startingLocation, shotChoice);

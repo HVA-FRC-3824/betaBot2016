@@ -66,7 +66,7 @@ public class Targets extends Subsystem
 	{
 		m_contoursReport = NetworkTable.getTable("GRIP/cameraTargets");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
-		m_onTargetX = Constants.IMAGE_ON_TARGET_X_POSITION;
+		m_onTargetX = Constants.IMAGE_ON_TARGET_X_POSITION_CENTER;
 	}
 
 	/*
@@ -333,8 +333,8 @@ public class Targets extends Subsystem
 			// get the area of the selected target
 			area = found_target.area;
 		
-			//	y = 9E-06x2 - 0.0896x + 267.23
-			distanceFromTarget = (9e-6 * area * area) - (0.0896 * area) + 267.23;
+			// y = 9E-06x2 - 0.1589x + 583.49
+			distanceFromTarget = (9e-6 * area * area) - (0.1589 * area) + 583.49;
 		}
 		
 		return distanceFromTarget;
