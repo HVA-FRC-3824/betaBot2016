@@ -35,11 +35,11 @@ public class Constants
 			SHOOTER_ELEVATION_POT_B               =  0.0115;
 			SHOOTER_ELEVATION_POT_C               =  0.2713;
 			
-			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.538;
-			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.262;
+			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.580;
+			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.277;
 			
-			BOUDLER_INTAKE_EXTENDED_RIGHT          = 4.14;
-			BOUDLER_INTAKE_EXTENDED_LEFT           = 4.54;
+			BOUDLER_INTAKE_EXTENDED_RIGHT          = 4.26;
+			BOUDLER_INTAKE_EXTENDED_LEFT           = 4.70;
 		}
 		else // Thing 2
 		{
