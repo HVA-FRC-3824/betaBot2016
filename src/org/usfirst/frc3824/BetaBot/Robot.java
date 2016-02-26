@@ -163,11 +163,16 @@ public class Robot extends IterativeRobot
 		}
 		
 		if(camConnected == true)
-			CameraServer.getInstance().startAutomaticCapture(driverCam);
+		{
+			// Set the driver camera resolution and frames per second
+			driverCam.setSize(320,  240);
+			driverCam.setFPS(30);
+			CameraServer.getInstance().startAutomaticCapture(driverCam);		
+		}
 
 		// Do a clean start of the image processing
-		TargetCam.waitForVisionSystem();
-		TargetCam.cleanAndStartVision();
+		if (TargetCam.waitForVisionSystem() == true)
+			TargetCam.cleanAndStartVision();
 	}
 
 	/**
@@ -183,8 +188,18 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 
+//		int button = 0;
+//		for (button = 1; button < Robot.oi.controllerJoystick.getButtonCount(); button++)
+//		{
+//			if (Robot.oi.controllerJoystick.getRawButton(button) == true)
+//				break;
+//		}
+//		SmartDashboard.putNumber("Button", button);
+
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
+//		SmartDashboard.putNumber("Right Pot", Robot.boulderIntake.getIntakeRight());
+//		SmartDashboard.putNumber("Left Pot", Robot.boulderIntake.getIntakeLeft());
 
 		Robot.targets.updateSmartDashboard();
 	}

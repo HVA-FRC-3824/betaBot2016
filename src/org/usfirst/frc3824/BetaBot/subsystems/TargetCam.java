@@ -137,7 +137,7 @@ public class TargetCam extends Subsystem
 	/*
 	 * Wait for the raspberry pi to boot and allow a connection
 	 */
-	public static void waitForVisionSystem()
+	public static boolean waitForVisionSystem()
 	{
 		int result;
 		int tryCount = 1;
@@ -146,7 +146,8 @@ public class TargetCam extends Subsystem
 
 		System.out.println("vvv Waiting to connect to RaspberryPi vvv");
 
-		while(connected == false)
+		// Give up after multiple tries
+		while((connected == false) && (tryCount < 15))
 		{
 			try {
 				System.out.println("\t---> Attempt "+String.valueOf(tryCount));
@@ -169,6 +170,9 @@ public class TargetCam extends Subsystem
 	        }
 			tryCount++;
 		}
+
+		// Return the connection state
+		return(connected);
 	}
 
 	

@@ -34,6 +34,7 @@ public class OI
     public JoystickButton jogUp;
     public JoystickButton jogDown;
     public JoystickButton intake;
+    public JoystickButton intakeNoBoulderArm;
     public JoystickButton intakeBoulder;
     public JoystickButton home;
     public JoystickButton homeBoulder;
@@ -44,8 +45,10 @@ public class OI
     public JoystickButton shoot5;
     public JoystickButton boulderIntakeLow;
     public JoystickButton shooterWheelsOut;
+    public JoystickButton shooterWheelsOutSlow;
     public JoystickButton shooterWheelsIn;
     public JoystickButton shooterWheelsOutReleased;
+    public JoystickButton shooterWheelsOutSlowReleased;
     public JoystickButton shooterWheelsInReleased;
     public JoystickButton intakePotEnable;
     public Joystick controllerJoystick;
@@ -65,14 +68,18 @@ public class OI
         
         intakePotEnable = new JoystickButton(controllerJoystick, 6);
         intakePotEnable.whileHeld(new BoulderIntakeControl(-600.0, false));
-        shooterWheelsInReleased = new JoystickButton(controllerJoystick, 19);
+        shooterWheelsInReleased = new JoystickButton(controllerJoystick, 13);
         shooterWheelsInReleased.whenReleased(new ShooterSetWheelSpeed(0));
+        shooterWheelsOutSlowReleased = new JoystickButton(controllerJoystick, 19);
+        shooterWheelsOutSlowReleased.whenReleased(new ShooterSetWheelSpeed(0));
         shooterWheelsOutReleased = new JoystickButton(controllerJoystick, 20);
         shooterWheelsOutReleased.whenReleased(new ShooterSetWheelSpeed(0));
-        shooterWheelsIn = new JoystickButton(controllerJoystick, 19);
+        shooterWheelsIn = new JoystickButton(controllerJoystick, 13);
         shooterWheelsIn.whenPressed(new ShooterSetWheelSpeed(-1));
+        shooterWheelsOutSlow = new JoystickButton(controllerJoystick, 19);
+        shooterWheelsOutSlow.whenPressed(new ShooterSetWheelSpeed(0.5));
         shooterWheelsOut = new JoystickButton(controllerJoystick, 20);
-        shooterWheelsOut.whenPressed(new ShooterSetWheelSpeed(1));
+        shooterWheelsOut.whenPressed(new ShooterSetWheelSpeed(1.0));
         boulderIntakeLow = new JoystickButton(controllerJoystick, 14);
         boulderIntakeLow.whileHeld(new BoulderIntakeControl(-1400.0, false));
         shoot5 = new JoystickButton(controllerJoystick, 1);
@@ -91,6 +98,8 @@ public class OI
         home.whenPressed(new ShooterPositionControl(-1700.0));
         intakeBoulder = new JoystickButton(controllerJoystick, 18);
         intakeBoulder.whenPressed(new BoulderIntakeControl(-1800.0, true));
+        intakeNoBoulderArm = new JoystickButton(controllerJoystick, 8);
+        intakeNoBoulderArm.whenPressed(new ShooterPositionControl(-1800.0));
         intake = new JoystickButton(controllerJoystick, 18);
         intake.whenPressed(new ShooterPositionControl(-1800.0));
         jogDown = new JoystickButton(controllerJoystick, 10);

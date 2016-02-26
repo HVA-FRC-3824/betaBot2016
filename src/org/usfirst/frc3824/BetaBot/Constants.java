@@ -35,11 +35,11 @@ public class Constants
 			SHOOTER_ELEVATION_POT_B               =  0.0115;
 			SHOOTER_ELEVATION_POT_C               =  0.2713;
 			
-			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.580;
-			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.277;
+			BOUDLER_INTAKE_RETRACTED_RIGHT         = 0.524;
+			BOUDLER_INTAKE_RETRACTED_LEFT          = 0.219;
 			
-			BOUDLER_INTAKE_EXTENDED_RIGHT          = 4.26;
-			BOUDLER_INTAKE_EXTENDED_LEFT           = 4.70;
+			BOUDLER_INTAKE_EXTENDED_RIGHT          = 4.236;
+			BOUDLER_INTAKE_EXTENDED_LEFT           = 4.630;
 		}
 		else // Thing 2
 		{
@@ -163,4 +163,5 @@ public class Constants
 	// ***************************************************************************************
 	// Autonomous constants
 	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE = 38.5;
+	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 340.0;
 }
