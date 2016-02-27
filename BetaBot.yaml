@@ -428,13 +428,9 @@ Children:
         default: []
         name: Default command parameters
         validators: null
-        value:
-        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: IntakePosition,
-          type: double, value: '-1'}
-        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: roll, type: boolean,
-          value: 'false'}
+        value: []
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Default Command, type: Command, validators: null, value: Boulder Intake Control}
+        name: Default Command, type: Command, validators: null, value: None}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
         default: []
         name: Constants

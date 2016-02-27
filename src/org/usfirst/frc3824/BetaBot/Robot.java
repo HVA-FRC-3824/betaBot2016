@@ -117,8 +117,8 @@ public class Robot extends IterativeRobot
 		defenseChooser.addObject("4) Ramparts",        Constants.DEFENSE_RAMPARTS);
 		defenseChooser.addObject("5) Rock Wall",       Constants.DEFENSE_ROCK_WALL);
 		defenseChooser.addObject("6) Moat",            Constants.DEFENSE_MOAT);
-//		defenseChooser.addObject("7) Cheval de Frise", Constants.DEFENSE_CHEVAL_DE_FRISE);
-//		defenseChooser.addObject("8) Portcullis",      Constants.DEFENSE_PORTCULLIS);
+		defenseChooser.addObject("7) Cheval de Frise", Constants.DEFENSE_CHEVAL_DE_FRISE);
+		defenseChooser.addObject("8) Portcullis",      Constants.DEFENSE_PORTCULLIS);
 		SmartDashboard.putData("Defense to cross", defenseChooser);
 		
 		// set up the chooser for the starting location a
@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot
 
 		// Add a USB camera for the Driver
 		boolean camConnected = false;
-		for(int camNum = 0; camNum <= 2; camNum++)
+		for(int camNum = 3; camNum <= 3; camNum++)
 		{
 			try
 			{
@@ -198,8 +198,8 @@ public class Robot extends IterativeRobot
 
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
-//		SmartDashboard.putNumber("Right Pot", Robot.boulderIntake.getIntakeRight());
-//		SmartDashboard.putNumber("Left Pot", Robot.boulderIntake.getIntakeLeft());
+		SmartDashboard.putNumber("Right Pot", Robot.boulderIntake.getIntakeRight());
+		SmartDashboard.putNumber("Left Pot", Robot.boulderIntake.getIntakeLeft());
 
 		Robot.targets.updateSmartDashboard();
 	}

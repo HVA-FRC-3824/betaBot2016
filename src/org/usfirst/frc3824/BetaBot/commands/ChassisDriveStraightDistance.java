@@ -45,6 +45,8 @@ public class ChassisDriveStraightDistance extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
+		System.out.println("In ChassisDriveStraightDistance initialize");
+		
 		// Set the PID up for driving straight
 		Robot.chassis.configurePIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
 		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
@@ -69,6 +71,8 @@ public class ChassisDriveStraightDistance extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
+		System.out.println("In ChassisDriveStraightDistance end");
+
 		// disable the PID and stop the robot
 		Robot.chassis.disablePIDs();
 		Robot.chassis.stop();
@@ -78,6 +82,8 @@ public class ChassisDriveStraightDistance extends Command
 	// subsystems is scheduled to run
 	protected void interrupted()
 	{
+		System.out.println("In ChassisDriveStraightDistance interrupted");
+
 		// call the end method
 		this.end();
 	}

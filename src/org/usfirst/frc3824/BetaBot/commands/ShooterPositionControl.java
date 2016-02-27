@@ -46,7 +46,7 @@ public class ShooterPositionControl extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-//		System.out.println("Shooter Position initialize");
+		System.out.println("Shooter Position initialize");
 		
 		// Get the present shooter elevator set point and wheel speed
 		m_ActualShooterSetPoint = Robot.shooter.GetShooterAngleSetPoint();
@@ -118,19 +118,20 @@ public class ShooterPositionControl extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
+		System.out.println("Shooter Position isFinished");
 		return true;
 	}
 
 	// Called once after isFinished returns true
 	protected void end()
 	{
-//		System.out.println("Shooter Position end");	
+		System.out.println("Shooter Position end");	
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted()
 	{
-
+		System.out.println("Shooter Position interrupted");
 	}
 }
