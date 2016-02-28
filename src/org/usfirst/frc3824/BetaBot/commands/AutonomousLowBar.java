@@ -34,7 +34,7 @@ public class AutonomousLowBar extends CommandGroup
 
 		// Drive over the low bar with the shooter at 0 degrees
 		addParallel(new ShooterPositionControl(0.0));
-		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.7));
+		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.8));
 
 		// Raise the shooter while turning towards the goal
 		addSequential(new ShooterPositionControl(shooterHeight));

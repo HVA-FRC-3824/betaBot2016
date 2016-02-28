@@ -104,7 +104,7 @@ public class Constants
 	public static double IMAGE_TURN_I                          = 0.004;	// Preference name: ImageTurn_I
 	public static double IMAGE_TURN_D                          = 0.008;	// Preference name: ImageTurn_D
 																		// Preference name: ImageTurn_MaxAbsOutput
-	public static int    IMAGE_ON_TARGET_X_POSITION_CENTER     = 171; // was 168 // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_X_POSITION_CENTER     = 165; // was 171 // X location of the "onTarget" position
 
 	public static int    IMAGE_WIDTH                           = 320;	// default image width
 	public static int    IMAGE_HEIGHT                          = 240;   // default image height
@@ -162,6 +162,6 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Autonomous constants
-	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE = 36.5;
+	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE = 37.5;
 	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 340.0;
 }

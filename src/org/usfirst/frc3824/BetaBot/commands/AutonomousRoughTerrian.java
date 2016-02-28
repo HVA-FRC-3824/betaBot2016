@@ -21,7 +21,7 @@ import org.usfirst.frc3824.BetaBot.subsystems.*;
 public class AutonomousRoughTerrian extends CommandGroup
 {
 	public double shooterHeight      = Constants.AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE;
-	public double driveDistance      = 340.0;
+	public double driveDistance      = 380.0;
 	public double position2TurnAngle = 80.0;
 	public double positionTurnAngle  = 20.0;
 	public double LiDarDistance      = Constants.AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET;
