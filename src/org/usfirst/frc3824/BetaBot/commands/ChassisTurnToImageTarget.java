@@ -64,12 +64,12 @@ public class ChassisTurnToImageTarget extends Command
 		System.out.println("Chassis turn to image initialize");
 		
 		// Set the PID up for driving straight
-		Robot.chassis.configurePIDs(Constants.IMAGE_TURN_P, 
+		Robot.chassis.configureGyroPIDs(Constants.IMAGE_TURN_P, 
 									Constants.IMAGE_TURN_I, 
 									Constants.IMAGE_TURN_D, 
 									heading + targetOffset, 0.0, 0.0);	
 		
-		SmartDashboard.putNumber("ImageTurn Angle SetPoint", Robot.chassis.getHeadingSetpoint());
+		SmartDashboard.putNumber("ImageTurn Angle SetPoint", Robot.chassis.getGyroHeadingSetpoint());
 		SmartDashboard.putNumber("ImageTurn Target Offset", targetOffset);
 
 		// Initialize the state machine state
@@ -90,7 +90,7 @@ public class ChassisTurnToImageTarget extends Command
 	protected void execute()
 	{
 		double offsetAngle = 0;
-		double error       = Math.abs(Robot.chassis.getPID_Error());
+		double error       = Math.abs(Robot.chassis.getGyroPID_Error());
 
 		// The first state uses a large acceptance angle
 		if ((m_state == STATE_1) && (error < 7.0))
@@ -115,7 +115,7 @@ public class ChassisTurnToImageTarget extends Command
 					offsetAngle = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
 
 					// Update the heading PID with the new gyro heading and target offset angle
-					Robot.chassis.setPID_Heading(Robot.chassis.getCurrentHeading() + offsetAngle);
+					Robot.chassis.setGyroPID_Heading(Robot.chassis.getCurrentHeading() + offsetAngle);
 					
 					// Reset the timer to hold the next error tolerance
 					m_Timer.reset();
@@ -141,7 +141,7 @@ public class ChassisTurnToImageTarget extends Command
 		}
 				
 		SmartDashboard.putNumber("ImageTurn Current Angle", Robot.chassis.getCurrentHeading());
-		SmartDashboard.putNumber("ImageTurn PID Error", Robot.chassis.getPID_Error());
+		SmartDashboard.putNumber("ImageTurn PID Error", Robot.chassis.getGyroPID_Error());
 		SmartDashboard.putNumber("ImageTurn OffsetFromCenterAngle", offsetAngle);
 		SmartDashboard.putNumber("ImageTurn State", m_state);
 		SmartDashboard.putNumber("ImageTurn Timer", m_Timer.get());
@@ -163,7 +163,7 @@ public class ChassisTurnToImageTarget extends Command
 		System.out.println("Chassis turn to image end");
 		
 		// disable the PID and stop the robot
-		Robot.chassis.disablePIDs();
+		Robot.chassis.disableAllPIDs();
 		Robot.chassis.stop();
 	}
 

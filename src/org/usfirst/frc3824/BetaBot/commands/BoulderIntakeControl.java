@@ -74,7 +74,7 @@ public class BoulderIntakeControl extends Command
 			// Intake Position
 			m_desired_position = 0.95;
 		}
-		else if (m_IntakePosition == Constants.BOULDER_INTAKE_MANUFAL_BUTTON)
+		else if (m_IntakePosition == Constants.BOULDER_INTAKE_MANUAL_BUTTON)
 		{
 			m_manual_enabled = true;
 			

@@ -65,7 +65,7 @@ public class ChassisTurnAngle extends Command
 //		                    		Preferences.getInstance().getDouble("Turn D", Constants.DRIVETRAIN_TURN_ANGLE_D), 
 //	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
 	
-		Robot.chassis.configurePIDs(Constants.TURN_ANGLE_P, 
+		Robot.chassis.configureGyroPIDs(Constants.TURN_ANGLE_P, 
 		                    		Constants.TURN_ANGLE_I,
 		                    		Constants.TURN_ANGLE_D, 
 	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
@@ -93,8 +93,8 @@ public class ChassisTurnAngle extends Command
 			return(true);
 		
 		// return PIDcontroller.OnTarget();
-		if (Math.abs(Robot.chassis.getHeadingSetpoint() - 
-		             Robot.chassis.getPID_Heading()) < Constants.TURN_THRESHOLD)
+		if (Math.abs(Robot.chassis.getGyroHeadingSetpoint() - 
+		             Robot.chassis.getGyroPID_Heading()) < Constants.TURN_THRESHOLD)
 		{
 			// Ensure hold position for time out time
 			if (m_OnTargetTimer.get() > 0.1)
@@ -118,7 +118,7 @@ public class ChassisTurnAngle extends Command
 //		System.out.println("Chassis turn angle end");
 		
 		// disable the PID controller
-		Robot.chassis.disablePIDs();
+		Robot.chassis.disableAllPIDs();
 		Robot.chassis.stop();
 		m_OnTargetTimer.stop();
 	}

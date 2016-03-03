@@ -72,7 +72,7 @@ public class ChassisDriveStraight extends Command
 	protected void initialize()
 	{
 		// Set the PID up for driving straight
-		Robot.chassis.configurePIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
+		Robot.chassis.configureGyroPIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
 	                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
 	                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
 	                                Robot.chassis.getCurrentHeading(), 0.0, m_DrivePower);
@@ -99,7 +99,7 @@ public class ChassisDriveStraight extends Command
 	protected void end()
 	{
 		// disable the PID and stop the robot
-		Robot.chassis.disablePIDs();
+		Robot.chassis.disableAllPIDs();
 		Robot.chassis.stop();
 		m_Timer.stop();
 	}

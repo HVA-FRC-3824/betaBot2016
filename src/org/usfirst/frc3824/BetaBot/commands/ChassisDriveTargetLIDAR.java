@@ -53,7 +53,7 @@ public class ChassisDriveTargetLIDAR extends Command
 		boolean driveForward = (Robot.chassis.getLidarDistanceCentimeters() - m_TargetDistance > 0.0);
 
 		// Set the PID up for driving straight
-		Robot.chassis.configurePIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
+		Robot.chassis.configureGyroPIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
 		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
 		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
 		                            Robot.chassis.getCurrentHeading(), 0.0, 

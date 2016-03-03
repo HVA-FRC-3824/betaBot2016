@@ -129,7 +129,7 @@ public class Constants
 	public static double BOULDER_INTAKE_HOME_BUTTON           = -1700.0;  // Button 17
 	public static double BOULDER_INTAKE_BOULDER_BUTTON        = -1800.0;  // Button 18
     public static double BOULDER_INTAKE_MAX_EXTEND_BUTTON     = -1400.0;  // Button 14
-    public static double BOULDER_INTAKE_MANUFAL_BUTTON        =  -600.0;  // Button  6
+    public static double BOULDER_INTAKE_MANUAL_BUTTON        =  -600.0;  // Button  6
 	
 	// ***************************************************************************************
 	// Shooter Elevation constants
@@ -164,4 +164,30 @@ public class Constants
 	// Autonomous constants
 	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  37.5;
 	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 340.0;
+	
+	// ***************************************************************************************
+	// Automated aim and shoot constants
+	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 10;
+	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 5;
+	public static int IMAGE_SMALL_PIXEL_OFFSET_Y 			  = 2;
+	
+	public static double IMAGE_LARGE_STEP_ANGLE_Y             = 5.0;
+	public static double IMAGE_MEDIUM_STEP_ANGLE_Y            = 2.0;
+	public static double IMAGE_SMALL_STEP_ANGLE_Y             = 0.5;
+
+	public static int IMAGE_LARGE_PIXEL_OFFSET_X 			  = 10;
+	public static int IMAGE_MEDIUM_PIXEL_OFFSET_X 			  = 5;
+	public static int IMAGE_SMALL_PIXEL_OFFSET_X 			  = 2;
+	
+	public static int IMAGE_LARGE_STEP_ANGLE_X                = 40;
+	public static int IMAGE_MEDIUM_STEP_ANGLE_X               = 20;
+	public static int IMAGE_SMALL_STEP_ANGLE_X                = 5;
+
+	public static double IMAGE_ANGLE_ENCODER_P                = 0.01;
+	public static double IMAGE_ANGLE_ENCODER_I                = 0.001;
+	public static double IMAGE_ANGLE_ENCODER_D                = 0.0;
+	
+	public static int IMAGE_ON_TARGET_X                       = 2;
+	public static int IMAGE_ON_TARGET_Y                       = 2;
+
 }

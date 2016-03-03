@@ -13,6 +13,7 @@ package org.usfirst.frc3824.BetaBot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 
+import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
 
 /**
@@ -47,7 +48,6 @@ public class VisionAutomatedAimAndShoot extends Command
 	protected void initialize()
 	{
 		// Initialize turn PID
-		
 
 		// reset and start the timer
 		m_timer.reset();
@@ -95,17 +95,76 @@ public class VisionAutomatedAimAndShoot extends Command
 
 	private void determine_shooter_height()
 	{
+		// Get present shooter angle
+		double shooterAngle = Robot.shooter.GetShooterAngleSetPoint();
 
+		// Ensure target has been detected
+		if (Robot.targets.getTargetPixel_Y() > 0)
+		{
+			// Calculate desired shooter angle
+			int pixelYOffset = targetShooterPositionY() - Robot.targets.getTargetPixel_Y();
+
+			// Adjust shooter angle based on distance from target
+			if (pixelYOffset > Constants.IMAGE_LARGE_PIXEL_OFFSET_Y)
+				shooterAngle += Constants.IMAGE_LARGE_STEP_ANGLE_Y;
+
+			else if (pixelYOffset > Constants.IMAGE_MEDIUM_PIXEL_OFFSET_Y)
+				shooterAngle += Constants.IMAGE_MEDIUM_STEP_ANGLE_Y;
+
+			else if (pixelYOffset > Constants.IMAGE_SMALL_PIXEL_OFFSET_Y)
+				shooterAngle += Constants.IMAGE_SMALL_STEP_ANGLE_Y;
+
+			Robot.shooter.setShooterElevationSetpoint(shooterAngle);
+		}
 	}
 
 	private void determine_robot_turn_angle()
 	{
+		// Get present encoder position
+		double encoderPosition = Robot.chassis.getEncoderSetpoint();
+
+		// Ensure target has been detected
+		if (Robot.targets.getTargetPixel_X() > 0)
+		{
+			// Calculate desired shooter angle
+			int pixelXOffset = targetShooterPositionX() - Robot.targets.getTargetPixel_X();
+
+			// Adjust shooter angle based on distance from target
+			if (pixelXOffset > Constants.IMAGE_LARGE_PIXEL_OFFSET_X)
+				encoderPosition += Constants.IMAGE_LARGE_STEP_ANGLE_X;
+
+			else if (pixelXOffset > Constants.IMAGE_MEDIUM_PIXEL_OFFSET_X)
+				encoderPosition += Constants.IMAGE_MEDIUM_STEP_ANGLE_X;
+
+			else if (pixelXOffset > Constants.IMAGE_SMALL_PIXEL_OFFSET_X)
+				encoderPosition += Constants.IMAGE_SMALL_STEP_ANGLE_X;
+
+			Robot.chassis.setEncoderPID_Setpoint(encoderPosition);
+		}
 
 	}
 
 	private boolean robot_aligned()
 	{
 		// Still aligning robot
-		return(false);
+		if (targetShooterPositionX() - Robot.targets.getTargetPixel_X() < Constants.IMAGE_LARGE_PIXEL_OFFSET_X
+				&& targetShooterPositionY() - Robot.targets.getTargetPixel_Y() < Constants.IMAGE_LARGE_PIXEL_OFFSET_Y)
+		{
+			return true;
+		} else
+		{
+			return false;
+		}
+	}
+
+	int targetShooterPositionX()
+	{
+		return Constants.IMAGE_WIDTH / 2;
+	}
+
+	int targetShooterPositionY()
+	{
+
+		return Constants.IMAGE_HEIGHT / 2;
 	}
 }

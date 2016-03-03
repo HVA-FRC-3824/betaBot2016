@@ -56,15 +56,21 @@ public class Chassis extends Subsystem
 	// not set by the controller constructor can be set by a command directly
 	private double m_magnitude;
 
-	// Declare the PID Output class prototype
-	// (See class at the end of the source file)
-	private AnglePIDOutput angleOutput = new AnglePIDOutput();
-
 	// Instantiate the PID controller for driving in the specified direction
 	private PIDController angleGyroController = new PIDController(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
 	                                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
 	                                                              Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
-	                                                              gyro, angleOutput);
+	                                                              gyro, new AnglePIDOutput());
+	
+	private PIDController angleEncoderControllerRight = new PIDController(Constants.IMAGE_ANGLE_ENCODER_P, 
+            Constants.IMAGE_ANGLE_ENCODER_I, 
+            Constants.IMAGE_ANGLE_ENCODER_D, 
+            encoderRight, new SpeedControllerPIDOutput(rightMotorA, rightMotorB));
+	
+	private PIDController angleEncoderControllerLeft = new PIDController(Constants.IMAGE_ANGLE_ENCODER_P, 
+            Constants.IMAGE_ANGLE_ENCODER_I, 
+            Constants.IMAGE_ANGLE_ENCODER_D, 
+            encoderLeft, new SpeedControllerPIDOutput(leftMotorA, leftMotorB));
 
 	/**
 	 * Method to set the default command for the Chassis
@@ -105,7 +111,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to configure the gyro based turn/drive straight PID controller
 	 */
-	public void configurePIDs(double P, double I, double D, double desiredHeading, double tolerance, double power)
+	public void configureGyroPIDs(double P, double I, double D, double desiredHeading, double tolerance, double power)
 	{
 		// update the drive power
 		m_magnitude = power;
@@ -128,16 +134,12 @@ public class Chassis extends Subsystem
 		
 		// enable the PID
 		angleGyroController.enable();
-
-//		SmartDashboard.putNumber("angle P", angleGyroController.getP());
-//		SmartDashboard.putNumber("angle I", angleGyroController.getI());
-//		SmartDashboard.putNumber("angle D", angleGyroController.getD());
 	}
-	
+
 	/**
 	 * Method to set the PID heading
 	 */
-	public void setPID_Heading(double desiredHeading)
+	public void setGyroPID_Heading(double desiredHeading)
 	{
 		// Set the PID desired heading
 		angleGyroController.setSetpoint(desiredHeading);
@@ -146,7 +148,7 @@ public class Chassis extends Subsystem
 	/**
 	 *  Method to get the PID target value (heading)
 	 */
-	public double getHeadingSetpoint()
+	public double getGyroHeadingSetpoint()
 	{
 		return angleGyroController.getSetpoint();
 	}
@@ -154,7 +156,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to get the PID target value (heading)
 	 */
-	public double getPID_Heading()
+	public double getGyroPID_Heading()
 	{
 		return gyro.pidGet();
 	}
@@ -162,20 +164,80 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to get the PID error
 	 */
-	public double getPID_Error()
+	public double getGyroPID_Error()
 	{
 		return angleGyroController.getError();
 	}
 	
 	/**
-	 * Method to disable the angle PId controller
+	 * Method to disable the angle PID controller
 	 */
-	public void disablePIDs()
+	public void disableAllPIDs()
 	{
 		// disable the PID
 		angleGyroController.disable();
+		angleEncoderControllerLeft.disable();
+		angleEncoderControllerRight.disable();
 	}
 
+	/**
+	 * Method to configure the encoder based turn PID controller
+	 */
+	public void configureEncoderPIDs(double P, double I, double D, double desiredEncoderValue, double tolerance)
+	{
+		// Reset Encoder Distance
+		resetEncoders();
+		
+		// Reset the PID controller
+		angleEncoderControllerLeft.disable();
+		angleEncoderControllerLeft.reset();
+		angleEncoderControllerRight.disable();
+		angleEncoderControllerRight.reset();
+		
+		// Set the PID gains
+		angleEncoderControllerLeft.setPID(P,I,D);
+		angleEncoderControllerRight.setPID(P,I,D);
+	
+		// Set the PID tolerance
+		angleEncoderControllerLeft.setAbsoluteTolerance(tolerance);
+		angleEncoderControllerRight.setAbsoluteTolerance(tolerance);
+	
+		// Set the PID desired set point
+		angleEncoderControllerLeft.setSetpoint(desiredEncoderValue);
+		angleEncoderControllerRight.setSetpoint(-desiredEncoderValue);
+		
+		// enable the PID
+		angleEncoderControllerLeft.enable();
+		angleEncoderControllerRight.enable();
+	}
+	
+
+	/**
+	 * Method to set the PID set point
+	 */
+	public void setEncoderPID_Setpoint(double desiredEncoderValue)
+	{
+		// Set the PID desired set point
+		angleEncoderControllerLeft.setSetpoint(desiredEncoderValue);
+		angleEncoderControllerRight.setSetpoint(-desiredEncoderValue);
+	}
+
+	/**
+	 *  Method to get the PID target value (heading)
+	 */
+	public double getEncoderSetpoint()
+	{
+		return angleEncoderControllerLeft.getSetpoint();
+	}
+
+	/**
+	 * Method to get the PID error
+	 */
+	public double getEncoderPID_Error()
+	{
+		return angleEncoderControllerLeft.getError();
+	}
+	
 	/**
 	 * Method to stop the chassis drive motors
 	 */
@@ -305,6 +367,27 @@ public class Chassis extends Subsystem
 		}
 	}
 	
+	public class SpeedControllerPIDOutput implements PIDOutput
+	{
+		private SpeedController m_speedControllerA;
+		private SpeedController m_speedControllerB;
+		
+		public SpeedControllerPIDOutput(SpeedController speedControllerA, SpeedController speedControllerB)
+		{
+			m_speedControllerA = speedControllerA;
+			m_speedControllerB = speedControllerB;
+		}
+		
+		/**
+		 * Virtual function to receive the PID output and set the drive motors 
+		 */
+		public void pidWrite(double PIDoutput)
+		{				
+			m_speedControllerA.set(PIDoutput);
+			m_speedControllerB.set(PIDoutput);
+		}
+	}
+	
 	//-------------------------------------------
 	// Lidar commands for Chassis
 	//-------------------------------------------
@@ -312,4 +395,5 @@ public class Chassis extends Subsystem
 	{
 		return lidar.getDistanceCentimeters();
 	}
+
 }
