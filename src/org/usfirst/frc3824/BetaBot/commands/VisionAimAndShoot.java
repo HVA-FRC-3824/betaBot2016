@@ -49,10 +49,10 @@ public class VisionAimAndShoot extends CommandGroup
 		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_CENTER));
 		addSequential(new VisionShooterHeight());
 		addSequential(new ShooterSetWheelSpeed(1.0));
-		
+
 		// Allow time for the shooter to reach the shoot height
-		addSequential(new Delay(1.0));
-		              
+		addSequential(new Delay(1.5));
+
 		// Shoot into the goal
 		addSequential(new ShooterShoot(true));
 		addSequential(new Delay(0.5));
