@@ -181,6 +181,14 @@ public class Chassis extends Subsystem
 	}
 
 	/**
+	 * Method to enable the encoder based turn PID controller with default values
+	 */
+	public void enableEncoderPIDs()
+	{
+		configureEncoderPIDs(Constants.IMAGE_ANGLE_ENCODER_P, Constants.IMAGE_ANGLE_ENCODER_I, Constants.IMAGE_ANGLE_ENCODER_D, 0.0, 0.1);
+	}
+	
+	/**
 	 * Method to configure the encoder based turn PID controller
 	 */
 	public void configureEncoderPIDs(double P, double I, double D, double desiredEncoderValue, double tolerance)
@@ -209,8 +217,7 @@ public class Chassis extends Subsystem
 		// enable the PID
 		angleEncoderControllerLeft.enable();
 		angleEncoderControllerRight.enable();
-	}
-	
+	}	
 
 	/**
 	 * Method to set the PID set point
