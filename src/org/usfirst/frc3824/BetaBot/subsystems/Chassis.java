@@ -216,7 +216,7 @@ public class Chassis extends Subsystem
 		
 		// enable the PID
 		angleEncoderControllerLeft.enable();
-		angleEncoderControllerRight.enable();
+		//angleEncoderControllerRight.enable();
 	}	
 
 	/**
@@ -226,6 +226,7 @@ public class Chassis extends Subsystem
 	{
 		// Set the PID desired set point
 		angleEncoderControllerLeft.setSetpoint(desiredEncoderValue);
+
 		angleEncoderControllerRight.setSetpoint(-desiredEncoderValue);
 	}
 
@@ -392,6 +393,7 @@ public class Chassis extends Subsystem
 		{				
 			m_speedControllerA.set(PIDoutput);
 			m_speedControllerB.set(PIDoutput);
+			SmartDashboard.putNumber("Encoder Speed Controller output: ", PIDoutput);
 		}
 	}
 	

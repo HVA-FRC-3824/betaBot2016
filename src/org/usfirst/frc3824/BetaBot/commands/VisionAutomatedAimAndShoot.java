@@ -11,6 +11,7 @@
 package org.usfirst.frc3824.BetaBot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc3824.BetaBot.Constants;
@@ -48,7 +49,7 @@ public class VisionAutomatedAimAndShoot extends Command
 	protected void initialize()
 	{
 		// Initialize turn PID
-		Robot.chassis.enableEncoderPIDs();
+//		Robot.chassis.enableEncoderPIDs();
 		
 		// reset and start the timer
 		m_timer.reset();
@@ -62,16 +63,16 @@ public class VisionAutomatedAimAndShoot extends Command
 		if (!m_shooterPositionOut)
 		{
 			// Shoot if the robot is properly aligned
-			if (robot_aligned())
-			{
-				Robot.shooter.ShooterShootBallControl(true);
-				m_shooterPositionOut = true;
-				
-				// Reset the timer for holding shooter position out
-				m_timer.reset();
-			} 
+//			if (robot_aligned())
+//			{
+//				Robot.shooter.ShooterShootBallControl(true);
+//				m_shooterPositionOut = true;
+//				
+//				// Reset the timer for holding shooter position out
+//				m_timer.reset();
+//			} 
 			// Determine if a new image should be processed
-			else if (m_timer.get() > 1.0)
+			if (m_timer.get() > 0.12)
 			{
 				// Adjust the robot angle and shooter height
 				determine_shooter_height();
@@ -96,6 +97,8 @@ public class VisionAutomatedAimAndShoot extends Command
 		// Bring shooter piston back in
 		Robot.shooter.ShooterShootBallControl(false);
 
+		Robot.chassis.disableAllPIDs();
+		
 		m_timer.stop();
 	}
 
@@ -115,17 +118,27 @@ public class VisionAutomatedAimAndShoot extends Command
 		if (Robot.targets.getTargetPixel_Y() > 0)
 		{
 			// Calculate desired shooter angle
+			// NOTE that the image (0,0) pixel is top left corner
+			// If pixelYOffset is positve, then target is too low
 			int pixelYOffset = targetShooterPositionY() - Robot.targets.getTargetPixel_Y();
-
+			SmartDashboard.putNumber("Auto Pixel Y Offset", pixelYOffset);
+			
+			int isPixelYOffsetPositive = 1;
+			if (pixelYOffset < 0)
+			{
+				isPixelYOffsetPositive = -1;
+				pixelYOffset *= -1;
+			}
+			
 			// Adjust shooter angle based on distance from target
 			if (pixelYOffset > Constants.IMAGE_LARGE_PIXEL_OFFSET_Y)
-				shooterAngle += Constants.IMAGE_LARGE_STEP_ANGLE_Y;
+				shooterAngle += isPixelYOffsetPositive * Constants.IMAGE_LARGE_STEP_ANGLE_Y;
 
 			else if (pixelYOffset > Constants.IMAGE_MEDIUM_PIXEL_OFFSET_Y)
-				shooterAngle += Constants.IMAGE_MEDIUM_STEP_ANGLE_Y;
+				shooterAngle += isPixelYOffsetPositive * Constants.IMAGE_MEDIUM_STEP_ANGLE_Y;
 
 			else if (pixelYOffset > Constants.IMAGE_SMALL_PIXEL_OFFSET_Y)
-				shooterAngle += Constants.IMAGE_SMALL_STEP_ANGLE_Y;
+				shooterAngle += isPixelYOffsetPositive * Constants.IMAGE_SMALL_STEP_ANGLE_Y;
 
 			Robot.shooter.setShooterElevationSetpoint(shooterAngle);
 		}
@@ -141,6 +154,14 @@ public class VisionAutomatedAimAndShoot extends Command
 		{
 			// Calculate desired shooter angle
 			int pixelXOffset = targetShooterPositionX() - Robot.targets.getTargetPixel_X();
+			SmartDashboard.putNumber("Auto Pixel X Offset", pixelXOffset);
+			
+			int isPixelXOffsetPositive = 1;
+			if (pixelXOffset < 0)
+			{
+				isPixelXOffsetPositive = -1;
+				pixelXOffset *= -1;
+			}
 
 			// Adjust shooter angle based on distance from target
 			if (pixelXOffset > Constants.IMAGE_LARGE_PIXEL_OFFSET_X)
@@ -154,6 +175,7 @@ public class VisionAutomatedAimAndShoot extends Command
 
 			Robot.chassis.setEncoderPID_Setpoint(encoderPosition);
 		}
+		
 
 	}
 

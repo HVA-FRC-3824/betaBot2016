@@ -167,21 +167,21 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
-	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 10;
-	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 5;
-	public static int IMAGE_SMALL_PIXEL_OFFSET_Y 			  = 2;
+	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 40;
+	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 20;
+	public static int IMAGE_SMALL_PIXEL_OFFSET_Y 			  = 0;
 	
-	public static double IMAGE_LARGE_STEP_ANGLE_Y             = 5.0;
-	public static double IMAGE_MEDIUM_STEP_ANGLE_Y            = 2.0;
-	public static double IMAGE_SMALL_STEP_ANGLE_Y             = 0.5;
+	public static double IMAGE_LARGE_STEP_ANGLE_Y             = 2.0;
+	public static double IMAGE_MEDIUM_STEP_ANGLE_Y            = 1.0;
+	public static double IMAGE_SMALL_STEP_ANGLE_Y             = 0.1;
 
-	public static int IMAGE_LARGE_PIXEL_OFFSET_X 			  = 10;
-	public static int IMAGE_MEDIUM_PIXEL_OFFSET_X 			  = 5;
-	public static int IMAGE_SMALL_PIXEL_OFFSET_X 			  = 2;
+	public static int IMAGE_LARGE_PIXEL_OFFSET_X 			  = 40;
+	public static int IMAGE_MEDIUM_PIXEL_OFFSET_X 			  = 20;
+	public static int IMAGE_SMALL_PIXEL_OFFSET_X 			  = 0;
 	
-	public static int IMAGE_LARGE_STEP_ANGLE_X                = 40;
-	public static int IMAGE_MEDIUM_STEP_ANGLE_X               = 20;
-	public static int IMAGE_SMALL_STEP_ANGLE_X                = 5;
+	public static int IMAGE_LARGE_STEP_ANGLE_X                = 10;
+	public static int IMAGE_MEDIUM_STEP_ANGLE_X               = 5;
+	public static int IMAGE_SMALL_STEP_ANGLE_X                = 1;
 
 	public static double IMAGE_ANGLE_ENCODER_P                = 0.01;
 	public static double IMAGE_ANGLE_ENCODER_I                = 0.001;

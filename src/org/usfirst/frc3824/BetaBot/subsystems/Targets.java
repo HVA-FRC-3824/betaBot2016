@@ -84,7 +84,7 @@ public class Targets extends Subsystem
 		m_positionFromOnTargetXNormalized = 0.0;
 		target found_target;
 		
-		System.out.println("In getTargetOffsetFromCenterNormalized: " + whichTarget);	
+//		System.out.println("In getTargetOffsetFromCenterNormalized: " + whichTarget);	
 		
 		// get the center of the largest target in view. We are assuming that
 		// the
@@ -188,8 +188,8 @@ public class Targets extends Subsystem
 		int maxAreaIndex  = -1;
 		target largest_target = new target();
 
-		try
-		{
+//		try
+//		{
 			// Loop through all targets
 			for (int areaIndex = 0; areaIndex < areas.length; areaIndex++)
 			{
@@ -217,12 +217,12 @@ public class Targets extends Subsystem
 				// No target found so return center
 				largest_target = null;
 			}
-		}
-		catch (Exception e)
-		{
-			System.out.println("Exception getLargestTarget: " + e);
-			largest_target = null;
-		}
+//		}
+//		catch (Exception e)
+//		{
+//			System.out.println("Exception getLargestTarget: " + e);
+//			largest_target = null;
+//		}
 
 		// return the X position of the maximum area target
 		return largest_target;
@@ -241,10 +241,10 @@ public class Targets extends Subsystem
 		double[] heights    = m_contoursReport.getNumberArray("height",  m_defaultValue);
 		target found_target = new target();
 		
-		System.out.println("In getSelectedTarget: " + whichTarget);
+		System.out.println("In getSelectedTarget: Targets" + areas.length);
 		
-		try
-		{
+//		try
+//		{
 			// Determine the number of found targets
 			if (areas.length == 1)
 			{
@@ -323,10 +323,14 @@ public class Targets extends Subsystem
 			}
 			else
 			{
-				// No target found so return center
-				found_target = null;
+				// No target found so return center				
+				return null;
 			}
 			
+			System.out.println("   centerXs Length:" + centerXs.length);
+			System.out.println("   centerYs Length:" + centerYs.length);
+			System.out.println("   widths Length:" + widths.length);
+			System.out.println("   heights Length:" + heights.length);
 			found_target.centerX = (int) centerXs[target_index];
 			found_target.centerY = (int) centerYs[target_index];
 			found_target.area    = (int) (widths[target_index] * heights[target_index]);
@@ -334,12 +338,12 @@ public class Targets extends Subsystem
 			System.out.println("****** target_index = " + target_index);
 			System.out.println("       area = " + found_target.area);
 			
-		}
-		catch (Exception e)
-		{
-			found_target = null;
-			System.out.println("Exception getSelectedTarget: " + e);
-		}
+//		}
+//		catch (Exception e)
+//		{
+//			found_target = null;
+//			System.out.println("Exception getSelectedTarget: " + e);
+//		}
 		
 		return found_target;
 	}
