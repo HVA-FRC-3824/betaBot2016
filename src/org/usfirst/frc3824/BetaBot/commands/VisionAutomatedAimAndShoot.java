@@ -49,7 +49,7 @@ public class VisionAutomatedAimAndShoot extends Command
 	protected void initialize()
 	{
 		// Initialize turn PID
-//		Robot.chassis.enableEncoderPIDs();
+		Robot.chassis.enableEncoderPIDs();
 		
 		// reset and start the timer
 		m_timer.reset();
@@ -72,7 +72,7 @@ public class VisionAutomatedAimAndShoot extends Command
 //				m_timer.reset();
 //			} 
 			// Determine if a new image should be processed
-			if (m_timer.get() > 0.12)
+			if (m_timer.get() > 10.0) //0.12)
 			{
 				// Adjust the robot angle and shooter height
 				determine_shooter_height();
@@ -172,6 +172,7 @@ public class VisionAutomatedAimAndShoot extends Command
 
 			else if (pixelXOffset > Constants.IMAGE_SMALL_PIXEL_OFFSET_X)
 				encoderPosition += Constants.IMAGE_SMALL_STEP_ANGLE_X;
+
 
 			Robot.chassis.setEncoderPID_Setpoint(encoderPosition);
 		}

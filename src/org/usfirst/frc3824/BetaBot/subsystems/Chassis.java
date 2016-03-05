@@ -225,9 +225,9 @@ public class Chassis extends Subsystem
 	public void setEncoderPID_Setpoint(double desiredEncoderValue)
 	{
 		// Set the PID desired set point
-		angleEncoderControllerLeft.setSetpoint(desiredEncoderValue);
+		angleEncoderControllerLeft.setSetpoint(-desiredEncoderValue);
 
-		angleEncoderControllerRight.setSetpoint(-desiredEncoderValue);
+		angleEncoderControllerRight.setSetpoint(desiredEncoderValue);
 	}
 
 	/**
