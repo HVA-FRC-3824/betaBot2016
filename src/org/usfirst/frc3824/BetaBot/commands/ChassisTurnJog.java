@@ -91,13 +91,13 @@ public class ChassisTurnJog extends Command
 		if (m_DirectionAngle > 0.0)
 		{
 			// Get the Left chassis encoder values		
-			if (Robot.chassis.getLeftEncoder() > Constants.JOG_TURN_ENCODER_TURN_VALUE)
+			if (Robot.chassis.getLeftEncoderValue() > Constants.JOG_TURN_ENCODER_TURN_VALUE)
 				return(true);
 		}
 		else if (m_DirectionAngle < 0.0)
 		{
 			// Get the Right chassis encoder values
-			if (Robot.chassis.getRightEncoder() > Constants.JOG_TURN_ENCODER_TURN_VALUE)
+			if (Robot.chassis.getRightEncoderValue() > Constants.JOG_TURN_ENCODER_TURN_VALUE)
 				return(true);
 		}
 		else  // No turn direction given

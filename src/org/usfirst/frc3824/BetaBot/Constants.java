@@ -72,7 +72,7 @@ public class Constants
 	public static final int DEFENSE_CHEVAL_DE_FRISE           = 6;
 	public static final int DEFENSE_PORTCULLIS                = 7;
 	
-	public static int STARTING_POSITION_1                     = 1;
+	public static int STARTING_POSITION_SPY                   = 1;
 	public static int STARTING_POSITION_2                     = 2;
 	public static int STARTING_POSITION_3                     = 3;
 	public static int STARTING_POSITION_4                     = 4;
@@ -85,9 +85,12 @@ public class Constants
 
 	// ***************************************************************************************
 	// Drive train turn constants
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_P          = 0.1;
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_I          = 0.0;
-	public static double DRIVETRAIN_DRIVE_STRAIGHT_D          = 0.0;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_P          =  0.1;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_I          =  0.0;
+	public static double DRIVETRAIN_DRIVE_STRAIGHT_D          =  0.0;
+	
+	public static double DRIVETRAIN_DRIVE_MINIMUM_OUTPUT      = -1.0;
+	public static double DRIVETRAIN_DRIVE_MAXIMUM_OUTPUT      =  1.0;	
 
 	// ***************************************************************************************
 	// Chassis turn constants
@@ -96,40 +99,29 @@ public class Constants
 	public static double TURN_ANGLE_I                         = 0.0;
 	public static double TURN_ANGLE_D                         = 0.0;
 	
+	public static double TURN_ANGLE_MINIMUM_OUTPUT            = -0.6;
+	public static double TURN_ANGLE_MAXIMUM_OUTPUT            =  0.6;	
+
 	public static double TURN_THRESHOLD                       = 3.0;
 
 	// ***************************************************************************************
 	// Image turn constants
-	public static double IMAGE_TURN_P                         = 0.07;	// Preference name: ImageTurn_P
-	public static double IMAGE_TURN_I                         = 0.004;	// Preference name: ImageTurn_I
-	public static double IMAGE_TURN_D                         = 0.008;	// Preference name: ImageTurn_D
-																		// Preference name: ImageTurn_MaxAbsOutput
-	public static int    IMAGE_ON_TARGET_X_POSITION_CENTER    = 165; // was 171 // X location of the "onTarget" position
+	public static double IMAGE_TURN_P                         = 0.07;
+	public static double IMAGE_TURN_I                         = 0.004;
+	public static double IMAGE_TURN_D                         = 0.008;
 
-	public static int    IMAGE_WIDTH                          = 320;	// default image width
-	public static int    IMAGE_HEIGHT                         = 240;   // default image height
+	public static double IMAGE_TURN_MINIMUM_OUTPUT            = -0.4;
+	public static double IMAGE_TURN_MAXIMUM_OUTPUT            =  0.4;
+	
+	public static int    IMAGE_ON_TARGET_X_POSITION_CENTER    = 165;  // X location of the "onTarget" position
+
+	public static int    IMAGE_WIDTH                          = 320;  // default image width
+	public static int    IMAGE_HEIGHT                         = 240;  // default image height
 	public static double CAM_FOV                              = 48.0; 
 	
 	public static int    TARGET_LEFT                          = 0;
 	public static int    TARGET_CENTER                        = 1;
 	public static int    TARGET_RIGHT                         = 2;
-
-	// ***************************************************************************************
-	// Boulder Intake constants
-	public static double BOULDER_INTAKE_P                     =  1.0;
-	public static double BOULDER_INTAKE_I                     =  0.0;
-	public static double BOULDER_INTAKE_D                     =  0.0;
-
-	public static double BOULDER_INTAKE_EXTEND_POWER          =  0.6;
-	public static double BOULDER_INTAKE_RETRACT_POWER         = -0.5;
-	public static double BOULDER_INTAKE_TOLERANCE             =  0.05;
-
-	public static double BOULDER_ROLLER_SPEED                 =  0.7;
-		
-	public static double BOULDER_INTAKE_HOME_BUTTON           = -1700.0;  // Button 17
-	public static double BOULDER_INTAKE_BOULDER_BUTTON        = -1800.0;  // Button 18
-    public static double BOULDER_INTAKE_MAX_EXTEND_BUTTON     = -1400.0;  // Button 14
-    public static double BOULDER_INTAKE_MANUAL_BUTTON        =  -600.0;  // Button  6
 	
 	// ***************************************************************************************
 	// Shooter Elevation constants
@@ -137,12 +129,12 @@ public class Constants
 	public static double SHOOTER_ELEVATION_SETPOINT_MAX       = 60.0;
 	
 	public static double SHOOTER_ELEVATION_BOULDER_INTAKE     = -7.0;
-	public static double SHOOTER_ELEVATION_HOME               =  -4.7;
-	public static double SHOOTER_ELEVATION_POSITION1          = 43.5;
-	public static double SHOOTER_ELEVATION_POSITION2          = 18.0;
-	public static double SHOOTER_ELEVATION_POSITION3          = 65.0;
-	public static double SHOOTER_ELEVATION_POSITION4          = 69.0;
-	public static double SHOOTER_ELEVATION_POSITION5          = 45.0;
+	public static double SHOOTER_ELEVATION_HOME               = -4.7;
+	public static double SHOOTER_ELEVATION_POSITION1          =  43.5;
+	public static double SHOOTER_ELEVATION_POSITION2          =  18.0;
+	public static double SHOOTER_ELEVATION_POSITION3          =  65.0;
+	public static double SHOOTER_ELEVATION_POSITION4          =  69.0;
+	public static double SHOOTER_ELEVATION_POSITION5          =  45.0;
 	
 	public static double SHOOTER_JOG_UP_BUTTON                = -1100.0;  // Button 11
 	public static double SHOOTER_JOG_DOWN_BUTTON              = -1000.0;  // Button 10
@@ -169,7 +161,7 @@ public class Constants
 	// Automated aim and shoot constants
 	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 40;
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 20;
-	public static int IMAGE_SMALL_PIXEL_OFFSET_Y 			  = 0;
+	public static int IMAGE_SMALL_PIXEL_OFFSET_Y 			  =  0;
 	
 	public static double IMAGE_LARGE_STEP_ANGLE_Y             = 2.0;
 	public static double IMAGE_MEDIUM_STEP_ANGLE_Y            = 1.0;
@@ -177,15 +169,22 @@ public class Constants
 
 	public static int IMAGE_LARGE_PIXEL_OFFSET_X 			  = 40;
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_X 			  = 20;
-	public static int IMAGE_SMALL_PIXEL_OFFSET_X 			  = 0;
+	public static int IMAGE_SMALL_PIXEL_OFFSET_X 			  =  0;
 	
 	public static int IMAGE_LARGE_STEP_ANGLE_X                = 10;
-	public static int IMAGE_MEDIUM_STEP_ANGLE_X               = 5;
-	public static int IMAGE_SMALL_STEP_ANGLE_X                = 1;
+	public static int IMAGE_MEDIUM_STEP_ANGLE_X               =  5;
+	public static int IMAGE_SMALL_STEP_ANGLE_X                =  1;
 
 	public static double IMAGE_ANGLE_ENCODER_P                = 0.01;
 	public static double IMAGE_ANGLE_ENCODER_I                = 0.0;
 	public static double IMAGE_ANGLE_ENCODER_D                = 0.0;
+	
+	public static double IMAGE_ANGLE_MINIMUM_INPUT            = -1000.0;
+	public static double IMAGE_ANGLE_MAXIMUM_INPUT            =  1000.0;	
+
+	public static double IMAGE_ANGLE_MINIMUM_OUTPUT           = -0.4;
+	public static double IMAGE_ANGLE_MAXIMUM_OUTPUT           =  0.4;	
+
 	
 //	public static int IMAGE_ON_TARGET_X                       = 2;
 //	public static int IMAGE_ON_TARGET_Y                       = 2;

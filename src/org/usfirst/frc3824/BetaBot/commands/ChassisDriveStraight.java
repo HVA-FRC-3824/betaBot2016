@@ -73,9 +73,11 @@ public class ChassisDriveStraight extends Command
 	{
 		// Set the PID up for driving straight
 		Robot.chassis.configureGyroPIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
-	                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
-	                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
-	                                Robot.chassis.getCurrentHeading(), 0.0, m_DrivePower);
+	                                    Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+	                                    Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+	                                    Constants.DRIVETRAIN_DRIVE_MINIMUM_OUTPUT,
+	                                    Constants.DRIVETRAIN_DRIVE_MAXIMUM_OUTPUT,
+	                                    Robot.chassis.getCurrentHeading(), 0.0, m_DrivePower);
 
 		// reset and start the timer
 		m_Timer.reset();

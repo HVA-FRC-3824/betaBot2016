@@ -67,6 +67,8 @@ public class ChassisTurnToImageTarget extends Command
 		Robot.chassis.configureGyroPIDs(Constants.IMAGE_TURN_P, 
 									Constants.IMAGE_TURN_I, 
 									Constants.IMAGE_TURN_D, 
+									Constants.IMAGE_TURN_MINIMUM_OUTPUT,
+									Constants.IMAGE_TURN_MAXIMUM_OUTPUT,
 									heading + targetOffset, 0.0, 0.0);	
 		
 		SmartDashboard.putNumber("ImageTurn Angle SetPoint", Robot.chassis.getGyroHeadingSetpoint());

@@ -53,21 +53,16 @@ public class ChassisTurnAngle extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-//		System.out.println("Chassis turn angle initialize");
-		
 		// Set the target turn angle based on the present gyro value and the
 		// desired turn degrees
 		double desiredHeading = Robot.chassis.getCurrentHeading() + m_TurnDegrees;
 
 		// Set the PID up for driving straight
-//		Robot.chassis.configurePIDs(Preferences.getInstance().getDouble("Turn P", Constants.DRIVETRAIN_TURN_ANGLE_P), 
-//		                    		Preferences.getInstance().getDouble("Turn I", Constants.DRIVETRAIN_TURN_ANGLE_I),
-//		                    		Preferences.getInstance().getDouble("Turn D", Constants.DRIVETRAIN_TURN_ANGLE_D), 
-//	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
-	
 		Robot.chassis.configureGyroPIDs(Constants.TURN_ANGLE_P, 
 		                        		Constants.TURN_ANGLE_I,
                                         Constants.TURN_ANGLE_D, 
+                                        Constants.TURN_ANGLE_MINIMUM_OUTPUT,
+                                        Constants.TURN_ANGLE_MAXIMUM_OUTPUT,
 	                                    desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
 
 		// Reset and start the on target timer
@@ -115,8 +110,6 @@ public class ChassisTurnAngle extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-//		System.out.println("Chassis turn angle end");
-		
 		// disable the PID controller
 		Robot.chassis.disableAllPIDs();
 		Robot.chassis.stop();

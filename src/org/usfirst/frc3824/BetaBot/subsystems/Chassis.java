@@ -66,13 +66,13 @@ public class Chassis extends Subsystem
                                                                     Constants.IMAGE_ANGLE_ENCODER_I, 
                                                                     Constants.IMAGE_ANGLE_ENCODER_D, 
                                                                     encoderRight, 
-                                                                    new SpeedControllerPIDOutputRight());
+                                                                    new EncoderPID_OutputRight());
 	
 	private PIDController angleEncoderPID_Left = new PIDController(Constants.IMAGE_ANGLE_ENCODER_P, 
 	                                                               Constants.IMAGE_ANGLE_ENCODER_I, 
 	                                                               Constants.IMAGE_ANGLE_ENCODER_D, 
 	                                                               encoderLeft,
-	                                                               new SpeedControllerPIDOutputLeft());
+	                                                               new EncoderPID_OutputLeft());
 
 	/**
 	 * Method to set the default command for the Chassis
@@ -113,7 +113,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to configure the gyro based turn/drive straight PID controller
 	 */
-	public void configureGyroPIDs(double P, double I, double D, 
+	public void configureGyroPIDs(double P, double I, double D, double minimumOutput, double maximumOutput,
 			                      double desiredHeading, double tolerance, double power)
 	{
 		// update the drive power
@@ -129,6 +129,15 @@ public class Chassis extends Subsystem
 		// Set the PID gains
 		angleGyroPID.setPID(P, I, D);
 	
+		// The gyro angle uses input values from 0 to 360
+		angleGyroPID.setInputRange(0.0, 360.0);
+		
+		// Consider 0 and 360 to be the same point
+		angleGyroPID.setContinuous(true);
+		
+		// Limit the output power when turning
+		angleGyroPID.setOutputRange(minimumOutput, maximumOutput);
+		
 		// Set the PID tolerance
 		angleGyroPID.setAbsoluteTolerance(tolerance);
 
@@ -145,7 +154,7 @@ public class Chassis extends Subsystem
 	public void setGyroPID_Heading(double desiredHeading)
 	{
 		// Set the PID desired heading
-		angleGyroPID.setSetpoint(desiredHeading);
+		angleGyroPID.setSetpoint(getRelativeAngle(desiredHeading));
 	}
 	
 	/**
@@ -182,36 +191,34 @@ public class Chassis extends Subsystem
 		angleEncoderPID_Left.disable();
 		angleEncoderPID_Right.disable();
 	}
-
-	/**
-	 * Method to enable the encoder based turn PID controller with default values
-	 */
-	public void enableEncoderPIDs()
-	{
-		configureEncoderPIDs(Constants.IMAGE_ANGLE_ENCODER_P, 
-		                     Constants.IMAGE_ANGLE_ENCODER_I, 
-		                     Constants.IMAGE_ANGLE_ENCODER_D, 0.0, 0.0);
-	}
 	
 	/**
 	 * Method to configure the encoder based turn PID controller
 	 */
-	public void configureEncoderPIDs(double P, double I, double D, 
+	public void configureEncoderPIDs(double P, double I, double D, double minimumOutput, double maximumOutput,
 			                         double desiredEncoderValue, double tolerance)
 	{
-		// Reset Encoder Distance
-		resetEncoders();
-		
 		// Reset the PID controller
 		angleEncoderPID_Left.disable();
-		angleEncoderPID_Left.reset();
 		angleEncoderPID_Right.disable();
+		angleEncoderPID_Left.reset();
 		angleEncoderPID_Right.reset();
+		
+		// Reset Encoder values
+		resetEncoders();
 		
 		// Set the PID gains
 		angleEncoderPID_Left.setPID(P,I,D);
 		angleEncoderPID_Right.setPID(P,I,D);
 	
+		// Set the encoder input value range
+		angleEncoderPID_Left.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_INPUT, Constants.IMAGE_ANGLE_MAXIMUM_INPUT);
+		angleEncoderPID_Right.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_INPUT, Constants.IMAGE_ANGLE_MAXIMUM_INPUT);
+		
+		// Set the encoder output range
+		angleEncoderPID_Left.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_OUTPUT, Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT);
+		angleEncoderPID_Right.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_OUTPUT, Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT);
+			
 		// Set the PID tolerance
 		angleEncoderPID_Left.setAbsoluteTolerance(tolerance);
 		angleEncoderPID_Right.setAbsoluteTolerance(tolerance);
@@ -263,7 +270,7 @@ public class Chassis extends Subsystem
 		wCDrive4.arcadeDrive(0, 0);
 		
 		// Disable PID Controller
-		angleGyroPID.disable();
+		this.disableAllPIDs();
 	}
 
 	/**
@@ -298,32 +305,31 @@ public class Chassis extends Subsystem
 	 */
 	public double getCurrentHeading()
 	{
-		// Return the gyro angle
-		return (gyro.getAngle());
+		// Return the relative gyro angle
+		return (getRelativeAngle(gyro.getAngle()));
 	}
 
 	/**
 	 * Method to return a relative gyro angle (between 0 and 360)
 	 */
-	public double getRelativeAngle()
+	private double getRelativeAngle(double angle)
 	{
-		// Get the present angle
-		double absAngle = gyro.getAngle();
-
 		// Adjust the angle if negative
-		while (absAngle < 0.0)
-			absAngle += 360.0;
+		while (angle < 0.0)
+			angle += 360.0;
 
 		// Adjust the angle if greater than 360
-		while (absAngle >= 360.0)
-			absAngle -= 360.0;
+		while (angle >= 360.0)
+			angle -= 360.0;
 
 		// Return the angle between 0 and 360
-		return absAngle;
+		return angle;
 	}
 
 	/**
 	 * Method to reset the chassis gyro
+	 *
+	 * Note: Should only be called once just before the autonomous command starts
 	 */
 	public void resetGyro()
 	{
@@ -358,7 +364,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Get the Right encoder value
 	 */
-	public int getRightEncoder()
+	public int getRightEncoderValue()
 	{
 		return encoderRight.get();
 	}
@@ -366,7 +372,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Get the Left encoder value
 	 */
-	public int getLeftEncoder()
+	public int getLeftEncoderValue()
 	{
 		return encoderLeft.get();
 	}
@@ -382,7 +388,7 @@ public class Chassis extends Subsystem
 		public void pidWrite(double PIDoutput)
 		{	
 			// Drive the robot given the speed and direction
-			// Arcade drive expects a joystick which is negative forward)
+			// Note: The Arcade drive expects a joystick which is negative forward)
 			wCDrive4.arcadeDrive(-m_magnitude, PIDoutput);
 		}
 	}
@@ -390,7 +396,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Class declaration for the PIDOutput
 	 */
-	public class SpeedControllerPIDOutputRight implements PIDOutput
+	public class EncoderPID_OutputRight implements PIDOutput
 	{
 		/**
 		 * Virtual function to receive the PID output and set the drive direction 
@@ -398,6 +404,7 @@ public class Chassis extends Subsystem
 		public void pidWrite(double PIDoutput)
 		{	
 			SmartDashboard.putNumber("SpeedControllerPIDOutputRight: ", PIDoutput);
+			
 			rightMotorA.set(PIDoutput);
 			rightMotorB.set(PIDoutput);
 		}
@@ -406,7 +413,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Class declaration for the PIDOutput
 	 */
-	public class SpeedControllerPIDOutputLeft implements PIDOutput
+	public class EncoderPID_OutputLeft implements PIDOutput
 	{
 		/**
 		 * Virtual function to receive the PID output and set the drive direction 
@@ -414,6 +421,7 @@ public class Chassis extends Subsystem
 		public void pidWrite(double PIDoutput)
 		{	
 			SmartDashboard.putNumber("SpeedControllerPIDOutputLeft: ", -PIDoutput);
+			
 			leftMotorA.set(-PIDoutput);
 			leftMotorB.set(-PIDoutput);
 		}

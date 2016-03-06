@@ -48,9 +48,14 @@ public class VisionAutomatedAimAndShoot extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		// Initialize turn PID
-		Robot.chassis.enableEncoderPIDs();
-		
+		// Initialize the encoder based turn PID with the present encoder value of zero
+		Robot.chassis.configureEncoderPIDs(Constants.IMAGE_ANGLE_ENCODER_P,
+		                                   Constants.IMAGE_ANGLE_ENCODER_I,
+		                                   Constants.IMAGE_ANGLE_ENCODER_D,
+		                                   Constants.IMAGE_ANGLE_MINIMUM_OUTPUT,
+		                                   Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT,
+		                                   0, 0.0);
+
 		// reset and start the timer
 		m_timer.reset();
 		m_timer.start();
@@ -165,7 +170,7 @@ public class VisionAutomatedAimAndShoot extends Command
 	private void determine_robot_turn_angle()
 	{
 		// Get present encoder position
-		// Note: Both encoders have the same setpoint except the right is the negative
+		// Note: Both encoders have the same set point except the right is the negative
 		// of the left encoder 
 		double encoderPosition = Robot.chassis.getEncoderSetpoint();
 

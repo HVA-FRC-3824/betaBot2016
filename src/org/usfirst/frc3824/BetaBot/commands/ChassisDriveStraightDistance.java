@@ -51,6 +51,8 @@ public class ChassisDriveStraightDistance extends Command
 		Robot.chassis.configureGyroPIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
 		                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
 		                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+		                                Constants.DRIVETRAIN_DRIVE_MINIMUM_OUTPUT,
+		                                Constants.DRIVETRAIN_DRIVE_MAXIMUM_OUTPUT,
 		                                Robot.chassis.getCurrentHeading(), 0.0, m_DrivePower);
 	}
 
