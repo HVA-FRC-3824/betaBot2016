@@ -39,14 +39,14 @@ public class AutonomousPortcullis extends CommandGroup
 		addParallel(new ShooterPositionControl(0.0));
 
     	// Lower the boulder pickup
-		addSequential(new BoulderIntakeControl(1.0, false));
+		addSequential(new AxeControl(true, true));
 		addSequential(new Delay(0.5));
 		
 		// Drive through the Portculis
 		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.8));
 		
 		// Raise the boulder pickup
-		addSequential(new BoulderIntakeControl(0.0, false));
+		addSequential(new AxeControl(false, false));
 		
 		// Determine the starting position
 		if (StartingPosition == Constants.STARTING_POSITION_2)

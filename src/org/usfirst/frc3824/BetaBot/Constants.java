@@ -184,10 +184,9 @@ public class Constants
 	public static int IMAGE_SMALL_STEP_ANGLE_X                = 1;
 
 	public static double IMAGE_ANGLE_ENCODER_P                = 0.01;
-	public static double IMAGE_ANGLE_ENCODER_I                = 0.001;
+	public static double IMAGE_ANGLE_ENCODER_I                = 0.0;
 	public static double IMAGE_ANGLE_ENCODER_D                = 0.0;
 	
-	public static int IMAGE_ON_TARGET_X                       = 2;
-	public static int IMAGE_ON_TARGET_Y                       = 2;
-
+//	public static int IMAGE_ON_TARGET_X                       = 2;
+//	public static int IMAGE_ON_TARGET_Y                       = 2;
 }

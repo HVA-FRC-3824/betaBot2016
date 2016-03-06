@@ -54,10 +54,10 @@ public class ChassisDriveTargetLIDAR extends Command
 
 		// Set the PID up for driving straight
 		Robot.chassis.configureGyroPIDs(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
-		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
-		                            Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
-		                            Robot.chassis.getCurrentHeading(), 0.0, 
-		                            0.8 * (driveForward ? 1.0:-1.0));
+		                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+		                                Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+		                                Robot.chassis.getCurrentHeading(), 0.0, 
+		                                0.8 * (driveForward ? 1.0:-1.0));
 	}
 
 	// Called repeatedly when this Command is scheduled to run

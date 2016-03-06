@@ -66,9 +66,9 @@ public class ChassisTurnAngle extends Command
 //	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
 	
 		Robot.chassis.configureGyroPIDs(Constants.TURN_ANGLE_P, 
-		                    		Constants.TURN_ANGLE_I,
-		                    		Constants.TURN_ANGLE_D, 
-	                                desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
+		                        		Constants.TURN_ANGLE_I,
+                                        Constants.TURN_ANGLE_D, 
+	                                    desiredHeading, Constants.TURN_THRESHOLD, m_DrivePower);
 
 		// Reset and start the on target timer
 		m_OnTargetTimer.reset();
