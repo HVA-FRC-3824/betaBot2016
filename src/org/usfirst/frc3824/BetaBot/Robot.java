@@ -294,8 +294,11 @@ public class Robot extends IterativeRobot
 		// Show the Lidar range on the SmartDashboard
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
 
-		SmartDashboard.putNumber("X Encoder Error", Robot.chassis.getEncoderPID_Error());
+//		SmartDashboard.putNumber("X Encoder Error", Robot.chassis.getEncoderPID_Error());
 		
+		SmartDashboard.putNumber("getTargetPixel_X", Robot.targets.getTargetPixel_X());
+		SmartDashboard.putNumber("getTargetPixel_Y", Robot.targets.getTargetPixel_Y());
+				
 		Robot.targets.updateSmartDashboard();
 	}
 

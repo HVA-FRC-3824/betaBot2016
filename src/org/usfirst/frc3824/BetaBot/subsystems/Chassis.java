@@ -142,7 +142,7 @@ public class Chassis extends Subsystem
 		angleGyroPID.setAbsoluteTolerance(tolerance);
 
 		// Set the PID desired heading
-		angleGyroPID.setSetpoint(desiredHeading);
+		angleGyroPID.setSetpoint(getRelativeAngle(desiredHeading));
 		
 		// enable the PID
 		angleGyroPID.enable();
@@ -152,7 +152,7 @@ public class Chassis extends Subsystem
 	 * Method to set the PID heading
 	 */
 	public void setGyroPID_Heading(double desiredHeading)
-	{
+	{	
 		// Set the PID desired heading
 		angleGyroPID.setSetpoint(getRelativeAngle(desiredHeading));
 	}
@@ -216,8 +216,8 @@ public class Chassis extends Subsystem
 		angleEncoderPID_Right.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_INPUT, Constants.IMAGE_ANGLE_MAXIMUM_INPUT);
 		
 		// Set the encoder output range
-		angleEncoderPID_Left.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_OUTPUT, Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT);
-		angleEncoderPID_Right.setInputRange(Constants.IMAGE_ANGLE_MINIMUM_OUTPUT, Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT);
+		angleEncoderPID_Left.setOutputRange(Constants.IMAGE_ANGLE_MINIMUM_OUTPUT, Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT);
+		angleEncoderPID_Right.setOutputRange(Constants.IMAGE_ANGLE_MINIMUM_OUTPUT, Constants.IMAGE_ANGLE_MAXIMUM_OUTPUT);
 			
 		// Set the PID tolerance
 		angleEncoderPID_Left.setAbsoluteTolerance(tolerance);
@@ -378,6 +378,22 @@ public class Chassis extends Subsystem
 	}
 	
 	/**
+	 * Return the right encoder distance
+	 */
+	public double getRightDistance()
+	{
+		return(encoderRight.getDistance());	
+	}
+	
+	/**
+	 * Return the left encoder distance
+	 */
+	public double getLeftDistance()
+	{
+		return(encoderLeft.getDistance());
+	}
+	
+	/**
 	 * Class declaration for the PIDOutput
 	 */
 	public class AnglePIDOutput implements PIDOutput
@@ -403,7 +419,7 @@ public class Chassis extends Subsystem
 		 */
 		public void pidWrite(double PIDoutput)
 		{	
-			SmartDashboard.putNumber("SpeedControllerPIDOutputRight: ", PIDoutput);
+//			SmartDashboard.putNumber("SpeedControllerPIDOutputRight: ", PIDoutput);
 			
 			rightMotorA.set(PIDoutput);
 			rightMotorB.set(PIDoutput);
@@ -420,7 +436,7 @@ public class Chassis extends Subsystem
 		 */
 		public void pidWrite(double PIDoutput)
 		{	
-			SmartDashboard.putNumber("SpeedControllerPIDOutputLeft: ", -PIDoutput);
+//			SmartDashboard.putNumber("SpeedControllerPIDOutputLeft: ", -PIDoutput);
 			
 			leftMotorA.set(-PIDoutput);
 			leftMotorB.set(-PIDoutput);

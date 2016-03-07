@@ -71,8 +71,8 @@ public class ChassisTurnToImageTarget extends Command
 									Constants.IMAGE_TURN_MAXIMUM_OUTPUT,
 									heading + targetOffset, 0.0, 0.0);	
 		
-		SmartDashboard.putNumber("ImageTurn Angle SetPoint", Robot.chassis.getGyroHeadingSetpoint());
-		SmartDashboard.putNumber("ImageTurn Target Offset", targetOffset);
+//		SmartDashboard.putNumber("ImageTurn Angle SetPoint", Robot.chassis.getGyroHeadingSetpoint());
+//		SmartDashboard.putNumber("ImageTurn Target Offset", targetOffset);
 
 		// Initialize the state machine state
 		m_state = STATE_1;
@@ -142,11 +142,11 @@ public class ChassisTurnToImageTarget extends Command
 			m_Timer.reset();
 		}
 				
-		SmartDashboard.putNumber("ImageTurn Current Angle", Robot.chassis.getCurrentHeading());
-		SmartDashboard.putNumber("ImageTurn PID Error", Robot.chassis.getGyroPID_Error());
-		SmartDashboard.putNumber("ImageTurn OffsetFromCenterAngle", offsetAngle);
-		SmartDashboard.putNumber("ImageTurn State", m_state);
-		SmartDashboard.putNumber("ImageTurn Timer", m_Timer.get());
+//		SmartDashboard.putNumber("ImageTurn Current Angle", Robot.chassis.getCurrentHeading());
+//		SmartDashboard.putNumber("ImageTurn PID Error", Robot.chassis.getGyroPID_Error());
+//		SmartDashboard.putNumber("ImageTurn OffsetFromCenterAngle", offsetAngle);
+//		SmartDashboard.putNumber("ImageTurn State", m_state);
+//		SmartDashboard.putNumber("ImageTurn Timer", m_Timer.get());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

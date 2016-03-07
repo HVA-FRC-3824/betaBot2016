@@ -99,8 +99,8 @@ public class Constants
 	public static double TURN_ANGLE_I                         = 0.0;
 	public static double TURN_ANGLE_D                         = 0.0;
 	
-	public static double TURN_ANGLE_MINIMUM_OUTPUT            = -0.6;
-	public static double TURN_ANGLE_MAXIMUM_OUTPUT            =  0.6;	
+	public static double TURN_ANGLE_MINIMUM_OUTPUT            = -0.9;
+	public static double TURN_ANGLE_MAXIMUM_OUTPUT            =  0.9;	
 
 	public static double TURN_THRESHOLD                       = 3.0;
 
@@ -171,12 +171,12 @@ public class Constants
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_X 			  = 20;
 	public static int IMAGE_SMALL_PIXEL_OFFSET_X 			  =  0;
 	
-	public static int IMAGE_LARGE_STEP_ANGLE_X                = 10;
-	public static int IMAGE_MEDIUM_STEP_ANGLE_X               =  5;
-	public static int IMAGE_SMALL_STEP_ANGLE_X                =  1;
+	public static double IMAGE_LARGE_STEP_ANGLE_X             = 1.50;  // mm
+	public static double IMAGE_MEDIUM_STEP_ANGLE_X            = 0.50;  // mm
+	public static double IMAGE_SMALL_STEP_ANGLE_X             = 0.15;  // mm
 
-	public static double IMAGE_ANGLE_ENCODER_P                = 0.01;
-	public static double IMAGE_ANGLE_ENCODER_I                = 0.0;
+	public static double IMAGE_ANGLE_ENCODER_P                = 0.3;
+	public static double IMAGE_ANGLE_ENCODER_I                = 0.0005;
 	public static double IMAGE_ANGLE_ENCODER_D                = 0.0;
 	
 	public static double IMAGE_ANGLE_MINIMUM_INPUT            = -1000.0;
@@ -184,8 +184,7 @@ public class Constants
 
 	public static double IMAGE_ANGLE_MINIMUM_OUTPUT           = -0.4;
 	public static double IMAGE_ANGLE_MAXIMUM_OUTPUT           =  0.4;	
-
 	
-//	public static int IMAGE_ON_TARGET_X                       = 2;
-//	public static int IMAGE_ON_TARGET_Y                       = 2;
+	public static int IMAGE_ON_TARGET_X                       = 0;
+	public static int IMAGE_ON_TARGET_Y                       = 2;
 }

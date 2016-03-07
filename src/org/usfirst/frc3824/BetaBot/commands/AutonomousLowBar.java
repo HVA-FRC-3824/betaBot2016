@@ -34,21 +34,33 @@ public class AutonomousLowBar extends CommandGroup
 
 		// Drive over the low bar with the shooter at 0 degrees
 		addParallel(new ShooterPositionControl(0.0));
-		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.8));
+		
+    	// Lower the boulder pickup
+		addSequential(new AxeControl(true, true));
+		addSequential(new Delay(0.4));
+		
+		addSequential(new ChassisDriveStraightDistance(driveDistance, 1.0));
 
 		// Raise the shooter while turning towards the goal
 		addSequential(new ShooterPositionControl(shooterHeight));
-		addSequential(new ChassisTurnAngle(45.0, 0.4));
+		addSequential(new ChassisTurnAngle(55.0, 0.2));
 
-		// Line up based on camera
-		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_LEFT));
-
-		// Determine if the Robot should shoot the boulder
-		if (ShotChoice == Constants.HIGH_GOAL)
-		{
-			// Shoot into the goal
-			addSequential(new ShootBoulderInGoal(shooterHeight, 1.0));
-			addSequential(new ShooterSetWheelSpeed(0.0));
-		}
+//		// Determine if the Robot should shoot the boulder
+//		if (ShotChoice == Constants.HIGH_GOAL)
+//		{
+		// Line up and shoot based on camera
+		addSequential(new VisionAutomatedAimAndShoot());
+//    }
+    
+//		// Line up based on camera
+//		addSequential(new ChassisTurnToImageTarget(Constants.TARGET_LEFT));
+//
+//		// Determine if the Robot should shoot the boulder
+//		if (ShotChoice == Constants.HIGH_GOAL)
+//		{
+//			// Shoot into the goal
+//			addSequential(new ShootBoulderInGoal(shooterHeight, 1.0));
+//			addSequential(new ShooterSetWheelSpeed(0.0));
+//		}
 	}
 }

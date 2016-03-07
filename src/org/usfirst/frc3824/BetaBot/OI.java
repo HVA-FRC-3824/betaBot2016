@@ -113,7 +113,9 @@ public class OI
 
 
         // SmartDashboard Buttons
+        SmartDashboard.putData("Autonomous Low Bar: NoShot", new AutonomousLowBar(0));
         SmartDashboard.putData("Pregame Configuration", new PregameConfiguration());
+        SmartDashboard.putData("Chassis Turn Angle: Turn90", new ChassisTurnAngle(90.0, 0.0));
         SmartDashboard.putData("Shooter Position Control: Middle", new ShooterPositionControl(45.0));
         SmartDashboard.putData("Set Gyro Center", new SetGyroCenter());
         SmartDashboard.putData("Restart Image Processing", new RestartImageProcessing());

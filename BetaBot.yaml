@@ -1216,7 +1216,7 @@ Children:
         validators: &id022 [List]
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command Group
     Name: Autonomous Low Bar
   - Children: []
@@ -1522,7 +1522,7 @@ Children:
           - {name: TurnDegrees, type: double, value: '90.0'}
           - {name: DrivePower, type: double, value: '0.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: Chassis Turn Angle
   - Children: []
@@ -1833,7 +1833,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Battle Axes}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id023
+        default: []
+        name: Parameter presets
+        validators: null
+        value:
         - !!robotbuilder.data.properties.ParameterSet
           name: Retract
           parameters:
@@ -1844,9 +1847,6 @@ Children:
           parameters:
           - {name: RightAxeExtend, type: boolean, value: 'true'}
           - {name: LeftAxeExtend, type: boolean, value: 'true'}
-        name: Parameter presets
-        validators: null
-        value: *id023
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -1859,15 +1859,15 @@ Children:
         validators: null
         value: []
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id024 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id024
+        value: []
       Commands: !!robotbuilder.data.properties.ListProperty
-        default: &id025 []
+        default: []
         name: Commands
         validators: *id022
-        value: *id025
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command Group

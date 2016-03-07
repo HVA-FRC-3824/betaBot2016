@@ -13,6 +13,7 @@ package org.usfirst.frc3824.BetaBot.commands;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
@@ -84,7 +85,7 @@ public class ChassisTurnAngle extends Command
 	protected boolean isFinished()
 	{
 		// Ensure the command ends after the watchdog time even if not on target
-		if (m_WatchdogTimer.get() > 1.5)
+		if (m_WatchdogTimer.get() > 2.5)
 			return(true);
 		
 		// return PIDcontroller.OnTarget();
