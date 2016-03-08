@@ -138,9 +138,9 @@ public class Constants
 	
 	public static double SHOOTER_JOG_UP_BUTTON                = -1100.0;  // Button 11
 	public static double SHOOTER_JOG_DOWN_BUTTON              = -1000.0;  // Button 10
-	public static double SHOOTER_HOME_BUTTON                  = -1700.0;  // Button 17
 	public static double SHOOTER_BOULDER_INTAKE_BUTTON        = -1800.0;  // Button 18
-	public static double SHOOTER_SHOOT_1_BUTTON               =  -200.0;  // Button  2
+	public static double SHOOTER_HOME_BUTTON                  =  -200.0;  // Button  2
+	public static double SHOOTER_SHOOT_1_BUTTON               = -1700.0;  // Button 17
 	public static double SHOOTER_SHOOT_2_BUTTON               =  -300.0;  // Button  3
 	public static double SHOOTER_SHOOT_3_BUTTON               =  -400.0;  // Button  4
 	public static double SHOOTER_SHOOT_4_BUTTON               =  -500.0;  // Button  5
@@ -187,4 +187,7 @@ public class Constants
 	
 	public static int IMAGE_ON_TARGET_X                       = 0;
 	public static int IMAGE_ON_TARGET_Y                       = 2;
+
+	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 43;
+	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 65;
 }

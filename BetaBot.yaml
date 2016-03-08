@@ -424,9 +424,13 @@ Children:
         default: []
         name: Default command parameters
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: RightAxeExtend,
+          type: boolean, value: 'false'}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: LeftAxeExtend,
+          type: boolean, value: 'false'}
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Default Command, type: Command, validators: null, value: None}
+        name: Default Command, type: Command, validators: null, value: Axe Control}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
         default: []
         name: Constants
@@ -800,13 +804,13 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: ShooterSetPoint,
-            type: double, value: '-1700.0'}
+            type: double, value: '-200.0'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id017
           default: '1'
           name: Button
           validators: null
-          value: '17'
+          value: '2'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -831,13 +835,13 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: ShooterSetPoint,
-            type: double, value: '-200.0'}
+            type: double, value: '-1700.0'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id017
           default: '1'
           name: Button
           validators: null
-          value: '2'
+          value: '17'
         Command: !!robotbuilder.data.properties.TypeSelectionProperty
           default: None
           name: Command
@@ -1162,6 +1166,39 @@ Children:
           value: whenReleased
       Base: Joystick Button
       Name: Shooter Wheels In Released
+    - Children: []
+      Properties:
+        Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
+          name: Joystick, validators: null, value: Controller Joystick}
+        Parameters: !!robotbuilder.data.properties.ParametersProperty
+          default: []
+          name: Parameters
+          validators: null
+          value:
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: RightAxeExtend,
+            type: boolean, value: 'true'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: LeftAxeExtend,
+            type: boolean, value: 'true'}
+        Button: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id017
+          default: '1'
+          name: Button
+          validators: null
+          value: '14'
+        Command: !!robotbuilder.data.properties.TypeSelectionProperty
+          default: None
+          name: Command
+          type: Command
+          validators: *id018
+          value: Axe Control
+        When to Run: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id019
+          default: whileHeld
+          name: When to Run
+          validators: null
+          value: whileHeld
+      Base: Joystick Button
+      Name: Extend Arms
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
         choices: *id020

@@ -198,8 +198,6 @@ public class Robot extends IterativeRobot
 
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
-
-		Robot.targets.updateSmartDashboard();
 	}
 
 	public void autonomousInit()
@@ -268,7 +266,7 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
 
-		Robot.targets.updateSmartDashboard();
+//		Robot.targets.updateSmartDashboard();
 }
 
 	public void teleopInit()
@@ -295,11 +293,6 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
 
 //		SmartDashboard.putNumber("X Encoder Error", Robot.chassis.getEncoderPID_Error());
-		
-		SmartDashboard.putNumber("getTargetPixel_X", Robot.targets.getTargetPixel_X());
-		SmartDashboard.putNumber("getTargetPixel_Y", Robot.targets.getTargetPixel_Y());
-				
-		Robot.targets.updateSmartDashboard();
 	}
 
 	/**
