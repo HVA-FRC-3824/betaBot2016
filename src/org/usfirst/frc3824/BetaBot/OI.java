@@ -100,7 +100,7 @@ public class OI
         driveJoystick = new Joystick(0);
         
         aimandShoot = new JoystickButton(driveJoystick, 5);
-        aimandShoot.whenPressed(new VisionAimAndShoot());
+        aimandShoot.whileHeld(new VisionAutomatedAimAndShoot());
         jogLeft = new JoystickButton(driveJoystick, 11);
         jogLeft.whenPressed(new ChassisTurnJog(-1.0));
         jogRight = new JoystickButton(driveJoystick, 12);
@@ -119,6 +119,7 @@ public class OI
         SmartDashboard.putData("Autonomous Low Bar: NoShot", new AutonomousLowBar(0));
         SmartDashboard.putData("Pregame Configuration", new PregameConfiguration());
         SmartDashboard.putData("Chassis Turn Angle: Turn90", new ChassisTurnAngle(90.0, 0.0));
+        SmartDashboard.putData("ChassisTurnToImageTarget", new ChassisTurnToImageTarget());
         SmartDashboard.putData("Shooter Position Control: Middle", new ShooterPositionControl(45.0));
         SmartDashboard.putData("Set Gyro Center", new SetGyroCenter());
         SmartDashboard.putData("Restart Image Processing", new RestartImageProcessing());

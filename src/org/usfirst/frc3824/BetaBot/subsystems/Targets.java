@@ -200,6 +200,7 @@ public class Targets extends Subsystem
 			largest_target = null;
 		}
 
+		// Show the target information on the dashboard
 		updateSmartDashboard(largest_target);
 
 		// return the X position of the maximum area target

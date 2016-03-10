@@ -651,13 +651,13 @@ Children:
           name: Command
           type: Command
           validators: *id018
-          value: VisionAimAndShoot
+          value: Vision Automated Aim And Shoot
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id019
           default: whileHeld
           name: When to Run
           validators: null
-          value: whenPressed
+          value: whileHeld
       Base: Joystick Button
       Name: Aim and Shoot
     Properties:
@@ -1592,6 +1592,24 @@ Children:
         default: []
         name: Parameters
         validators: null
+        value: []
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Chassis}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Command
+    Name: ChassisTurnToImageTarget
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
         value:
         - !!robotbuilder.data.properties.ParameterDescriptor {name: whichTarget, type: int}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
@@ -1612,7 +1630,7 @@ Children:
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
-    Name: ChassisTurnToImageTarget
+    Name: ChassisTurnToImageTargetGyro
   - Children: []
     Properties:
       Parameters: !!robotbuilder.data.properties.ParametersProperty

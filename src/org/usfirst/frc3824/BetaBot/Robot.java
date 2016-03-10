@@ -15,6 +15,7 @@ import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.commands.*;
 import org.usfirst.frc3824.BetaBot.subsystems.*;
+import org.usfirst.frc3824.BetaBot.subsystems.Targets.Target;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -198,6 +199,9 @@ public class Robot extends IterativeRobot
 
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
+		
+		// find target
+		Target foundTarget = Robot.targets.getLargestTarget();
 	}
 
 	public void autonomousInit()

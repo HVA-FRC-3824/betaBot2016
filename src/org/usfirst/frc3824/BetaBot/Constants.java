@@ -155,7 +155,7 @@ public class Constants
 	// ***************************************************************************************
 	// Autonomous constants
 	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  37.5;
-	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 340.0;
+	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 200.0;
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
@@ -185,8 +185,11 @@ public class Constants
 	public static double IMAGE_ANGLE_MINIMUM_OUTPUT           = -0.4;
 	public static double IMAGE_ANGLE_MAXIMUM_OUTPUT           =  0.4;	
 	
-	public static int IMAGE_ON_TARGET_X                       = 0;
-	public static int IMAGE_ON_TARGET_Y                       = 2;
+	public static int IMAGE_ON_TARGET_X                       = 1;
+	public static int IMAGE_ON_TARGET_Y                       = 4;
+
+	public static int IMAGE_TURN_TO_TARGET_X                  = 20;
+	public static int IMAGE_TURN_TO_TARGET_Y                  = 50;
 
 	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 43;
 	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 65;
