@@ -20,7 +20,7 @@ import org.usfirst.frc3824.BetaBot.subsystems.*;
  */
 public class AutonomousMoat extends CommandGroup
 {
-	public double driveDistance      = 415.0;
+	public double driveDistance      = 445.0;
 	
 	public double position2TurnAngle = 80.0; // Position 2
 	public double position2Drive     = 200.0;

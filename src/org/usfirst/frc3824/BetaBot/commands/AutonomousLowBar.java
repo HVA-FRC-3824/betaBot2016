@@ -37,7 +37,7 @@ public class AutonomousLowBar extends CommandGroup
 		
     	// Lower the boulder pickup
 		addParallel(new AxeControl(true, true));
-		addSequential(new Delay(0.2));
+		addSequential(new Delay(0.4));
 		
 		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.9));
 

@@ -72,7 +72,7 @@ public class OI
         shooterWheelsOutReleased = new JoystickButton(controllerJoystick, 20);
         shooterWheelsOutReleased.whenReleased(new ShooterSetWheelSpeed(0));
         shooterWheelsIn = new JoystickButton(controllerJoystick, 13);
-        shooterWheelsIn.whenPressed(new ShooterSetWheelSpeed(-1));
+        shooterWheelsIn.whenPressed(new ShooterSetWheelSpeed(-0.8));
         shooterWheelsOutSlow = new JoystickButton(controllerJoystick, 19);
         shooterWheelsOutSlow.whenPressed(new ShooterSetWheelSpeed(0.5));
         shooterWheelsOut = new JoystickButton(controllerJoystick, 20);

@@ -1052,7 +1052,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: WheelSpeed,
-            type: double, value: '-1'}
+            type: double, value: '-0.8'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id017
           default: '1'

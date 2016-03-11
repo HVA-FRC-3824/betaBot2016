@@ -150,7 +150,7 @@ public class Constants
 	// Chassis Turn Jog constants
 	public static double JOG_TURN_WATCHDOG_TIME               =  1.0;
 	public static double JOG_TURN_WHEEL_POWER                 =  0.3;
-	public static double JOG_TURN_ENCODER_TURN_VALUE          =   20;    // integer	
+	public static double JOG_TURN_ENCODER_TURN_VALUE          =   15;    // integer	
 	
 	// ***************************************************************************************
 	// Autonomous constants
