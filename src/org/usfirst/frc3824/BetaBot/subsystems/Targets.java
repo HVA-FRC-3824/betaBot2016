@@ -10,6 +10,13 @@
 
 package org.usfirst.frc3824.BetaBot.subsystems;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
 
@@ -33,6 +40,8 @@ public class Targets extends Subsystem
 	NetworkTable m_contoursReport;
 	NetworkTable m_imageReport;
 	NetworkTable m_frameRateReport;
+	NetworkTable m_linesReport;
+	List<Line> m_lines;
 
 	// Used to clear the target arrays before reading target information
 	double[] m_defaultValue = new double[0];
@@ -40,12 +49,64 @@ public class Targets extends Subsystem
 	// Allows off setting the target to compensate for camera angle
 	private int m_onTargetX;  // "Center of Image" on the X-axis
 
+	public static class TargetInfo
+	{
+		public double rotationAngleOffset;	// robot's rotation offset from perfectly lined up with target
+		public double positionAngleOffset;	// robot's position offset on field from the centerline of the target
+		public double distanceToTarget;		// robot's distance to the target
+	}
+	
+	public static class Point 
+	{
+		private double x;
+		private double y;
+
+		public Point(double x, double y)
+		{
+		    this.x=x;
+		    this.y=y;
+		}
+		
+		public String toString()
+		{
+		    return "("+ this.x+","+this.y+")";
+		}
+	}
+	
 	public static class Target
 	{
 		public int centerX;
 		public int centerY;
 		public int height;
 		public int area;
+	}
+	
+	public static class Line
+	{
+		public Point p1;
+		public Point p2;
+		public double angle;
+		public double length;
+		
+		public static Comparator<Line> LineXComparator = new Comparator<Line>() 
+		{
+			public int compare(Line line1, Line line2) 
+			{
+				double line1_p1x = line1.p1.x;
+				double line2_p1x = line2.p1.x;
+
+				//ascending order: line1_p1x > line2_p1x returns +1
+				if(line1_p1x > line2_p1x)
+					return 1;
+				else if(line2_p1x > line1_p1x)
+					return -1;
+				else
+					return 0;
+				
+				//descending order: line2_p1x > line1_p1x returns +1
+			}
+
+		};
 	}
 
 	public void initDefaultCommand()
@@ -61,6 +122,8 @@ public class Targets extends Subsystem
 		m_contoursReport  = NetworkTable.getTable("GRIP/cameraTargets");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
 		m_onTargetX       = Constants.IMAGE_ON_TARGET_X_POSITION_CENTER;
+		m_linesReport     = NetworkTable.getTable("GRIP/cameraTargetLines");
+		m_lines           = null;
 	}
 
 	/**
@@ -111,6 +174,47 @@ public class Targets extends Subsystem
 	{
 		return getTargetOffsetFromCenterNormalized(whichTarget) * (Constants.CAM_FOV / 2.0);
 	}
+	
+	public TargetInfo getTargetingInfoWithLine(int whichTarget)
+	{
+		// if the image is positioned to the right, the robot is too far left.
+		// so this return value is flipped
+		double positionFromOnTargetX;
+		double positionFromOnTargetXNormalized = 0.0;
+		double angleOffset;
+		Line found_target;
+		TargetInfo target = null;
+
+		// System.out.println("In getTargetOffsetFromCenterNormalized: " + whichTarget);
+
+		// get the center of the largest target in view. We are assuming that
+		// the
+		// largest target is the one we are facing most directly
+		found_target = getSelectedTargetLine(whichTarget);
+		if (found_target != null)
+		{
+			target = new TargetInfo();
+			
+			// calculate offset from "OnTarget" in pixels
+			positionFromOnTargetX = ((found_target.p2.x - found_target.p1.x) / 2.0) - m_onTargetX;
+
+			// convert the offset in pixels to a normalized range where -1 is one half an
+			// image width to the left and 1 is one half an image width to the right.
+			positionFromOnTargetXNormalized = positionFromOnTargetX / (Constants.IMAGE_WIDTH / 2.0);
+			
+			target.rotationAngleOffset = positionFromOnTargetXNormalized * (Constants.CAM_FOV / 2.0);
+		
+			// Now calulate the robots offset from center
+			target.positionAngleOffset = calculatePositionAngleOffsetWithLine(found_target.angle);
+			
+			// Now calculate distance from tower
+			target.distanceToTarget = calculateDistanceFromTargetWithLine(found_target.length);
+		}
+
+		// Return the normalized position from target
+		return target;
+	}
+
 
 	/**
 	 * ***********************************************************************
@@ -207,6 +311,191 @@ public class Targets extends Subsystem
 		return largest_target;
 	}
 
+	/**
+	 * Method to sort the lines using the X value of P1 of each line.
+	 * Lines are sorted in ascending order so they should be in left to right order
+	 */
+	private void importSortedLines()
+	{
+		Line line;
+		
+		double[] angle	= m_linesReport.getNumberArray("angle", m_defaultValue);
+		double[] length = m_linesReport.getNumberArray("length", m_defaultValue);
+		double[] x1     = m_linesReport.getNumberArray("x1", m_defaultValue);
+		double[] y1     = m_linesReport.getNumberArray("y1", m_defaultValue);
+		double[] x2     = m_linesReport.getNumberArray("x2", m_defaultValue);
+		double[] y2     = m_linesReport.getNumberArray("y2", m_defaultValue);
+				
+		if(angle.length == 0)
+			return;
+		
+		m_lines = new ArrayList<Line>();
+		
+		for(int i=0; i < angle.length; i++)
+		{
+			line = new Line();
+			
+			line.angle = angle[i];
+			line.length = length[i];
+			line.p1.x = x1[i];
+			line.p1.y = y1[i];
+			line.p2.x = x2[i];
+			line.p2.y = y2[i];
+			
+			m_lines.add(line);
+		}
+		
+		m_lines.sort(Line.LineXComparator);
+	}
+	
+	private void filterToHorizontalLines()
+	{
+		double angle;
+		double len, min, max;
+		boolean firstTime;
+		double thresh;
+		
+		// remove "vertical" lines
+		Iterator<Line> linesIterator = m_lines.iterator();
+		while (linesIterator.hasNext()) {
+			angle = linesIterator.next().angle;
+			if(angle > 75 && angle < 105)
+			{
+				linesIterator.remove();
+			}
+		}
+		
+		// find the shortest line and the longest line
+		firstTime = true;
+		min = max = 0;
+		linesIterator = m_lines.iterator();
+		while (linesIterator.hasNext())
+		{
+			len = linesIterator.next().length;
+			if(firstTime)
+			{
+				min = max = len;
+				firstTime = false;
+			}
+			
+			if(len < min)
+				min = len;
+			if(len > max)
+				max = len;
+		}
+		
+		// remove all lines less than the threshold
+		thresh = ((max - min) / 2.0) + min;
+		linesIterator = m_lines.iterator();
+		while(linesIterator.hasNext())
+		{
+			if(linesIterator.next().length < thresh)
+			{
+				linesIterator.remove();
+			}
+		}
+ 	}
+		
+	public Line getSelectedTargetLine(int whichTarget)
+	{
+		Line selectedLine = null;
+		
+		// get the lines sorted from left to right
+		importSortedLines();
+		
+		// filter to get only the horizontal lines
+		filterToHorizontalLines();
+		
+		// Targets should already have been sorted left to right.
+		switch (whichTarget)
+		{
+		case 0: // LEFT - take the left target
+			if(m_lines.size() > 0)
+				selectedLine = m_lines.get(0);
+			break;
+
+		case 1: // CENTER - take the LARGEST target
+			if(m_lines.size() > 0)
+			{
+				if(m_lines.size() > 2)
+					selectedLine = m_lines.get(1);
+				else
+					selectedLine = m_lines.get(m_lines.size()-1);
+			}
+			break;
+
+		case 2: // RIGHT - take the right target
+			if(m_lines.size() > 0)
+				selectedLine = m_lines.get(m_lines.size()-1);
+			break;
+		}
+		
+		return selectedLine;
+	}
+
+	// -- currently unused --
+	private void filterToVerticalLines()
+	{
+		//----------------------------------------------------------------------------
+		// We only want lines that represent a full target.  This means there should
+		// be 4 lines per target. These lines should occur as:
+		//
+		// Long line (1 ft) - Tape is 12" x 2"
+		// short line very close to long line (should be 1/6 length away)
+		// large gap
+		// short line
+		// long line very close to short line
+		// 
+		// If there are more than 4 lines, need to figure out which lines eliminate
+		// If there are 8 or 12 lines, need to keep the sets of 4
+		//
+		// 4 options for the 1st two lines:
+		// case 1 - good: listed above
+		// case 2 - bad: short line followed by big gap followed by short line
+		//			- remove three lines total
+		//			- remove one line, then becomes case 3
+		// case 3 - bad: short line followed by a small gap followed by long line
+		//			- remove two lines total
+		//          - remove one line, becomes case 4
+		// case 4 - bad: long line followed by big gap followed by a long line
+		//          - remove one line, then becomes case 1
+		// 
+		// gap is 2", line length is either 12" or 10" the space between lines
+		// gap is X.
+		// short length is 5x
+		// long length is 6x
+		//----------
+		boolean done = false;
+		int extra;
+		do
+		{
+			// case 2 & case 4 - if the distance between the first line and the second is greater than 1/4 of the length
+			if( (m_lines.get(0).p1.x - m_lines.get(1).p1.x) > (m_lines.get(1).length / 4.0) )
+			{
+				m_lines.remove(0);
+			}
+			// case 3 - small gap (gap < length/4) and it's a short line followed by a long line
+			else if (m_lines.get(0).length < m_lines.get(1).length)
+			{
+				m_lines.remove(0);
+			}
+			// case 1
+			else
+			{
+				// if the line count is a not multiple of 4, remove the extras
+				if(m_lines.size() % 4 != 0)
+				{
+					extra = m_lines.size() % 4;
+					for(int i=0; i<extra; i++)
+					{
+						m_lines.remove(m_lines.size()-1);
+					}
+				}
+				done = true;
+			}
+		} while (!done);
+	}
+	
 	/**
 	 * Method to select the specified target when there are multiple targets
 	 */
@@ -378,4 +667,45 @@ public class Targets extends Subsystem
 		// Return the distance from the target
 		return distanceFromTarget;
 	}
+	
+	/**
+	 * Method to return the position offset on the field from center of a target based on
+	 * the angle of the horizontal line
+	 * 
+	 * Use line fit:
+	 *   line angle vs actual angle
+	 */
+	public double calculatePositionAngleOffsetWithLine(double lineAngle)
+	{
+		double angleOffset;
+		
+		if(lineAngle < 75)
+		{
+			angleOffset = 0 - lineAngle;	// left of center is negative angle
+		}
+		else
+		{
+			angleOffset = 0 - (lineAngle - 360.0); // right of center is positive angle
+		}
+
+		return angleOffset;
+	}
+	
+	/**
+	 * Method to return the distance from the specified target based on the target line length
+	 * 
+	 * Use line fit:
+	 * 	line lenght vs target distance
+	 */
+	public double calculateDistanceFromTargetWithLine(double length)
+	{
+		double distanceFromTarget;
+		
+		// y = 9E-06x2 - 0.0896x + 267.23
+		distanceFromTarget = (9e-6 * length * length) - (0.0896 * length) + 267.23;
+		
+		// Return the distance from the target
+		return distanceFromTarget;
+	}
+	
 }
