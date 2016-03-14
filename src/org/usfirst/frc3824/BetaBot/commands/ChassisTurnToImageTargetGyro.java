@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
+import org.usfirst.frc3824.BetaBot.subsystems.Targets.TargetInfo;
 
 /**
  *
@@ -57,8 +58,8 @@ public class ChassisTurnToImageTargetGyro extends Command
 	protected void initialize()
 	{
 		double heading      = Robot.chassis.getCurrentHeading();
-		double targetOffset = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
-		
+		double targetOffset = Robot.targets.getTargetingInfo().rotationAngleOffset;
+				
 		System.out.println("Chassis turn to image initialize");
 		
 		// Set the PID up for driving straight
@@ -112,7 +113,7 @@ public class ChassisTurnToImageTargetGyro extends Command
 					m_state = STATE_2;
 					
 					// Determine the image offset angle
-					offsetAngle = Robot.targets.getTargetOffsetFromCenterAngle(m_whichTarget);
+					offsetAngle = Robot.targets.getTargetingInfo().rotationAngleOffset;
 
 					// Update the heading PID with the new gyro heading and target offset angle
 					Robot.chassis.setGyroPID_Heading(Robot.chassis.getCurrentHeading() + offsetAngle);

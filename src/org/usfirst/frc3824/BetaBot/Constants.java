@@ -113,7 +113,7 @@ public class Constants
 	public static double IMAGE_TURN_MINIMUM_OUTPUT            = -0.4;
 	public static double IMAGE_TURN_MAXIMUM_OUTPUT            =  0.4;
 	
-	public static int    IMAGE_ON_TARGET_X_POSITION_CENTER    = 165;  // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_X_POSITION           = 155;  // X location of the "onTarget" position
 
 	public static int    IMAGE_WIDTH                          = 320;  // default image width
 	public static int    IMAGE_HEIGHT                         = 240;  // default image height

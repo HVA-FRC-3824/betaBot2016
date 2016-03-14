@@ -23,6 +23,7 @@ import org.usfirst.frc3824.BetaBot.Robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jdk.nashorn.internal.runtime.regexp.joni.constants.TargetInfo;
 
 /**
  *
@@ -42,18 +43,37 @@ public class Targets extends Subsystem
 	NetworkTable m_frameRateReport;
 	NetworkTable m_linesReport;
 	List<Line> m_lines;
+	List<Target> m_targets;
 
 	// Used to clear the target arrays before reading target information
 	double[] m_defaultValue = new double[0];
-
-	// Allows off setting the target to compensate for camera angle
-	private int m_onTargetX;  // "Center of Image" on the X-axis
 
 	public static class TargetInfo
 	{
 		public double rotationAngleOffset;	// robot's rotation offset from perfectly lined up with target
 		public double positionAngleOffset;	// robot's position offset on field from the centerline of the target
 		public double distanceToTarget;		// robot's distance to the target
+		public double bottomLineAngle;		// angle of the bottom line of target - relative to horizontal
+		public int offsetFromCenterX;		// pixels from targeting point in the X direction
+		public int offsetFromCenterY;		// pixels from targeting point in the Y direction
+		public int centerX;
+		public int centerY;
+		public int height;
+		public int width;
+		public int area;
+		
+		TargetInfo()
+		{
+			rotationAngleOffset = 0;
+			positionAngleOffset = 0;
+			distanceToTarget = 0;
+			bottomLineAngle = 0;
+			centerX = 0;
+			centerY = 0;
+			height = 0;
+			width = 0;
+			area = 0;
+		}
 	}
 	
 	public static class Point 
@@ -78,7 +98,53 @@ public class Targets extends Subsystem
 		public int centerX;
 		public int centerY;
 		public int height;
+		public int width;
 		public int area;
+
+		public static Comparator<Target> XComparator = new Comparator<Target>() 
+		{
+			public int compare(Target t1, Target t2) 
+			{
+				//ascending order: line1_p1x > line2_p1x returns +1
+				if(t1.centerX > t2.centerX)
+					return 1;
+				else if(t2.centerX > t1.centerX)
+					return -1;
+				else
+					return 0;
+				
+				//descending order: line2_p1x > line1_p1x returns +1
+			}
+		};
+		
+		public static Comparator<Target> AreaComparatorDescending = new Comparator<Target>() 
+		{
+			public int compare(Target t1, Target t2) 
+			{
+				//descending order: target1.area < target2.area returns +1
+				if(t1.area < t2.area)
+					return 1;
+				else if(t2.area < t1.area)
+					return -1;
+				else
+					return 0;
+			}
+		};
+
+		public static Comparator<Target> AreaComparatorAscending = new Comparator<Target>() 
+		{
+			public int compare(Target t1, Target t2) 
+			{
+				//ascending order: target1.area > target2.area returns +1
+				if(t1.area > t2.area)
+					return 1;
+				else if(t2.area > t1.area)
+					return -1;
+				else
+					return 0;
+			}
+		};
+
 	}
 	
 	public static class Line
@@ -87,6 +153,7 @@ public class Targets extends Subsystem
 		public Point p2;
 		public double angle;
 		public double length;
+		public double compareAngle;
 		
 		public static Comparator<Line> LineXComparator = new Comparator<Line>() 
 		{
@@ -107,6 +174,25 @@ public class Targets extends Subsystem
 			}
 
 		};
+		
+		public static Comparator<Line> LineAngleComparator = new Comparator<Line>() 
+		{
+			public int compare(Line line1, Line line2) 
+			{
+
+				//ascending order: line1_p1x > line2_p1x returns +1
+				if(line1.compareAngle > line2.compareAngle)
+					return 1;
+				else if(line2.compareAngle > line1.compareAngle)
+					return -1;
+				else
+					return 0;
+				
+				//descending order: line2_p1x > line1_p1x returns +1
+			}
+
+		};
+
 	}
 
 	public void initDefaultCommand()
@@ -121,97 +207,91 @@ public class Targets extends Subsystem
 	{
 		m_contoursReport  = NetworkTable.getTable("GRIP/cameraTargets");
 		m_frameRateReport = NetworkTable.getTable("GRIP");
-		m_onTargetX       = Constants.IMAGE_ON_TARGET_X_POSITION_CENTER;
 		m_linesReport     = NetworkTable.getTable("GRIP/cameraTargetLines");
 		m_lines           = null;
+		m_targets         = null;
 	}
 
-	/**
-	 * ***********************************************************************
-	 * Return the position of the target, offset from our desired center point
-	 * The return value will be in the range of -2 to 2, where -2 a full image
-	 * width to the left of "onTarget" and 2 is a full image width to the right
-	 * of "onTarget". In the ideal case of the "onTarget" position being exactly
-	 * in the center of the image, then the left edge would be -1 and the right
-	 * edge would be 1.
-	 */
-	public double getTargetOffsetFromCenterNormalized(int whichTarget)
+	public TargetInfo getTargetingInfo()
 	{
 		// if the image is positioned to the right, the robot is too far left.
 		// so this return value is flipped
-		double positionFromOnTargetX;
 		double positionFromOnTargetXNormalized = 0.0;
-		Target found_target;
-
-		// System.out.println("In getTargetOffsetFromCenterNormalized: " + whichTarget);
-
-		// get the center of the largest target in view. We are assuming that
-		// the
-		// largest target is the one we are facing most directly
-		found_target = getSelectedTarget(whichTarget);
-		if (found_target != null)
-		{
-			// calculate offset from "OnTarget" in pixels
-			positionFromOnTargetX = found_target.centerX - m_onTargetX;
-
-			// convert the offset in pixels to a normalized range where -1 is one half an
-			// image width to the left and 1 is one half an image width to the right.
-			positionFromOnTargetXNormalized = positionFromOnTargetX / (Constants.IMAGE_WIDTH / 2.0);
-		}
-
-		// Return the normalized position from target
-		return positionFromOnTargetXNormalized;
-	}
-
-	/**
-	 * ***********************************************************************
-	 * Convert the normalized value into an angle based on the camera's FOV
-	 * Technically, this should be a trigonometric function, but we are using a
-	 * linear approximation, which is good enough for our purposes. To use the
-	 * trig function, we would have to know our distance as well
-	 */
-	public double getTargetOffsetFromCenterAngle(int whichTarget)
-	{
-		return getTargetOffsetFromCenterNormalized(whichTarget) * (Constants.CAM_FOV / 2.0);
-	}
-	
-	public TargetInfo getTargetingInfoWithLine(int whichTarget)
-	{
-		// if the image is positioned to the right, the robot is too far left.
-		// so this return value is flipped
-		double positionFromOnTargetX;
-		double positionFromOnTargetXNormalized = 0.0;
-		double angleOffset;
-		Line found_target;
+		Target largestTarget;
 		TargetInfo target = null;
+		Line foundTargetLine;
 
 		// System.out.println("In getTargetOffsetFromCenterNormalized: " + whichTarget);
 
-		// get the center of the largest target in view. We are assuming that
-		// the
-		// largest target is the one we are facing most directly
-		found_target = getSelectedTargetLine(whichTarget);
-		if (found_target != null)
+		// pull all the GRIP data into data structures (m_lines and m_targets)
+		importTargetData();
+		
+		// if there are any targets, then process them, otherwise just exit
+		if(m_targets.size() > 0)
 		{
 			target = new TargetInfo();
 			
-			// calculate offset from "OnTarget" in pixels
-			positionFromOnTargetX = ((found_target.p2.x - found_target.p1.x) / 2.0) - m_onTargetX;
-
-			// convert the offset in pixels to a normalized range where -1 is one half an
-			// image width to the left and 1 is one half an image width to the right.
-			positionFromOnTargetXNormalized = positionFromOnTargetX / (Constants.IMAGE_WIDTH / 2.0);
+			m_targets.sort(Target.AreaComparatorDescending);	// sort from largest to smallest
+			largestTarget = m_targets.get(0);		            // get the largest target
+			target.centerX = largestTarget.centerX;             // copy it into the TargetInfo object
+			target.centerY = largestTarget.centerY;
+			target.height = largestTarget.height;
+			target.width = largestTarget.width;
+			target.area = largestTarget.area;
 			
-			target.rotationAngleOffset = positionFromOnTargetXNormalized * (Constants.CAM_FOV / 2.0);
-		
-			// Now calulate the robots offset from center
-			target.positionAngleOffset = calculatePositionAngleOffsetWithLine(found_target.angle);
+			// find only the "horizontal lines"
+			filterToHorizontalLines();
 			
-			// Now calculate distance from tower
-			target.distanceToTarget = calculateDistanceFromTargetWithLine(found_target.length);
+			// find the target associated with the line and assign the center
+			Iterator<Line> lineIterator = m_lines.iterator();
+			while (lineIterator.hasNext()) {
+				Line tmpLine = lineIterator.next();
+				// remove any horizontal lines whose X midpoint is more than 10 pixels from the
+				// largets target center
+				if( Math.abs(largestTarget.centerX - (Math.abs(tmpLine.p2.x - tmpLine.p1.x) / 2.0)) > 10 )
+				{
+					lineIterator.remove();
+				}
+			}	
+			
+			// There should be exactly ONE line left, but lets verify and not assume
+			m_lines.sort(Line.LineXComparator);
+			if(m_lines.size() > 0)
+			{
+				foundTargetLine = m_lines.get(m_lines.size()-1);
+			
+				target.bottomLineAngle = foundTargetLine.angle;
+				
+				//--------------------------------------------
+				// calculate rotation offset of robot
+				//---
+				// calculate offset from "OnTarget" in pixels
+				target.offsetFromCenterX = targetingPositionX(largestTarget) - largestTarget.centerX;
+				target.offsetFromCenterY = targetingPositionY(largestTarget) - largestTarget.centerY;
+	
+				// convert the offset in pixels to a normalized range where -1 is one half an
+				// image width to the left and 1 is one half an image width to the right.
+				positionFromOnTargetXNormalized = (-target.offsetFromCenterX) / (Constants.IMAGE_WIDTH / 2.0);
+				
+				target.rotationAngleOffset = positionFromOnTargetXNormalized * (Constants.CAM_FOV / 2.0);
+			
+				//--------------------------------------------
+				// calculate robot's offset from centerline of target
+				//---
+				target.positionAngleOffset = calculatePositionAngleOffsetWithLine(foundTargetLine.angle);
+				
+				//--------------------------------------------
+				// calculate robot's distance from the tower based on
+				// line size and angle
+				//---
+				target.distanceToTarget = calculateDistanceFromTargetWithLine(foundTargetLine.length);
+			}
+			
 		}
 
-		// Return the normalized position from target
+		updateSmartDashboard(target);
+		
+		// Return the targeting information
 		return target;
 	}
 
@@ -231,7 +311,7 @@ public class Targets extends Subsystem
 	 * ***********************************************************************
 	 * Display data values on the smart dashboard
 	 */
-	public void updateSmartDashboard(Target target)
+	public void updateSmartDashboard(TargetInfo target)
 	{
 		SmartDashboard.putBoolean("Image Processing Running", isImageProcessingRunning());
 		SmartDashboard.putNumber("Targets FrameRate",         m_frameRateReport.getNumber("cameraFrameRate", 0.0));
@@ -241,82 +321,29 @@ public class Targets extends Subsystem
 			SmartDashboard.putNumber("TargetPixel_X", target.centerX);
 			SmartDashboard.putNumber("TargetPixel_Y", target.centerY);
 			SmartDashboard.putNumber("TargetHeight", target.height);
+			SmartDashboard.putNumber("TargetOffset_X", target.offsetFromCenterX);
+			SmartDashboard.putNumber("TargetOffset_Y", target.offsetFromCenterY);
+			SmartDashboard.putNumber("Target Line Angle", target.bottomLineAngle);
 		}
 		else
 		{
 			SmartDashboard.putNumber("TargetPixel_X", -1);
 			SmartDashboard.putNumber("TargetPixel_Y", -1);
 			SmartDashboard.putNumber("TargetHeight",  -1);
+			SmartDashboard.putNumber("TargetOffset_X", -1);
+			SmartDashboard.putNumber("TargetOffset_Y", -1);
+			SmartDashboard.putNumber("Target Line Angle", -1);
 		}
 	}
 
 	/**
-	 * ***********************************************************************
-	 * Calculate the center of the largest target in the list of targets NOTE: I
-	 * THINK this will always be the first object in the array, but until this
-	 * can be confirmed, need to do this calculation
+	 * Method to import the image processing data into internal objects:
+	 * m_lines - a List<> of lines from the image processing
+	 * m_targets - a List<> of contour bounding boxes
 	 */
-	public Target getLargestTarget()
+	private void importTargetData()
 	{
-		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
-		double[] centerYs = m_contoursReport.getNumberArray("centerY", m_defaultValue);
-		double[] areas    = m_contoursReport.getNumberArray("area",    m_defaultValue);
-		double[] widths   = m_contoursReport.getNumberArray("width",   m_defaultValue);
-		double[] heights  = m_contoursReport.getNumberArray("height",  m_defaultValue);
-		double maxArea    = 0.0;
-		int maxAreaIndex  = -1;
-		Target largest_target = new Target();
-
-		try
-		{
-			// Loop through all targets
-			for (int areaIndex = 0; areaIndex < areas.length; areaIndex++)
-			{
-				// Determine if the area is the largest
-				if (areas[areaIndex] > maxArea)
-				{
-					// Remember the maximum area index
-					maxAreaIndex = areaIndex;
-
-					// Update the new maximum area
-					maxArea = areas[areaIndex];
-				}
-			}
-
-			// Determine if a target area was found
-			if (maxAreaIndex >= 0)
-			{
-				// remember the X position of the maximum area target
-				largest_target.centerX = (int) centerXs[maxAreaIndex];
-				largest_target.centerY = (int) centerYs[maxAreaIndex];
-				largest_target.height  = (int) heights[maxAreaIndex];
-				largest_target.area    = (int) (widths[maxAreaIndex] * heights[maxAreaIndex]);
-			}
-			else
-			{
-				// No target found so return center
-				largest_target = null;
-			}
-		}
-		catch (Exception e)
-		{
-			System.out.println("Exception getLargestTarget: " + e);
-			largest_target = null;
-		}
-
-		// Show the target information on the dashboard
-		updateSmartDashboard(largest_target);
-
-		// return the X position of the maximum area target
-		return largest_target;
-	}
-
-	/**
-	 * Method to sort the lines using the X value of P1 of each line.
-	 * Lines are sorted in ascending order so they should be in left to right order
-	 */
-	private void importSortedLines()
-	{
+		// Import the lines - sorted by X left to right
 		Line line;
 		
 		double[] angle	= m_linesReport.getNumberArray("angle", m_defaultValue);
@@ -344,290 +371,97 @@ public class Targets extends Subsystem
 			
 			m_lines.add(line);
 		}
+				
+		// Import the targets
+		Target target;
 		
-		m_lines.sort(Line.LineXComparator);
+		double[] centerXs = m_contoursReport.getNumberArray("centerX", m_defaultValue);
+		double[] centerYs = m_contoursReport.getNumberArray("centerY", m_defaultValue);
+		double[] areas    = m_contoursReport.getNumberArray("area",    m_defaultValue);
+		double[] widths   = m_contoursReport.getNumberArray("width",   m_defaultValue);
+		double[] heights  = m_contoursReport.getNumberArray("height",  m_defaultValue);
+				
+		if(areas.length == 0)
+			return;
+		
+		m_targets = new ArrayList<Target>();
+		
+		for(int i=0; i < areas.length; i++)
+		{
+			target = new Target();
+			
+			target.centerX = (int) centerXs[i];
+			target.centerY = (int) centerYs[i];
+			target.area = (int) areas[i];
+			target.width = (int) widths[i];
+			target.height = (int) heights[i];
+			
+			m_targets.add(target);
+		}
 	}
 	
+	/**
+	 * Method to remove any line with an angle of 45 degrees or less from veritical
+	 */
 	private void filterToHorizontalLines()
 	{
 		double angle;
-		double len, min, max;
-		boolean firstTime;
-		double thresh;
+		Line line, line2;
 		
 		// remove "vertical" lines
 		Iterator<Line> linesIterator = m_lines.iterator();
 		while (linesIterator.hasNext()) {
-			angle = linesIterator.next().angle;
-			if(angle > 75 && angle < 105)
+			angle = Math.abs(linesIterator.next().angle);
+			if( (angle >= 45.0) && (angle <= 135.0) )
 			{
 				linesIterator.remove();
 			}
 		}
 		
-		// find the shortest line and the longest line
-		firstTime = true;
-		min = max = 0;
-		linesIterator = m_lines.iterator();
-		while (linesIterator.hasNext())
-		{
-			len = linesIterator.next().length;
-			if(firstTime)
-			{
-				min = max = len;
-				firstTime = false;
-			}
-			
-			if(len < min)
-				min = len;
-			if(len > max)
-				max = len;
-		}
+		// sort the lines from smallest angle to largest angle
+		m_lines.sort(Line.LineAngleComparator);
 		
-		// remove all lines less than the threshold
-		thresh = ((max - min) / 2.0) + min;
+		// iterate over the lines.  If two lines are withing 5 deg of each
+		// other then we'll call them a target pair and we only want the 
+		// longest line of the target pair.
 		linesIterator = m_lines.iterator();
-		while(linesIterator.hasNext())
+		if(linesIterator.hasNext())
 		{
-			if(linesIterator.next().length < thresh)
+			line = linesIterator.next();
+			while(linesIterator.hasNext())
 			{
-				linesIterator.remove();
-			}
+				line2 = linesIterator.next();
+				
+				if(Math.abs(line.compareAngle - line2.compareAngle) < 5)
+				{
+					if(line.length < line2.length)
+					{
+						// delete line
+						m_lines.remove(line);
+						line = line2;
+					}
+					else
+					{
+						// delete line2
+						m_lines.remove(line2);
+						// line = line;  <-- function is to keep the same line but it's a noop
+					}
+				}
+			} 
 		}
  	}
 		
-	public Line getSelectedTargetLine(int whichTarget)
-	{
-		Line selectedLine = null;
-		
-		// get the lines sorted from left to right
-		importSortedLines();
-		
-		// filter to get only the horizontal lines
-		filterToHorizontalLines();
-		
-		// Targets should already have been sorted left to right.
-		switch (whichTarget)
-		{
-		case 0: // LEFT - take the left target
-			if(m_lines.size() > 0)
-				selectedLine = m_lines.get(0);
-			break;
-
-		case 1: // CENTER - take the LARGEST target
-			if(m_lines.size() > 0)
-			{
-				if(m_lines.size() > 2)
-					selectedLine = m_lines.get(1);
-				else
-					selectedLine = m_lines.get(m_lines.size()-1);
-			}
-			break;
-
-		case 2: // RIGHT - take the right target
-			if(m_lines.size() > 0)
-				selectedLine = m_lines.get(m_lines.size()-1);
-			break;
-		}
-		
-		return selectedLine;
-	}
-
-	// -- currently unused --
-	private void filterToVerticalLines()
-	{
-		//----------------------------------------------------------------------------
-		// We only want lines that represent a full target.  This means there should
-		// be 4 lines per target. These lines should occur as:
-		//
-		// Long line (1 ft) - Tape is 12" x 2"
-		// short line very close to long line (should be 1/6 length away)
-		// large gap
-		// short line
-		// long line very close to short line
-		// 
-		// If there are more than 4 lines, need to figure out which lines eliminate
-		// If there are 8 or 12 lines, need to keep the sets of 4
-		//
-		// 4 options for the 1st two lines:
-		// case 1 - good: listed above
-		// case 2 - bad: short line followed by big gap followed by short line
-		//			- remove three lines total
-		//			- remove one line, then becomes case 3
-		// case 3 - bad: short line followed by a small gap followed by long line
-		//			- remove two lines total
-		//          - remove one line, becomes case 4
-		// case 4 - bad: long line followed by big gap followed by a long line
-		//          - remove one line, then becomes case 1
-		// 
-		// gap is 2", line length is either 12" or 10" the space between lines
-		// gap is X.
-		// short length is 5x
-		// long length is 6x
-		//----------
-		boolean done = false;
-		int extra;
-		do
-		{
-			// case 2 & case 4 - if the distance between the first line and the second is greater than 1/4 of the length
-			if( (m_lines.get(0).p1.x - m_lines.get(1).p1.x) > (m_lines.get(1).length / 4.0) )
-			{
-				m_lines.remove(0);
-			}
-			// case 3 - small gap (gap < length/4) and it's a short line followed by a long line
-			else if (m_lines.get(0).length < m_lines.get(1).length)
-			{
-				m_lines.remove(0);
-			}
-			// case 1
-			else
-			{
-				// if the line count is a not multiple of 4, remove the extras
-				if(m_lines.size() % 4 != 0)
-				{
-					extra = m_lines.size() % 4;
-					for(int i=0; i<extra; i++)
-					{
-						m_lines.remove(m_lines.size()-1);
-					}
-				}
-				done = true;
-			}
-		} while (!done);
-	}
 	
-	/**
-	 * Method to select the specified target when there are multiple targets
-	 */
-	public Target getSelectedTarget(int whichTarget)
-	{
-		int target_index    = 0;
-		double[] centerXs   = m_contoursReport.getNumberArray("centerX", m_defaultValue);
-		double[] centerYs   = m_contoursReport.getNumberArray("centerY", m_defaultValue);
-		double[] areas      = m_contoursReport.getNumberArray("area",    m_defaultValue);
-		double[] widths     = m_contoursReport.getNumberArray("width",   m_defaultValue);
-		double[] heights    = m_contoursReport.getNumberArray("height",  m_defaultValue);
-		Target found_target = new Target();
-
-		System.out.println("In getSelectedTarget: Targets" + areas.length);
-
-		try
-		{
-			// Determine the number of found targets
-			if (areas.length == 1)
-			{
-				System.out.println("areas.length == 1");
-
-				// Only one target so return X center
-				target_index = 0;
-			}
-			else if (areas.length == 2)
-			{
-				System.out.println("areas.length == 2");
-
-				// ----- TWO TARGETS DETECTED -------
-				switch (whichTarget)
-				{
-				case 0: // LEFT - take the left target
-					if (centerXs[0] < centerXs[1])
-						target_index = 0;
-					else
-						target_index = 1;
-					break;
-
-				case 1: // CENTER - take the LARGEST target
-					if (areas[0] > areas[1])
-					{
-						target_index = 0;
-					}
-					else
-					{
-						target_index = 1;
-					}
-					break;
-
-				case 2: // RIGHT - take the right target
-					if (centerXs[0] >= centerXs[1])
-						target_index = 0;
-					else
-						target_index = 1;
-					break;
-				}
-			}
-			else if (areas.length == 3)
-			{
-				System.out.println("areas.length == 3");
-
-				// ----- THREE TARGETS DETECTED -------
-				switch (whichTarget)
-				{
-				case 0: // LEFT - take the left target
-					if ((centerXs[0] < centerXs[1]) && (centerXs[0] < centerXs[2]))
-						target_index = 0;
-					else if ((centerXs[1] < centerXs[0]) && (centerXs[1] < centerXs[2]))
-						target_index = 1;
-					else
-						target_index = 2;
-					break;
-
-				case 1: // CENTER - take the LARGEST target
-					if ((areas[0] >= areas[1]) && (areas[0] >= areas[2]))
-						target_index = 0;
-					else if ((areas[1] >= areas[0]) && (areas[1] >= areas[2]))
-						target_index = 1;
-					else
-						target_index = 2;
-					break;
-
-				case 2: // RIGHT - take the right target
-					if ((centerXs[0] >= centerXs[1]) && (centerXs[0] >= centerXs[2]))
-						target_index = 0;
-					else if ((centerXs[1] >= centerXs[0]) && (centerXs[1] >= centerXs[2]))
-						target_index = 1;
-					else
-						target_index = 2;
-					break;
-				}
-			}
-			else
-			{
-				// No target found so return center
-				return null;
-			}
-
-			System.out.println("   centerXs Length:" + centerXs.length);
-			System.out.println("   centerYs Length:" + centerYs.length);
-			System.out.println("   widths Length:"   + widths.length);
-			System.out.println("   heights Length:"  + heights.length);
-			found_target.centerX = (int) centerXs[target_index];
-			found_target.centerY = (int) centerYs[target_index];
-			found_target.height  = (int) heights[target_index];
-			found_target.area    = (int) (widths[target_index] * heights[target_index]);
-
-			System.out.println("****** target_index = " + target_index);
-			System.out.println("       area = " + found_target.area);
-		}
-		catch (Exception e)
-		{
-			found_target = null;
-			System.out.println("Exception getSelectedTarget: " + e);
-		}
-
-		updateSmartDashboard(found_target);
-
-		return found_target;
-	}
-
 	/**
 	 * Method to return the distance from the largest target based on the target area
 	 */
 	public double getDistanceFromLargestTarget()
 	{
-		Target found_target;
+		TargetInfo found_target;
 		double area;
 		double distanceFromTarget = -1.0;
 
-		found_target = getLargestTarget();
+		found_target = getTargetingInfo();
 
 		// Ensure a target was identified
 		if (found_target != null)
@@ -643,30 +477,6 @@ public class Targets extends Subsystem
 		return distanceFromTarget;
 	}
 
-	/**
-	 * Method to return the distance from the specified target based on the target area
-	 */
-	public double getDistanceFromTarget(int whichTarget)
-	{
-		Target found_target;
-		double area;
-		double distanceFromTarget = -1.0;
-
-		// get the area of the selected target
-		found_target = getSelectedTarget(whichTarget);
-
-		// Ensure a target was identified
-		if (found_target != null)
-		{
-			area = found_target.area;
-
-			// y = 9E-06x2 - 0.0896x + 267.23
-			distanceFromTarget = (9e-6 * area * area) - (0.0896 * area) + 267.23;
-		}
-
-		// Return the distance from the target
-		return distanceFromTarget;
-	}
 	
 	/**
 	 * Method to return the position offset on the field from center of a target based on
@@ -693,6 +503,7 @@ public class Targets extends Subsystem
 	
 	/**
 	 * Method to return the distance from the specified target based on the target line length
+	 * and angle of the line
 	 * 
 	 * Use line fit:
 	 * 	line lenght vs target distance
@@ -708,4 +519,53 @@ public class Targets extends Subsystem
 		return distanceFromTarget;
 	}
 	
+	/**
+	 * Method to return the desired target X position based on the distance
+	 * and angle to the target
+	 */
+	int targetingPositionX(Target foundTarget)
+	{
+		int targetX;
+		
+		targetX = Constants.IMAGE_ON_TARGET_X_POSITION;
+		SmartDashboard.putNumber("targetX", targetX);
+		
+		return targetX;
+	}
+
+	/**
+	 * Method to return the desired targetY position based on the distance
+	 * and angle to the target
+	 */
+	int targetingPositionY(Target foundTarget)
+	{		
+		int    targetY;
+		double distance;
+		
+		// Ensure found target
+		if (foundTarget == null)
+			return -1;
+		
+		// Determine the Y pixel based on distance from target
+		// Note: Start with LiDAR, but should use image average of image vertical bars
+		//       to support not being centered on the Target
+//		distance = Robot.chassis.getLidarDistanceCentimeters();
+		
+		int height = foundTarget.height;
+		
+		// distance = -27.303x + 1244.1
+		distance = -27.303*(height) + 1244.1;
+		
+		// Determine the image Y pixel
+		if (distance <= 250.0)
+			targetY = 171;
+		else 
+			targetY = (int) ((-0.0021 * (distance * distance))  + (1.4036 * distance) - 50.833);
+
+		SmartDashboard.putNumber("distance from height", height);
+		SmartDashboard.putNumber("targetY", targetY);
+		
+		// Return the Y target pixel
+		return targetY;
+	}
 }

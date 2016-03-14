@@ -200,8 +200,8 @@ public class Robot extends IterativeRobot
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
 		
-		// find target
-		Target foundTarget = Robot.targets.getLargestTarget();
+		// find target - don't care about results, but this will also update the SmartDashboard
+		Robot.targets.getTargetingInfo();
 	}
 
 	public void autonomousInit()

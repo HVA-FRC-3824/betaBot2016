@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc3824.BetaBot.Constants;
 import org.usfirst.frc3824.BetaBot.Robot;
 import org.usfirst.frc3824.BetaBot.subsystems.Targets.Target;
+import org.usfirst.frc3824.BetaBot.subsystems.Targets.TargetInfo;
 
 /**
  *
@@ -68,7 +69,7 @@ public class ChassisTurnToImageTarget extends Command
 	protected void execute()
 	{
 		// find target
-		Target foundTarget = Robot.targets.getLargestTarget();
+		TargetInfo foundTarget = Robot.targets.getTargetingInfo();
 		
 		// Determine if the robot is properly aligned
 		if (robotAlignedToTarget(foundTarget) == true)
@@ -113,7 +114,7 @@ public class ChassisTurnToImageTarget extends Command
 	 * Method to track the Y position of the target and set the shooter
 	 * position angle to the target
 	 */
-	private void determine_shooter_height(Target foundTarget)
+	private void determine_shooter_height(TargetInfo foundTarget)
 	{
 		// Get present shooter angle
 		double shooterAngle = Robot.shooter.GetShooterAngleSetPoint();
@@ -124,7 +125,7 @@ public class ChassisTurnToImageTarget extends Command
 			// Calculate desired shooter angle
 			// Note: The image (0,0) pixel is top left corner
 			// If pixelYOffset is positive, then target is too low
-			int pixelYOffset = targetShooterPositionY(foundTarget) - foundTarget.centerY;
+			int pixelYOffset = foundTarget.offsetFromCenterY;
 			
 			SmartDashboard.putNumber("pixelYOffset", pixelYOffset);
 			
@@ -188,7 +189,7 @@ public class ChassisTurnToImageTarget extends Command
 	 * Method to track the X position of the target and set the desired encoder
 	 * positions to turn the robot towards the target
 	 */
-	private void determine_robot_turn_angle(Target foundTarget)
+	private void determine_robot_turn_angle(TargetInfo foundTarget)
 	{
 		// Get present encoder position
 		// Note: Both encoders have the same set point except the right is the negative
@@ -200,7 +201,7 @@ public class ChassisTurnToImageTarget extends Command
 		if (foundTarget != null)
 		{
 			// Calculate the delta pixels from the target
-			int pixelXOffset = targetShooterPositionX() - foundTarget.centerX;
+			int pixelXOffset = foundTarget.offsetFromCenterX;
 			
 			SmartDashboard.putNumber("pixelXOffset", pixelXOffset);
 			
@@ -234,68 +235,18 @@ public class ChassisTurnToImageTarget extends Command
 	 * Method to determine when the robot chassis and shooter are aligned to 
 	 * the target
 	 */
-	private boolean robotAlignedToTarget(Target foundTarget)
+	private boolean robotAlignedToTarget(TargetInfo foundTarget)
 	{
 		// Ensure found target
 		if (foundTarget == null)
 			return false;
 		
 		// Determine if the robot is lined to the target
-		if ((Math.abs(targetShooterPositionX() - foundTarget.centerX) <= Constants.IMAGE_TURN_TO_TARGET_X) &&
-			(Math.abs(targetShooterPositionY(foundTarget) - foundTarget.centerY) <= Constants.IMAGE_TURN_TO_TARGET_Y))
+		if ((Math.abs(foundTarget.offsetFromCenterX) <= Constants.IMAGE_TURN_TO_TARGET_X) &&
+			(Math.abs(foundTarget.offsetFromCenterY) <= Constants.IMAGE_TURN_TO_TARGET_Y))
 			return true;
 
 		// Not on target
 		return false;
-	}
-
-	/**
-	 * Method to return the desired target X position based on the distance
-	 * and angle to the target
-	 */
-	int targetShooterPositionX()
-	{
-		int targetX;
-		
-		targetX = 155;
-		SmartDashboard.putNumber("targetX", targetX);
-		
-		return targetX;
-	}
-
-	/**
-	 * Method to return the desired targetY position based on the distance
-	 * and angle to the target
-	 */
-	int targetShooterPositionY(Target foundTarget)
-	{		
-		int    targetY;
-		double distance;
-		
-		// Ensure found target
-		if (foundTarget == null)
-			return -1;
-		
-		// Determine the Y pixel based on distance from target
-		// Note: Start with LiDAR, but should use image average of image vertical bars
-		//       to support not being centered on the Target
-//		distance = Robot.chassis.getLidarDistanceCentimeters();
-		
-		int height = foundTarget.height;
-		
-		// distance = -27.303x + 1244.1
-		distance = -27.303*(height) + 1244.1;
-		
-		// Determine the image Y pixel
-		if (distance <= 250.0)
-			targetY = 171;
-		else 
-			targetY = (int) ((-0.0021 * (distance * distance))  + (1.4036 * distance) - 50.833);
-
-		SmartDashboard.putNumber("distance from height", height);
-		SmartDashboard.putNumber("targetY", targetY);
-		
-		// Return the Y target pixel
-		return targetY;
 	}
 }
