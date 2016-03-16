@@ -113,7 +113,7 @@ public class Constants
 	public static double IMAGE_TURN_MINIMUM_OUTPUT            = -0.4;
 	public static double IMAGE_TURN_MAXIMUM_OUTPUT            =  0.4;
 	
-	public static int    IMAGE_ON_TARGET_X_POSITION           = 155;  // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_X_POSITION           = 150;  // X location of the "onTarget" position
 
 	public static int    IMAGE_WIDTH                          = 320;  // default image width
 	public static int    IMAGE_HEIGHT                         = 240;  // default image height
@@ -185,12 +185,20 @@ public class Constants
 	public static double IMAGE_ANGLE_MINIMUM_OUTPUT           = -0.4;
 	public static double IMAGE_ANGLE_MAXIMUM_OUTPUT           =  0.4;	
 	
-	public static int IMAGE_ON_TARGET_X                       = 1;
-	public static int IMAGE_ON_TARGET_Y                       = 4;
-
 	public static int IMAGE_TURN_TO_TARGET_X                  = 20;
 	public static int IMAGE_TURN_TO_TARGET_Y                  = 50;
 
 	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 43;
 	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 65;
+	
+	public static int IMAGE_ON_TARGET_X_FAR                   = 1;
+	public static int IMAGE_ON_TARGET_Y_FAR                   = 2;
+
+	public static double IMAGE_DISTANCE_MEDIUM                = 275;
+	public static int IMAGE_ON_TARGET_X_MEDIUM                = 2;
+	public static int IMAGE_ON_TARGET_Y_MEDIUM                = 4;
+
+	public static double IMAGE_DISTANCE_CLOSE                  = 200;
+	public static int IMAGE_ON_TARGET_X_CLOSE                 = 3;
+	public static int IMAGE_ON_TARGET_Y_CLOSE                 = 6;
 }

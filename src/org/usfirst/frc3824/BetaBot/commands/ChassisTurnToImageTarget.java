@@ -125,7 +125,7 @@ public class ChassisTurnToImageTarget extends Command
 			// Calculate desired shooter angle
 			// Note: The image (0,0) pixel is top left corner
 			// If pixelYOffset is positive, then target is too low
-			int pixelYOffset = foundTarget.offsetFromCenterY;
+			int pixelYOffset = foundTarget.offsetFromTargetY;
 			
 			SmartDashboard.putNumber("pixelYOffset", pixelYOffset);
 			
@@ -201,7 +201,7 @@ public class ChassisTurnToImageTarget extends Command
 		if (foundTarget != null)
 		{
 			// Calculate the delta pixels from the target
-			int pixelXOffset = foundTarget.offsetFromCenterX;
+			int pixelXOffset = foundTarget.offsetFromTargetX;
 			
 			SmartDashboard.putNumber("pixelXOffset", pixelXOffset);
 			
@@ -242,8 +242,8 @@ public class ChassisTurnToImageTarget extends Command
 			return false;
 		
 		// Determine if the robot is lined to the target
-		if ((Math.abs(foundTarget.offsetFromCenterX) <= Constants.IMAGE_TURN_TO_TARGET_X) &&
-			(Math.abs(foundTarget.offsetFromCenterY) <= Constants.IMAGE_TURN_TO_TARGET_Y))
+		if ((Math.abs(foundTarget.offsetFromTargetX) <= Constants.IMAGE_TURN_TO_TARGET_X) &&
+			(Math.abs(foundTarget.offsetFromTargetY) <= Constants.IMAGE_TURN_TO_TARGET_Y))
 			return true;
 
 		// Not on target

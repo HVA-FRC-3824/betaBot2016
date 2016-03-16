@@ -152,9 +152,7 @@ public class VisionAutomatedAimAndShoot extends Command
 			// Calculate desired shooter angle
 			// Note: The image (0,0) pixel is top left corner
 			// If pixelYOffset is positive, then target is too low
-			int pixelYOffset = foundTarget.offsetFromCenterY;
-			
-			SmartDashboard.putNumber("pixelYOffset", pixelYOffset);
+			int pixelYOffset = foundTarget.offsetFromTargetY;
 			
 			// Assume the offset is positive
 			int isPixelYOffsetPositive = 1;
@@ -164,7 +162,7 @@ public class VisionAutomatedAimAndShoot extends Command
 			{
 				// Make the offset positive and set the is positive variable to -1
 				isPixelYOffsetPositive = -1;
-				pixelYOffset *= -1;
+				pixelYOffset          *= -1;
 			}
 			
 			// Adjust shooter angle based on distance from target
@@ -189,7 +187,7 @@ public class VisionAutomatedAimAndShoot extends Command
 				}
 				else
 				{
-					// above max, change direction
+					// above maximum, change direction
 					m_shouldSearchUp = false;
 				}			
 			}
@@ -202,7 +200,7 @@ public class VisionAutomatedAimAndShoot extends Command
 				}
 				else
 				{
-					// below min, change direction
+					// below minimum, change direction
 					m_shouldSearchUp = true;
 				}
 			}	
@@ -228,10 +226,8 @@ public class VisionAutomatedAimAndShoot extends Command
 		if (foundTarget != null)
 		{
 			// Calculate the delta pixels from the target
-			int pixelXOffset = foundTarget.offsetFromCenterX;
-			
-			SmartDashboard.putNumber("pixelXOffset", pixelXOffset);
-			
+			int pixelXOffset = foundTarget.offsetFromTargetX;
+
 			// Assume the offset is positive
 			int isPixelXOffsetPositive = 1;
 			
@@ -240,7 +236,7 @@ public class VisionAutomatedAimAndShoot extends Command
 			{
 				// Make the offset positive and set the is positive variable to -1
 				isPixelXOffsetPositive = -1;
-				pixelXOffset *= -1;
+				pixelXOffset          *= -1;
 			}
 
 			// Adjust wheel encoders based on distance from target
@@ -268,10 +264,28 @@ public class VisionAutomatedAimAndShoot extends Command
 		if (foundTarget == null)
 			return false;
 		
-		// Determine if the robot is lined to the target
-		if ((Math.abs(foundTarget.offsetFromCenterX) <= Constants.IMAGE_ON_TARGET_X) &&
-			(Math.abs(foundTarget.offsetFromCenterY) <= Constants.IMAGE_ON_TARGET_Y))
-			return true;
+		// Get the distance from the target
+		if (foundTarget.distanceToTarget < Constants.IMAGE_DISTANCE_CLOSE)
+		{
+			// Determine if the robot is lined to the target	
+			if ((Math.abs(foundTarget.offsetFromTargetX) <= Constants.IMAGE_ON_TARGET_X_CLOSE) &&
+				(Math.abs(foundTarget.offsetFromTargetY) <= Constants.IMAGE_ON_TARGET_Y_CLOSE))
+				return true;			
+		}
+		else if (foundTarget.distanceToTarget < Constants.IMAGE_DISTANCE_MEDIUM)
+		{
+			// Determine if the robot is lined to the target	
+			if ((Math.abs(foundTarget.offsetFromTargetX) <= Constants.IMAGE_ON_TARGET_X_MEDIUM) &&
+				(Math.abs(foundTarget.offsetFromTargetY) <= Constants.IMAGE_ON_TARGET_Y_MEDIUM))
+				return true;			
+		}
+		else
+		{
+			// Determine if the robot is lined to the target	
+			if ((Math.abs(foundTarget.offsetFromTargetX) <= Constants.IMAGE_ON_TARGET_X_FAR) &&
+				(Math.abs(foundTarget.offsetFromTargetY) <= Constants.IMAGE_ON_TARGET_Y_FAR))
+				return true;
+		}
 
 		// Not on target
 		return false;
