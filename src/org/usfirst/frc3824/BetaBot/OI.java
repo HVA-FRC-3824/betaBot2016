@@ -30,6 +30,7 @@ public class OI
     public JoystickButton jogRight;
     public JoystickButton jogLeft;
     public JoystickButton aimandShoot;
+    public JoystickButton aimandShootXOnly;
     public Joystick driveJoystick;
     public JoystickButton jogUp;
     public JoystickButton jogDown;
@@ -99,6 +100,8 @@ public class OI
         jogUp.whenPressed(new ShooterPositionControl(-1100.0));
         driveJoystick = new Joystick(0);
         
+        aimandShootXOnly = new JoystickButton(driveJoystick, 6);
+        aimandShootXOnly.whileHeld(new VisionAutomatedAimAndShootX());
         aimandShoot = new JoystickButton(driveJoystick, 5);
         aimandShoot.whileHeld(new VisionAutomatedAimAndShoot());
         jogLeft = new JoystickButton(driveJoystick, 11);
@@ -123,7 +126,6 @@ public class OI
         SmartDashboard.putData("Shooter Position Control: Middle", new ShooterPositionControl(45.0));
         SmartDashboard.putData("Set Gyro Center", new SetGyroCenter());
         SmartDashboard.putData("Restart Image Processing", new RestartImageProcessing());
-        SmartDashboard.putData("Vision Automated Aim And Shoot", new VisionAutomatedAimAndShoot());
         SmartDashboard.putData("Axe Control: Retract", new AxeControl(false, false));
         SmartDashboard.putData("Axe Control: Extend", new AxeControl(true, true));
         SmartDashboard.putData("Melee", new Melee());

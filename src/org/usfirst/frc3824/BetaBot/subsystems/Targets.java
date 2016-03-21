@@ -583,6 +583,8 @@ public class Targets extends Subsystem
 		// Get the image X target position
 		targetX = Constants.IMAGE_ON_TARGET_X_POSITION;
 		
+		SmartDashboard.putNumber("Target Base X", targetX);
+
 		// Calculate the X pixel offset
 		// -15 -> -2
 		// -10 -> -1
@@ -590,17 +592,17 @@ public class Targets extends Subsystem
 		//   0 ->  0
 		//   5 ->  0
 		//  10 ->  1
-		//  15 ->  2  
-		int Xoffset = (int) (lineAngle / 5.0);
-		if (Xoffset >= 1)
-			Xoffset -= 1;
-		else if (Xoffset <= -1)
-			Xoffset += 1;
+		//  15 ->  2 
+		if (Math.abs(lineAngle) > 90.0)
+			if (lineAngle > 0)
+				lineAngle -= 180.0;
+			else
+				lineAngle += 180.0;
 		
-		SmartDashboard.putNumber("Target Base X", targetX);
+		int Xoffset = (int) (lineAngle / 2.5);
 
 		// Modify the offset based on the angle
-		targetX += Xoffset;
+		targetX -= Xoffset;
 		
 		SmartDashboard.putNumber("Target Offset X", Xoffset);
 		SmartDashboard.putNumber("Target Aim X", targetX);
@@ -624,7 +626,9 @@ public class Targets extends Subsystem
 		// y = 0.0001x2 + 0.0534x + 172.81
 		targetY = (int) ((0.0001 * distanceToTarget * distanceToTarget) + (0.0534 * distanceToTarget) + 172.81);
 
-		// Calculate the X pixel offset
+		SmartDashboard.putNumber("Target Base Y", targetY);
+
+		// Calculate the Y pixel offset
 		// -15 -> 2
 		// -10 -> 1
 		//  -5 -> 0
@@ -632,11 +636,16 @@ public class Targets extends Subsystem
 		//   5 -> 0
 		//  10 -> 1
 		//  15 -> 2  
-		int Yoffset = (int) (Math.abs(lineAngle) / 5.0);
-		if (Yoffset >= 1)
-			Yoffset -= 1;
+		if (Math.abs(lineAngle) > 90.0)
+			if (lineAngle > 0)
+				lineAngle -= 180.0;
+			else
+				lineAngle += 180.0;
 		
-		SmartDashboard.putNumber("Target Base Y", targetY);
+		SmartDashboard.putNumber("ANGLE", lineAngle);
+
+		int Yoffset = (int) (Math.abs(lineAngle) / 5.0);
+
 
 		// Modify the offset based on the angle
 		targetY += Yoffset;

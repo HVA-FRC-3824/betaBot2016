@@ -198,7 +198,7 @@ public class Constants
 	public static int IMAGE_ON_TARGET_X_MEDIUM                = 2;
 	public static int IMAGE_ON_TARGET_Y_MEDIUM                = 4;
 
-	public static double IMAGE_DISTANCE_CLOSE                  = 200;
+	public static double IMAGE_DISTANCE_CLOSE                 = 200;
 	public static int IMAGE_ON_TARGET_X_CLOSE                 = 3;
 	public static int IMAGE_ON_TARGET_Y_CLOSE                 = 6;
 }
