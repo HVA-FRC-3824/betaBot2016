@@ -395,7 +395,11 @@ public class Targets extends Subsystem
 			double[] y2     = m_linesReport.getNumberArray("y2",     m_defaultValue);
 
 			if (angle.length == 0)
+			{
+				m_lines = null;
+				m_targets = null;
 				return;
+			}
 
 			m_lines = new ArrayList<Line>();
 
@@ -415,6 +419,8 @@ public class Targets extends Subsystem
 		}
 		catch (Exception e)
 		{
+			m_lines = null;
+			m_targets = null;
 			System.out.println(e);
 		}
 
@@ -430,8 +436,12 @@ public class Targets extends Subsystem
 			double[] heights  = m_contoursReport.getNumberArray("height",  m_defaultValue);
 
 			if (areas.length == 0)
+			{
+				m_lines = null;
+				m_targets = null;
 				return;
-
+			}
+			
 			m_targets = new ArrayList<Target>();
 
 			for (int i = 0; i < areas.length; i++)
@@ -449,6 +459,8 @@ public class Targets extends Subsystem
 		}
 		catch (Exception e)
 		{
+			m_lines = null;
+			m_targets = null;
 			System.out.println(e);
 		}
 	}
@@ -565,8 +577,10 @@ public class Targets extends Subsystem
 		double distanceFromTarget;
 
 		// Determine the distance from the target
-		// y = 0.0838x2 - 16.665x + 952.25
-		distanceFromTarget = (0.0838 * length * length) - (16.665 * length) + 952.25;
+		// y = Ax^2 + Bx + C
+		distanceFromTarget = (Constants.DISTANCE_A * length * length) + 
+				             (Constants.DISTANCE_B * length) + 
+				              Constants.DISTANCE_C;
 
 		// Return the distance from the target
 		return distanceFromTarget;
@@ -623,8 +637,10 @@ public class Targets extends Subsystem
 			return -1;
 
 		// Determine the image target Y pixel
-		// y = 0.0001x2 + 0.0534x + 172.81
-		targetY = (int) ((0.0001 * distanceToTarget * distanceToTarget) + (0.0534 * distanceToTarget) + 172.81);
+		// y = Ax^2 + Bx + C
+		targetY = (int) ((Constants.IMAGE_Y_A * distanceToTarget * distanceToTarget) + 
+				         (Constants.IMAGE_Y_B * distanceToTarget) +
+				          Constants.IMAGE_Y_C);
 
 		SmartDashboard.putNumber("Target Base Y", targetY);
 
@@ -645,7 +661,6 @@ public class Targets extends Subsystem
 		SmartDashboard.putNumber("ANGLE", lineAngle);
 
 		int Yoffset = (int) (Math.abs(lineAngle) / 5.0);
-
 
 		// Modify the offset based on the angle
 		targetY += Yoffset;

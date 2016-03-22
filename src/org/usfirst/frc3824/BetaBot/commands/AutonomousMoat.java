@@ -20,7 +20,7 @@ import org.usfirst.frc3824.BetaBot.subsystems.*;
  */
 public class AutonomousMoat extends CommandGroup
 {
-	public double driveDistance      = 445.0;
+	public double driveDistance      = 475.0;
 	
 	public double position2TurnAngle = 80.0; // Position 2
 	public double position2Drive     = 200.0;
@@ -49,7 +49,7 @@ public class AutonomousMoat extends CommandGroup
 		addSequential(new ShiftGear(true));
 
 		// Drive over the Moat
-		addSequential(new ChassisDriveStraightDistance(driveDistance, 1.0));
+		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.85));
 
 		// Set the drive train to low speed
 		addSequential(new ShiftGear(false));

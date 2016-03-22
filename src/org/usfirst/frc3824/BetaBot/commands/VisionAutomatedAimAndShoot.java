@@ -83,7 +83,7 @@ public class VisionAutomatedAimAndShoot extends Command
 		{
 			// Shoot if the robot is properly aligned
 			if ((robotAlignedToTarget(foundTarget) == true) &&
-				(m_wheelTimer.get() > 2.0))
+				(m_wheelTimer.get() > Constants.IMAGE_SHOOTER_WHEEL_SPINUP_TIME))
 			{
 				Robot.shooter.ShooterShootBallControl(true);
 				m_shooterPositionOut = true;

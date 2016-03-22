@@ -46,7 +46,7 @@ public class AutonomousLowBar extends CommandGroup
 		addSequential(new ChassisTurnAngle(50.0, 0.4));
 		
 		// Drive towards goal
-		addSequential(new ChassisDriveStraightDistance(213.36, 1.0));
+		addSequential(new ChassisDriveStraightDistance(120.0, 1.0));
 
 		// Determine if the Robot should shoot the boulder
 		if (ShotChoice == Constants.HIGH_GOAL)
@@ -55,7 +55,7 @@ public class AutonomousLowBar extends CommandGroup
 			addSequential(new VisionAutomatedAimAndShoot());
 	
 			// Turn around
-			addSequential(new ChassisTurnAngle(60.0, 0.0));
+			addSequential(new ChassisTurnAngle(80.0, 0.0));
 		}
 	}
 }

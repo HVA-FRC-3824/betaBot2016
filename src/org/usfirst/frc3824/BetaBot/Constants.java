@@ -155,10 +155,12 @@ public class Constants
 	// ***************************************************************************************
 	// Autonomous constants
 	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  37.5;
-	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 200.0;
+	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 230.0;
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
+	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 1.5;
+	
 	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 40;
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 20;
 	public static int IMAGE_SMALL_PIXEL_OFFSET_Y 			  =  0;
@@ -188,7 +190,7 @@ public class Constants
 	public static int IMAGE_TURN_TO_TARGET_X                  = 20;
 	public static int IMAGE_TURN_TO_TARGET_Y                  = 50;
 
-	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 43;
+	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 35;
 	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 65;
 	
 	public static int IMAGE_ON_TARGET_X_FAR                   = 1;
@@ -201,4 +203,12 @@ public class Constants
 	public static double IMAGE_DISTANCE_CLOSE                 = 200;
 	public static int IMAGE_ON_TARGET_X_CLOSE                 = 3;
 	public static int IMAGE_ON_TARGET_Y_CLOSE                 = 6;
+	
+	public static double DISTANCE_A                           =  0.0838;   // x^2
+	public static double DISTANCE_B                           = -16.665;   // x
+	public static double DISTANCE_C                           =  952.25;   // offset
+	
+	public static double IMAGE_Y_A                            =  0.0001;    // x^2
+	public static double IMAGE_Y_B                            =  0.0534;    // x
+	public static double IMAGE_Y_C                            =  172.81;    // offset
 }
