@@ -102,7 +102,7 @@ public class Constants
 	public static double TURN_ANGLE_MINIMUM_OUTPUT            = -0.9;
 	public static double TURN_ANGLE_MAXIMUM_OUTPUT            =  0.9;	
 
-	public static double TURN_THRESHOLD                       = 3.0;
+	public static double TURN_THRESHOLD                       = 5.0;
 
 	// ***************************************************************************************
 	// Image turn constants
@@ -113,8 +113,6 @@ public class Constants
 	public static double IMAGE_TURN_MINIMUM_OUTPUT            = -0.4;
 	public static double IMAGE_TURN_MAXIMUM_OUTPUT            =  0.4;
 	
-	public static int    IMAGE_ON_TARGET_X_POSITION           = 150;  // X location of the "onTarget" position
-
 	public static int    IMAGE_WIDTH                          = 320;  // default image width
 	public static int    IMAGE_HEIGHT                         = 240;  // default image height
 	public static double CAM_FOV                              = 48.0; 
@@ -154,8 +152,8 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Autonomous constants
-	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  37.5;
-	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 230.0;
+	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  40.0;
+	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 240.0;
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
@@ -193,22 +191,25 @@ public class Constants
 	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 35;
 	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 65;
 	
-	public static int IMAGE_ON_TARGET_X_FAR                   = 1;
-	public static int IMAGE_ON_TARGET_Y_FAR                   = 2;
+	public static int IMAGE_ON_TARGET_X_FAR                   =   1;
+	public static int IMAGE_ON_TARGET_Y_FAR                   =   2;
 
 	public static double IMAGE_DISTANCE_MEDIUM                = 275;
-	public static int IMAGE_ON_TARGET_X_MEDIUM                = 2;
-	public static int IMAGE_ON_TARGET_Y_MEDIUM                = 4;
+	public static int IMAGE_ON_TARGET_X_MEDIUM                =   2;
+	public static int IMAGE_ON_TARGET_Y_MEDIUM                =   4;
 
 	public static double IMAGE_DISTANCE_CLOSE                 = 200;
-	public static int IMAGE_ON_TARGET_X_CLOSE                 = 3;
-	public static int IMAGE_ON_TARGET_Y_CLOSE                 = 6;
+	public static int IMAGE_ON_TARGET_X_CLOSE                 =   3;
+	public static int IMAGE_ON_TARGET_Y_CLOSE                 =   6;
 	
-	public static double DISTANCE_A                           =  0.0838;   // x^2
-	public static double DISTANCE_B                           = -16.665;   // x
-	public static double DISTANCE_C                           =  952.25;   // offset
+	public static double DISTANCE_A                           =  0.0839;  //  0.0838;   // x^2
+	public static double DISTANCE_B                           = -16.762;  // -16.665;   // x
+	public static double DISTANCE_C                           =  967.84;  //  952.25;   // offset
 	
-	public static double IMAGE_Y_A                            =  0.0001;    // x^2
-	public static double IMAGE_Y_B                            =  0.0534;    // x
-	public static double IMAGE_Y_C                            =  172.81;    // offset
+	public static double IMAGE_Y_A                            =  0.0001;    //0.00005; //   0.0001;    // x^2
+	public static double IMAGE_Y_B                            =  0.0534;    //0.1887;  //   0.0534;    // x
+	public static double IMAGE_Y_C                            =  172.81;    //141.11;  //   172.81;    // offset
+	
+	public static int    IMAGE_ON_TARGET_X_POSITION           = 144;        // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_Y_OFFSET             =   0;
 }

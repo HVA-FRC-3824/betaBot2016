@@ -597,7 +597,7 @@ public class Targets extends Subsystem
 		// Get the image X target position
 		targetX = Constants.IMAGE_ON_TARGET_X_POSITION;
 		
-		SmartDashboard.putNumber("Target Base X", targetX);
+//		SmartDashboard.putNumber("Target Base X", targetX);
 
 		// Calculate the X pixel offset
 		// -15 -> -2
@@ -618,8 +618,8 @@ public class Targets extends Subsystem
 		// Modify the offset based on the angle
 		targetX -= Xoffset;
 		
-		SmartDashboard.putNumber("Target Offset X", Xoffset);
-		SmartDashboard.putNumber("Target Aim X", targetX);
+//		SmartDashboard.putNumber("Target Offset X", Xoffset);
+//		SmartDashboard.putNumber("Target Aim X", targetX);
 
 		return targetX;
 	}
@@ -642,7 +642,7 @@ public class Targets extends Subsystem
 				         (Constants.IMAGE_Y_B * distanceToTarget) +
 				          Constants.IMAGE_Y_C);
 
-		SmartDashboard.putNumber("Target Base Y", targetY);
+//		SmartDashboard.putNumber("Target Base Y", targetY);
 
 		// Calculate the Y pixel offset
 		// -15 -> 2
@@ -658,15 +658,18 @@ public class Targets extends Subsystem
 			else
 				lineAngle += 180.0;
 		
-		SmartDashboard.putNumber("ANGLE", lineAngle);
+//		SmartDashboard.putNumber("ANGLE", lineAngle);
 
 		int Yoffset = (int) (Math.abs(lineAngle) / 5.0);
 
 		// Modify the offset based on the angle
 		targetY += Yoffset;
 		
-		SmartDashboard.putNumber("Target Offset Y", Yoffset);
-		SmartDashboard.putNumber("Target Aim Y", targetY);
+		// Additional offset to compensate for X position
+		targetY += Constants.IMAGE_ON_TARGET_Y_OFFSET;
+		
+//		SmartDashboard.putNumber("Target Offset Y", Yoffset);
+//		SmartDashboard.putNumber("Target Aim Y", targetY);
 
 		// Return the Y target pixel
 		return targetY;

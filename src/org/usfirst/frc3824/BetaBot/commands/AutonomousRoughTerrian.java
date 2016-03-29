@@ -22,8 +22,8 @@ public class AutonomousRoughTerrian extends CommandGroup
 {
 	public double driveDistance      = 415.0;
 	
-	public double position2TurnAngle = 80.0; // Position 2
-	public double position2Drive     = 200.0;
+	public double position2TurnAngle = 70.0; // Position 2
+	public double position2Drive     = 230.0;
 	
 	public double positionTurnAngle  = 20.0;  // Position 3 and 5
 	public double positionDrive      = 90.0;

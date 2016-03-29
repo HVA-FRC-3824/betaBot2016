@@ -52,7 +52,7 @@ public class AutonomousChevaldeFrise extends CommandGroup
 		addSequential(new Delay(1.5));
 		
 		// Driver over Cheval de Frise
-		addSequential(new ChassisDriveStraightDistance(315, 1.0));
+		addSequential(new ChassisDriveStraightDistance(350, 1.0));
 		
 		// Determine the starting position
 		if (StartingPosition == Constants.STARTING_POSITION_2)

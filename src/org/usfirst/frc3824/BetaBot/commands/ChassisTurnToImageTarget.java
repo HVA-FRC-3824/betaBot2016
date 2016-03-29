@@ -127,7 +127,7 @@ public class ChassisTurnToImageTarget extends Command
 			// If pixelYOffset is positive, then target is too low
 			int pixelYOffset = foundTarget.offsetFromTargetY;
 			
-			SmartDashboard.putNumber("pixelYOffset", pixelYOffset);
+//			SmartDashboard.putNumber("pixelYOffset", pixelYOffset);
 			
 			// Assume the offset is positive
 			int isPixelYOffsetPositive = 1;
@@ -203,7 +203,7 @@ public class ChassisTurnToImageTarget extends Command
 			// Calculate the delta pixels from the target
 			int pixelXOffset = foundTarget.offsetFromTargetX;
 			
-			SmartDashboard.putNumber("pixelXOffset", pixelXOffset);
+//			SmartDashboard.putNumber("pixelXOffset", pixelXOffset);
 			
 			// Assume the offset is positive
 			int isPixelXOffsetPositive = 1;

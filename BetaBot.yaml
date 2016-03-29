@@ -1588,7 +1588,7 @@ Children:
           - {name: TurnDegrees, type: double, value: '90.0'}
           - {name: DrivePower, type: double, value: '0.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Chassis Turn Angle
   - Children: []
@@ -1630,7 +1630,7 @@ Children:
         validators: null
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: ChassisTurnToImageTarget
   - Children: []
@@ -1759,7 +1759,7 @@ Children:
           parameters:
           - {name: ShooterSetPoint, type: double, value: '45.0'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Shooter Position Control
   - Children: []
@@ -1913,10 +1913,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Chassis}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id023 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id023
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
@@ -1950,7 +1950,7 @@ Children:
           - {name: RightAxeExtend, type: boolean, value: 'true'}
           - {name: LeftAxeExtend, type: boolean, value: 'true'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: Axe Control
   - Children: []
