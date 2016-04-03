@@ -7,7 +7,7 @@ public class Constants
 	// Set the robot configuration (competition or practice)
 	// Thing 1 - true  (Competition)
 	// Thing 2 - false
-	static final boolean IS_COMP_ROBOT = false;
+	static final boolean IS_COMP_ROBOT = true;
 
 	public static double SHOOTER_ELEVATION_ANGLE_A;
 	public static double SHOOTER_ELEVATION_ANGLE_B;
@@ -152,12 +152,12 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Autonomous constants
-	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  40.0;
+	public static double AUTONOMOUS_LIDAR_RANGE_SHOOTER_ANGLE =  32.0;
 	public static double AUTONOMOUS_LIDAR_DISTANCE_TO_TARGET  = 240.0;
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
-	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 1.5;
+	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 2.0;
 	
 	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 40;
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 20;
@@ -188,8 +188,8 @@ public class Constants
 	public static int IMAGE_TURN_TO_TARGET_X                  = 20;
 	public static int IMAGE_TURN_TO_TARGET_Y                  = 50;
 
-	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 35;
-	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 65;
+	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 30;
+	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 60;
 	
 	public static int IMAGE_ON_TARGET_X_FAR                   =   1;
 	public static int IMAGE_ON_TARGET_Y_FAR                   =   2;
@@ -210,6 +210,6 @@ public class Constants
 	public static double IMAGE_Y_B                            =  0.0534;    //0.1887;  //   0.0534;    // x
 	public static double IMAGE_Y_C                            =  172.81;    //141.11;  //   172.81;    // offset
 	
-	public static int    IMAGE_ON_TARGET_X_POSITION           = 144;        // X location of the "onTarget" position
-	public static int    IMAGE_ON_TARGET_Y_OFFSET             =   0;
+	public static int    IMAGE_ON_TARGET_X_POSITION           = 170;        // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_Y_OFFSET             = -25;
 }

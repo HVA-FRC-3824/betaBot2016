@@ -344,6 +344,10 @@ public class Targets extends Subsystem
 		return (m_frameRateReport. getNumber("cameraFrameRate", 0.0) > 0);
 	}
 
+	public int getFrameRate()
+	{
+		return (int) m_frameRateReport.getNumber("cameraFrameRate", 0.0);
+	}
 	/**
 	 * ***********************************************************************
 	 * Display data values on the smart dash board
@@ -352,6 +356,8 @@ public class Targets extends Subsystem
 	{
 		SmartDashboard.putBoolean("Image Processing Running", isImageProcessingRunning());
 		SmartDashboard.putNumber("Targets FrameRate", m_frameRateReport.getNumber("cameraFrameRate", 0.0));
+
+		SmartDashboard.putBoolean("Target Found", (target != null) ? true : false);
 
 		if (target != null)
 		{

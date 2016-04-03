@@ -49,7 +49,7 @@ public class AutonomousMoat extends CommandGroup
 		addSequential(new ShiftGear(true));
 
 		// Drive over the Moat
-		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.85));
+		addSequential(new ChassisDriveStraightDistance(driveDistance, 1.0));
 
 		// Set the drive train to low speed
 		addSequential(new ShiftGear(false));

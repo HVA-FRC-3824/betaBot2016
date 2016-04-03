@@ -22,7 +22,16 @@
   </head>
   <body>
     <h1>Wiring</h1>
-                            <h2>PWMs</h2>
+                    <h2>DIO</h2>
+	    <table><tr>
+	        <th class="pound">#</th>
+	        <th>Sensor</th></tr>
+	                                                                       <tr><td>2</td><td>Chassis Encoder Right</td><td></td></tr>
+            	                                         <tr><td>3</td><td>Chassis Encoder Right</td><td></td></tr>
+            	                                         <tr><td>4</td><td>Chassis Encoder Left</td><td></td></tr>
+            	                                         <tr><td>5</td><td>Chassis Encoder Left</td><td></td></tr>
+            	                                                                                                                                                                                                                                                     	    </table>
+                    <h2>PWMs</h2>
 	    <table><tr>
 	        <th class="pound">#</th>
 	        <th>Motor</th>
@@ -31,11 +40,8 @@
             	                                         <tr><td>1</td><td>Chassis Right Motor B</td><td>Talon</td></tr>
             	                                         <tr><td>2</td><td>Chassis Left Motor A</td><td>Talon</td></tr>
             	                                         <tr><td>3</td><td>Chassis Left Motor B</td><td>Talon</td></tr>
-            	                                         <tr><td>4</td><td>Shooter Angle Speed Controller</td><td>VictorSP</td></tr>
-            	                                         <tr><td>5</td><td>Boulder Intake Boulder Intake Right</td><td>Talon</td></tr>
-            	                                         <tr><td>6</td><td>Boulder Intake Boulder Intake Left</td><td>Talon</td></tr>
-            	                                         <tr><td>7</td><td>Boulder Intake Boulder Wheel</td><td>Talon</td></tr>
-            	                                                                                                                                                                                                                             	    </table>
+            	                                         <tr><td>4</td><td>Shooter Actuator</td><td>VictorSP</td></tr>
+            	                                                                                                                                                                                                                                                                 	    </table>
      
                 <h2>CAN IDs</h2>
 	<table><tr>
@@ -53,19 +59,18 @@
 	    <table><tr>
 	        <th class="pound">#</th>
 	        <th>Sensor</th></tr>
-	                                               <tr><td>0</td><td>Chassis Gyro</td><td></td></tr>
-            	                                         <tr><td>1</td><td>Shooter Angle Analog Potentiometer</td><td></td></tr>
-            	                                         <tr><td>2</td><td>Boulder Intake Boudler Right Position</td><td></td></tr>
-            	                                         <tr><td>3</td><td>Boulder Intake Boulder Left Position</td><td></td></tr>
-            	                                                                                                                                                                                                                                                                             	    </table>
+	                                                           <tr><td>1</td><td>Shooter Analog Potentiometer</td><td></td></tr>
+            	                                                                                                                                                                                                                                                                                                     	    </table>
     
                     <h2>PCM 0</h2>
 	    <table><tr>
 	        <th class="pound">#</th>
 	        <th>Solenoid</th></tr>
-	                                                           <tr><td>1</td><td>Shooter Ball Shooter Output </td><td></td></tr>
+	                                               <tr><td>0</td><td>Battle Axes Axe Left Output </td><td></td></tr>
+            	                                         <tr><td>1</td><td>Shooter Ball Shooter Piston Output </td><td></td></tr>
             	                                         <tr><td>2</td><td>Chassis Transmission Output </td><td></td></tr>
-            	                                                                                                                                                                                                                                                                                         	    </table>
+            	                                                                                         <tr><td>7</td><td>Battle Axes Axe Right Output </td><td></td></tr>
+            	                                                                                                                                                                                                                             	    </table>
                                                                                                                                                                                                                                                     
                 <h2>Compressor</h2>
 	<table><tr>

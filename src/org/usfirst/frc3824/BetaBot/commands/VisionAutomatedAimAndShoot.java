@@ -78,6 +78,18 @@ public class VisionAutomatedAimAndShoot extends Command
 		// find target
 		TargetInfo foundTarget = Robot.targets.getTargetingInfo();
 		
+		System.out.println("Targets FrameRate: " + Robot.targets.getFrameRate());
+
+		if(foundTarget != null)
+		{
+			System.out.println("TargetPixel_X " + foundTarget.centerX);
+			System.out.println("TargetPixel_Y " + foundTarget.centerY);
+		}
+		else
+		{
+			System.out.println("No Target Found");
+		}
+		
 		// If we haven't shot yet,
 		if (m_shooterPositionOut == false)
 		{
@@ -85,6 +97,7 @@ public class VisionAutomatedAimAndShoot extends Command
 			if ((robotAlignedToTarget(foundTarget) == true) &&
 				(m_wheelTimer.get() > Constants.IMAGE_SHOOTER_WHEEL_SPINUP_TIME))
 			{
+				System.out.println("---------Shot Fired-----------");
 				Robot.shooter.ShooterShootBallControl(true);
 				m_shooterPositionOut = true;
 				
