@@ -109,6 +109,16 @@ public class Chassis extends Subsystem
 	    // Drive with arcade control
 		wCDrive4.arcadeDrive(moveValue, twist, false);
 	}
+	
+	/**
+	 * Uses the Chassis Ultrasonic sensors to align itself when driving under a defense
+	 * @param stick Uses y-axis of stick for forward/backward movement
+	 * Rotation is controlled automatically with sensors
+	 */
+	public void autoDefenseDrive(Joystick stick)
+	{
+		
+	}
 
 	/**
 	 * Method to configure the gyro based turn/drive straight PID controller
