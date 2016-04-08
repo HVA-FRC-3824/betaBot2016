@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 /**
  * 
- * @author Robert Palmer - Team 3824
+ * @author Robert Smith - Team 3824
  * 
  *
  */
-public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSendable{
+public class HVAUltrasonic extends SensorBase implements PIDSource, LiveWindowSendable{
 	private Counter m_counter;
 	
 	protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
@@ -28,7 +28,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
 	/**
 	 * Create a Ultrasonic object.  
 	 */
-	public Ultrasonic(int channel)
+	public HVAUltrasonic(int channel)
 	{
 		m_counter = new Counter(channel);
 		

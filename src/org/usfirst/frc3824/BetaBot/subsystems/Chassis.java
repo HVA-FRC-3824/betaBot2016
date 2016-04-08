@@ -13,6 +13,7 @@ package org.usfirst.frc3824.BetaBot.subsystems;
 import org.usfirst.frc3824.BetaBot.RobotMap;
 import org.usfirst.frc3824.BetaBot.commands.*;
 import org.usfirst.frc3824.BetaBot.utilities.HVAGyro;
+import org.usfirst.frc3824.BetaBot.utilities.HVAUltrasonic;
 import org.usfirst.frc3824.BetaBot.utilities.Lidar;
 import org.usfirst.frc3824.BetaBot.Constants;
 
@@ -23,7 +24,10 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDInterface;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -73,6 +77,12 @@ public class Chassis extends Subsystem
 	                                                               Constants.IMAGE_ANGLE_ENCODER_D, 
 	                                                               encoderLeft,
 	                                                               new EncoderPID_OutputLeft());
+	
+	private PIDController ultrasonicPID = new PIDController(Constants.DRIVETRAIN_DRIVE_STRAIGHT_P, 
+            Constants.DRIVETRAIN_DRIVE_STRAIGHT_I, 
+            Constants.DRIVETRAIN_DRIVE_STRAIGHT_D, 
+            new UltrasonicPIDInput(), new AnglePIDOutput()); //TODO: New constants
+
 
 	/**
 	 * Method to set the default command for the Chassis
@@ -450,6 +460,45 @@ public class Chassis extends Subsystem
 			
 			leftMotorA.set(-PIDoutput);
 			leftMotorB.set(-PIDoutput);
+		}
+	}
+	
+	public class UltrasonicPIDInput implements PIDSource
+	{
+		
+		@Override
+		public double pidGet()
+		{
+			HVAUltrasonic ultraLeft;
+			HVAUltrasonic ultraRight;
+			double driveMagnitude = m_magnitude;
+			if (driveMagnitude > 0.0)
+			{
+				// Power is positive, use forward ultrasonic
+				ultraLeft  = RobotMap.chassisUltrasonicFrontLeft;
+				ultraRight = RobotMap.chassisUltrasonicFrontRight;
+			}
+			else
+			{
+				ultraLeft  = RobotMap.chassisUltrasonicBackLeft;
+				ultraRight = RobotMap.chassisUltrasonicBackRight;	
+			}
+			
+			return ultraLeft.getDistanceCentimeters() - ultraRight.getDistanceCentimeters();
+		}
+
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource)
+		{
+			// TODO Auto-generated method stub
+		}
+
+
+		@Override
+		public PIDSourceType getPIDSourceType()
+		{
+			return PIDSourceType.kDisplacement;
 		}
 	}
 	
