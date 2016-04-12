@@ -199,6 +199,8 @@ public class Robot extends IterativeRobot
 
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
+		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getDistanceRight());
+		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getDistanceLeft());
 		
 		// find target - don't care about results, but this will also update the SmartDashboard
 		Robot.targets.getTargetingInfo();
