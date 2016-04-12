@@ -212,4 +212,10 @@ public class Constants
 	
 	public static int    IMAGE_ON_TARGET_X_POSITION           = 170;        // X location of the "onTarget" position
 	public static int    IMAGE_ON_TARGET_Y_OFFSET             = -25;
+	
+	// ***************************************************************************************
+	// Chassis Auto Defense Drive
+
+	public static double AUTO_DEFENSE_DRIVE_MAX_RANGE         =  60.0; // inches
+	public static double AUTO_DEFENSE_DRIVE_NUDGE             =  1.0; // degree
 }
