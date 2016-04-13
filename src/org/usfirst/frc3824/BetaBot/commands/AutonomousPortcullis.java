@@ -64,7 +64,7 @@ public class AutonomousPortcullis extends CommandGroup
 			addSequential(new ChassisDriveStraightDistance(position2Drive, 1.0));
 
 			// Turn towards the goal
-			addSequential(new ChassisTurnAngle(-position2TurnAngle, 0.0));
+			addSequential(new ChassisTurnAngle(0.0, 0.0));
 		}
 		else if (StartingPosition == Constants.STARTING_POSITION_3)
 		{
@@ -104,7 +104,7 @@ public class AutonomousPortcullis extends CommandGroup
 			addSequential(new VisionAutomatedAimAndShoot());
 	
 			// Turn around
-			addSequential(new ChassisTurnAngle(160.0, 0.0));
+			addSequential(new ChassisTurnAngle(180.0, 0.0));
 		}
 	}
 }

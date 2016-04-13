@@ -59,7 +59,7 @@ public class AutonomousRoughTerrian extends CommandGroup
 			addSequential(new ChassisDriveStraightDistance(position2Drive, 1.0));
 
 			// Turn towards the goal
-			addSequential(new ChassisTurnAngle(-position2TurnAngle, 0.0));
+			addSequential(new ChassisTurnAngle(0.0, 0.0));
 		}
 		else if (StartingLocation == Constants.STARTING_POSITION_3)
 		{
@@ -93,13 +93,34 @@ public class AutonomousRoughTerrian extends CommandGroup
 		addSequential(new ChassisDriveTargetLIDAR(LiDarDistance));
 
 		// Determine if the Robot should shoot the boulder
-		if (ShotChoice == Constants.HIGH_GOAL)
+		if ((ShotChoice == Constants.HIGH_GOAL) || (ShotChoice == Constants.SHOT_RETURN))
 		{
 			// Line up and shoot based on camera
 			addSequential(new VisionAutomatedAimAndShoot());
-	
-			// Turn around
-			addSequential(new ChassisTurnAngle(160.0, 0.0));
+		}
+		
+		if (ShotChoice == Constants.SHOT_RETURN)
+		{
+			if (StartingLocation == Constants.STARTING_POSITION_2)
+			{
+				// Turn around
+				addSequential(new ChassisTurnAngle(180.0, 0.0));	
+			}
+			else if (StartingLocation == Constants.STARTING_POSITION_3)
+			{
+				// Turn around
+				addSequential(new ChassisTurnAngle(positionTurnAngle + 180.0, 0.0));
+				
+				
+			}
+			else if (StartingLocation == Constants.STARTING_POSITION_4)
+			{
+				
+			}
+			else if (StartingLocation == Constants.STARTING_POSITION_5)
+			{
+				
+			}
 		}
 	}
 }

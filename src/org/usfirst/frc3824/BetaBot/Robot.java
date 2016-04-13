@@ -124,19 +124,18 @@ public class Robot extends IterativeRobot
 		
 		// set up the chooser for the starting location a
 		startingLocationChooser = new SendableChooser();
-		startingLocationChooser.addDefault("1", 1);
-		startingLocationChooser.addDefault("2", 2);
-		startingLocationChooser.addDefault("3", 3);
-		startingLocationChooser.addDefault("4", 4);
-		startingLocationChooser.addDefault("5", 5);
-//		startingLocationChooser.addDefault("6", 6);
+		startingLocationChooser.addDefault("2", Constants.STARTING_POSITION_2);
+		startingLocationChooser.addDefault("3", Constants.STARTING_POSITION_3);
+		startingLocationChooser.addDefault("4", Constants.STARTING_POSITION_4);
+		startingLocationChooser.addDefault("5", Constants.STARTING_POSITION_5);
+//		startingLocationChooser.addDefault("6", Constants.STARTING_POSITION_6);
 		SmartDashboard.putData("Starting Location", startingLocationChooser );
 		
 		// set up the chooser for the shooting.
 		shotChooser = new SendableChooser();
 		shotChooser.addDefault("No Shot", Constants.NO_GOAL);
-		shotChooser.addDefault("Low", Constants.LOW_GOAL);
-		shotChooser.addDefault("High", Constants.HIGH_GOAL);
+		shotChooser.addDefault("High Shot", Constants.HIGH_GOAL);
+		shotChooser.addDefault("Shot Return", Constants.SHOT_RETURN);
 		SmartDashboard.putData("Shot", shotChooser);
 		
 		RobotMap.chassisCompressor.setClosedLoopControl(true);
@@ -199,8 +198,8 @@ public class Robot extends IterativeRobot
 
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
-		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getDistanceRight());
-		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getDistanceLeft());
+		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getUltrasonicSensorRightDistance());
+		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getUltrasonicSensorLeftDistance());
 		
 		// find target - don't care about results, but this will also update the SmartDashboard
 		Robot.targets.getTargetingInfo();

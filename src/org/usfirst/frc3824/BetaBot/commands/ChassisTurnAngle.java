@@ -54,8 +54,9 @@ public class ChassisTurnAngle extends Command
 	{
 		// Set the target turn angle based on the present gyro value and the
 		// desired turn degrees
-		double desiredHeading = Robot.chassis.getCurrentHeading() + m_TurnDegrees;
-
+//		double desiredHeading = Robot.chassis.getCurrentHeading() + m_TurnDegrees;
+		double desiredHeading = m_TurnDegrees;
+		
 		// Set the PID up for driving straight
 		Robot.chassis.configureGyroPIDs(Constants.TURN_ANGLE_P, 
 		                        		Constants.TURN_ANGLE_I,

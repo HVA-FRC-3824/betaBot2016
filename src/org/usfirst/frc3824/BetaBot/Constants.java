@@ -82,6 +82,7 @@ public class Constants
 	public static int NO_GOAL                                 = 0;
 	public static int LOW_GOAL                                = 1;
 	public static int HIGH_GOAL                               = 2;
+	public static int SHOT_RETURN                             = 3;
 
 	// ***************************************************************************************
 	// Drive train turn constants

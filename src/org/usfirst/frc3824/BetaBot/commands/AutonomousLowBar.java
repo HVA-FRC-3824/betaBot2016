@@ -55,7 +55,7 @@ public class AutonomousLowBar extends CommandGroup
 			addSequential(new VisionAutomatedAimAndShoot());
 	
 			// Turn around
-			addSequential(new ChassisTurnAngle(80.0, 0.0));
+			addSequential(new ChassisTurnAngle(180.0, 0.0));
 		}
 	}
 }
