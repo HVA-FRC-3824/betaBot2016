@@ -59,10 +59,18 @@ public class AutonomousAutoDriveOverDefense extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		// Slow down when reaching the desired position
-		if (Math.abs(m_distance - Robot.chassis.getDistance()) < 50.0)
-			Robot.chassis.setMagnitude(0.5);
-		
+		// Drive slow if we are not at the defense
+		if (Robot.chassis.checkUltrasonicInUsefulRange())
+		{
+			// In defense, full power
+			Robot.chassis.setMagnitude(m_power);
+		}
+		else
+		{
+			// Not sure if in defense, half power
+			Robot.chassis.setMagnitude(0.5 * m_power);
+		}
+			
 		// Update gyro setpoint for auto drive
 		Robot.chassis.updateGyroSetpointFromUltrasonic();
 	}

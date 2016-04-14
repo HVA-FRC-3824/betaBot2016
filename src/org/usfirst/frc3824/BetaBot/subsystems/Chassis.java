@@ -141,15 +141,12 @@ public class Chassis extends Subsystem
 	 */
 	public void updateGyroSetpointFromUltrasonic()
 	{
-		double left = getUltrasonicSensorLeftDistance();
-		double right = getUltrasonicSensorRightDistance();
 		// check to see if ultrasonic sensors are in a useful range
-		if (left < Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE && right < Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE)
+		if (checkUltrasonicInUsefulRange())
 		{
-
 			// if in useful range:
 			double degreesToNudge = Constants.AUTO_DEFENSE_DRIVE_NUDGE;
-			if (left < right)
+			if (getLeftUltrasonicDistance() < getRightUltrasonicDistance())
 			{
 				// Left Distance is less than Right
 				// Robot is too far left, turn right
@@ -161,6 +158,16 @@ public class Chassis extends Subsystem
 				setGyroPID_Heading(getCurrentHeading() - degreesToNudge);
 			}
 		}
+	}
+
+	/**
+	 * returns true if Ultrasonic Sensors are within Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE 
+	 * @return
+	 */
+	public boolean checkUltrasonicInUsefulRange()
+	{
+		return getLeftUltrasonicDistance() < Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE
+				&& getRightUltrasonicDistance() < Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE;
 	}
 
 	/**
@@ -508,7 +515,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to return the distance from the right ultrasonic sensor
 	 */
-	public double getUltrasonicSensorRightDistance()
+	public double getRightUltrasonicDistance()
 	{
 		double distance;
 
@@ -522,7 +529,7 @@ public class Chassis extends Subsystem
 	/**
 	 * Method to return the distance from the left ultrasonic sensor
 	 */
-	public double getUltrasonicSensorLeftDistance()
+	public double getLeftUltrasonicDistance()
 	{
 		double distance;
 
