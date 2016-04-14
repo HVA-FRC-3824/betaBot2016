@@ -104,22 +104,33 @@ public class AutonomousRoughTerrian extends CommandGroup
 			if (StartingLocation == Constants.STARTING_POSITION_2)
 			{
 				// Turn around
-				addSequential(new ChassisTurnAngle(180.0, 0.0));	
+				addSequential(new ChassisTurnAngle(180.0, 0.0));
+				
+				//TODO: Drive back over after crossing position 2
 			}
 			else if (StartingLocation == Constants.STARTING_POSITION_3)
 			{
 				// Turn around
-				addSequential(new ChassisTurnAngle(positionTurnAngle + 180.0, 0.0));
+				addSequential(new ChassisTurnAngle(180.0, 0.0));
 				
-				
+				// Drive back over Rough Terrain
+				addSequential(new AutonomousAutoDriveOverDefense(driveDistance, 1.0));
 			}
 			else if (StartingLocation == Constants.STARTING_POSITION_4)
 			{
+				// Turn around
+				addSequential(new ChassisTurnAngle(180.0, 0.0));
 				
+				// Drive back over Rough Terrain
+				addSequential(new AutonomousAutoDriveOverDefense(driveDistance, 1.0));
 			}
 			else if (StartingLocation == Constants.STARTING_POSITION_5)
 			{
+				// Turn around
+				addSequential(new ChassisTurnAngle(180.0, 0.0));
 				
+				// Drive back over Rough Terrain
+				addSequential(new AutonomousAutoDriveOverDefense(driveDistance, 1.0));
 			}
 		}
 	}
