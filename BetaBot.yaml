@@ -769,7 +769,7 @@ Children:
           validators: null
           value: whileHeld
       Base: Joystick Button
-      Name: Teleop Drive Over Defense
+      Name: teleop Drive Over Defense
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -790,7 +790,7 @@ Children:
           name: Command
           type: Command
           validators: *id020
-          value: JiggleBoulder
+          value: Jiggle Boulder
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id021
           default: whileHeld
@@ -798,7 +798,7 @@ Children:
           validators: null
           value: whileHeld
       Base: Joystick Button
-      Name: Jiggle Boulder
+      Name: jiggle Boulder
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -819,7 +819,7 @@ Children:
           name: Command
           type: Command
           validators: *id020
-          value: IntakeBoulderAfterJiggling
+          value: Intake Boulder After Jiggling
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id021
           default: whileHeld
@@ -827,7 +827,7 @@ Children:
           validators: null
           value: whenReleased
       Base: Joystick Button
-      Name: Jiggle Boulder Release
+      Name: jiggle Boulder Release
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
         choices: &id022 ['0', '1', '2', '3', '4', '5']
@@ -2162,18 +2162,19 @@ Children:
         default: []
         name: Parameters
         validators: null
-        value: []
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: WheelSpeed, type: double}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Requires, type: Subsystem, validators: null, value: Shooter}
+        name: Requires, type: Subsystem, validators: null, value: None}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
         default: []
         name: Parameter presets
         validators: null
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
-    Name: JiggleBoulder
+    Name: Set Boulder Intake Wheel Speed
   - Children: []
     Properties:
       Parameters: !!robotbuilder.data.properties.ParametersProperty
@@ -2191,26 +2192,25 @@ Children:
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
-    Name: IntakeBoulderAfterJiggling
+    Name: Intake Boulder After Jiggling
   - Children: []
-      Properties:
-      	Parameters: !!robotbuilder.data.properties.ParametersProperty
-       	  default: []
-          name: Parameters
-          validators: null
-          value:
-          - !!robotbuilder.data.properties.ParameterDescriptor {name: WheelSpeed, type: double}
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value: []
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Requires, type: Subsystem, validators: null, value: None}
+        name: Requires, type: Subsystem, validators: null, value: Shooter}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id025 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id025
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: false}
+        name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
-    Name: Set Boulder Intake Wheel Speed
+    Name: Jiggle Boulder
   Properties: {}
   Base: Commands
   Name: Commands
