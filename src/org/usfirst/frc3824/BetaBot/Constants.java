@@ -217,6 +217,6 @@ public class Constants
 	// ***************************************************************************************
 	// Chassis Auto Defense Drive
 
-	public static double AUTO_DEFENSE_DRIVE_MAX_RANGE         =  60.0; // inches
-	public static double AUTO_DEFENSE_DRIVE_NUDGE             =  1.0; // degree
+	public static double AUTO_DEFENSE_DRIVE_CLOSE_RANGE       =  50.0; // inches
+	public static double AUTO_DEFENSE_DRIVE_NUDGE             =   1.0; // degree
 }
