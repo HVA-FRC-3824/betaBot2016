@@ -7,7 +7,7 @@ public class Constants
 	// Set the robot configuration (competition or practice)
 	// Thing 1 - true  (Competition)
 	// Thing 2 - false
-	static final boolean IS_COMP_ROBOT = true;
+	static final boolean IS_COMP_ROBOT = false;
 
 	public static double SHOOTER_ELEVATION_ANGLE_A;
 	public static double SHOOTER_ELEVATION_ANGLE_B;

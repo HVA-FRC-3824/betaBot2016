@@ -49,7 +49,14 @@ public class AxeControl extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
+		// Extend the battle axes
 		Robot.battleAxes.setAxePositions(m_RightAxeExtend, m_LeftAxeExtend);
+		
+		// Start the boulder intake wheels
+		if (m_RightAxeExtend == true)
+			Robot.battleAxes.setWheelIntakePower(-0.5, 0.5);
+		else
+			Robot.battleAxes.setWheelIntakePower(0.0, 0.0);
 		
 		// reset and start the timer
 		m_holdTimer.reset();
@@ -74,13 +81,14 @@ public class AxeControl extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-		
+		// Disable the boulder intake wheels
+		Robot.battleAxes.setWheelIntakePower(0.0, 0.0);	
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted()
 	{
-		
+		this.end();
 	}
 }
