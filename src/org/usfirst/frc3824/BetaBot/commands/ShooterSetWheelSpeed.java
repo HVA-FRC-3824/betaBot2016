@@ -42,7 +42,7 @@ public class ShooterSetWheelSpeed extends Command
 	protected void initialize()
 	{
 		// Set Wheel Speed
-		Robot.shooter.ShooterWheelControl(m_WheelSpeed);
+		Robot.shooter.ShooterAllWheelControl(m_WheelSpeed);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

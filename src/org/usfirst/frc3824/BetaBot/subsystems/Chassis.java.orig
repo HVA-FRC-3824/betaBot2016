@@ -141,8 +141,16 @@ public class Chassis extends Subsystem
 	 */
 	public void updateGyroSetpointFromUltrasonic()
 	{
+<<<<<<< HEAD
+		double left  = getUltrasonicSensorLeftDistance();
+		double right = getUltrasonicSensorRightDistance();
+		
+		// check to see if ultrasonic sensors are in a useful range
+		if ((left < Constants.AUTO_DEFENSE_DRIVE_CLOSE_RANGE) || (right < Constants.AUTO_DEFENSE_DRIVE_CLOSE_RANGE))
+=======
 		// check to see if ultrasonic sensors are in a useful range
 		if (checkUltrasonicInUsefulRange())
+>>>>>>> 9ddd6be5163f0b8f5dec798aa3cf65a2808393fe
 		{
 			// if in useful range:
 			double degreesToNudge = Constants.AUTO_DEFENSE_DRIVE_NUDGE;
@@ -166,8 +174,8 @@ public class Chassis extends Subsystem
 	 */
 	public boolean checkUltrasonicInUsefulRange()
 	{
-		return getLeftUltrasonicDistance() < Constants.AUTO_DEFENSE_DRIVE_CLOSE_RANGE
-				&& getRightUltrasonicDistance() < Constants.AUTO_DEFENSE_DRIVE_CLOSE_RANGE;
+		return getLeftUltrasonicDistance() < Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE
+				&& getRightUltrasonicDistance() < Constants.AUTO_DEFENSE_DRIVE_MAX_RANGE;
 	}
 
 	/**
