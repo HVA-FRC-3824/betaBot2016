@@ -68,7 +68,7 @@ public class VisionAutomatedAimAndShootX extends Command
 		m_wheelTimer.start();
 		
 		// start the shooter wheels
-		Robot.shooter.ShooterWheelControl(1.0);
+		Robot.shooter.ShooterAllWheelControl(1.0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -118,7 +118,7 @@ public class VisionAutomatedAimAndShootX extends Command
 		m_shooterPositionOut = false;
 		
 		// Stop the shooter wheels
-		Robot.shooter.ShooterWheelControl(0.0);
+		Robot.shooter.ShooterAllWheelControl(0.0);
 		
 		// Disable both gyro and the two encoder drive PIDs 
 		Robot.chassis.disableAllPIDs();

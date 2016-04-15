@@ -104,7 +104,7 @@ public class Shooter extends Subsystem
 	 * Method to enable the shooter with the specified speed. The method can
 	 * also disable the shooter with a speed of zero.
 	 */
-	public void ShooterWheelControl(double speed)
+	public void ShooterAllWheelControl(double speed)
 	{
 		// Record Current Wheel Speed
 		m_PresentWheelSpeed = speed;
@@ -115,6 +115,32 @@ public class Shooter extends Subsystem
 		wheelRightA.set(speed);
 		wheelRightB.set(speed);
 		wheelLeftA.set(speed);
+		wheelLeftB.set(speed);
+	}
+	
+	/**
+	 * Method to enable the shooter rear wheels with the specified speed. The method can
+	 * also disable the shooter with a speed of zero.
+	 */
+	public void ShooterRearWheelControl(double speed)
+	{
+		// Set the shooter rear wheel motor speeds
+		// Note: The multiplier is to ensure maximum speed is reached
+		// The multiplier also reduces the minimum speed
+		wheelRightA.set(speed);
+		wheelLeftA.set(speed);
+	}
+	
+	/**
+	 * Method to enable the shooter front wheels with the specified speed. The method can
+	 * also disable the shooter with a speed of zero.
+	 */
+	public void ShooterFrontWheelControl(double speed)
+	{
+		// Set the shooter front wheel motor speeds
+		// Note: The multiplier is to ensure maximum speed is reached
+		// The multiplier also reduces the minimum speed
+		wheelRightB.set(speed);
 		wheelLeftB.set(speed);
 	}
 

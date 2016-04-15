@@ -103,7 +103,7 @@ public class ShooterPositionControl extends Command
 		Robot.shooter.setShooterElevationSetpoint(m_ActualShooterSetPoint);
 
 		// Set Wheel Speed
-		Robot.shooter.ShooterWheelControl(wheelSpeed);
+		Robot.shooter.ShooterAllWheelControl(wheelSpeed);
 		
 		// Enable the shooter elevation PID
 		Robot.shooter.setShooterElevationEnabled(true);

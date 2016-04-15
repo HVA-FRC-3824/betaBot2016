@@ -52,7 +52,7 @@ public class IntakeBoulderAfterJiggling extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    		Robot.shooter.ShooterWheelControl(-1);
+    		Robot.shooter.ShooterAllWheelControl(-1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -69,7 +69,7 @@ public class IntakeBoulderAfterJiggling extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	
-    	Robot.shooter.ShooterWheelControl(0);
+    	Robot.shooter.ShooterAllWheelControl(0);
     	m_Timer.stop();
     }
 

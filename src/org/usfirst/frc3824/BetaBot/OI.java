@@ -107,7 +107,7 @@ public class OI
         jiggleBoulderRelease.whenReleased(new IntakeBoulderAfterJiggling());
         jiggleBoulder = new JoystickButton(driveJoystick, 7);
         jiggleBoulder.whileHeld(new JiggleBoulder());
-        teleopDriveOverDefense = new JoystickButton(driveJoystick, 4);
+        teleopDriveOverDefense = new JoystickButton(driveJoystick, 3);
         teleopDriveOverDefense.whileHeld(new TeleopAutoDriveOverDefense());
         aimandShootXOnly = new JoystickButton(driveJoystick, 6);
         aimandShootXOnly.whileHeld(new VisionAutomatedAimAndShootX());
