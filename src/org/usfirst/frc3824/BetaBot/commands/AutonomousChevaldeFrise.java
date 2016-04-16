@@ -46,13 +46,16 @@ public class AutonomousChevaldeFrise extends CommandGroup
 
 		// Drive to the Chevalde de Frise
 		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.8));
-		addParallel(new AxeControl(true, true));
+		addParallel(new AxeControlDown());
 		
 		// Allow time for arms to deploy
 		addSequential(new Delay(1.5));
 		
 		// Driver over Cheval de Frise
 		addSequential(new ChassisDriveStraightDistance(350, 1.0));
+		
+		// Raise the arms back up
+		addParallel(new AxeControlUp());
 		
 		// Determine the starting position
 		if (StartingPosition == Constants.STARTING_POSITION_2)

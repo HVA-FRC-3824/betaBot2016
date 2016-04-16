@@ -36,10 +36,13 @@ public class AutonomousLowBar extends CommandGroup
 		addParallel(new ShooterPositionControl(0.0));
 		
     	// Lower the boulder pickup
-		addParallel(new AxeControl(true, true));
+		addParallel(new AxeControlDown());
 		addSequential(new Delay(0.4));
 		
 		addSequential(new ChassisDriveStraightDistance(driveDistance, 0.9));
+		
+		// Raise the arms back up
+		addParallel(new AxeControlUp());
 
 		// Raise the shooter while turning towards the goal
 		addSequential(new ShooterPositionControl(shooterHeight));

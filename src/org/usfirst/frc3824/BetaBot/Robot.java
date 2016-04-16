@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot
 
 		// Add a USB camera for the Driver
 		boolean camConnected = false;
-		for(int camNum = 3; camNum <= 3; camNum++)
+		for(int camNum = 0; camNum <= 0; camNum++)  // Thing 1 is CAM 3
 		{
 			try
 			{
@@ -270,7 +270,9 @@ public class Robot extends IterativeRobot
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
-
+		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
+		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getLeftUltrasonicDistance());
+		
 //		Robot.targets.updateSmartDashboard();
 }
 
@@ -296,7 +298,9 @@ public class Robot extends IterativeRobot
 		
 		// Show the Lidar range on the SmartDashboard
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
-
+		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
+		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getLeftUltrasonicDistance());
+		
 //		SmartDashboard.putNumber("X Encoder Error", Robot.chassis.getEncoderPID_Error());
 	}
 

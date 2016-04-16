@@ -126,9 +126,9 @@ public class Chassis extends Subsystem
 
 		double moveValue = stick.getY();
 		if (moveValue < 0)
-			moveValue = -1.0 * (moveValue * moveValue);
-		else
 			moveValue = moveValue * moveValue;
+		else
+			moveValue = -1.0 * (moveValue * moveValue);
 
 		// Set magnitude
 		setMagnitude(moveValue);
