@@ -127,7 +127,7 @@ public class Shooter extends Subsystem
 		// Set the shooter rear wheel motor speeds
 		// Note: The multiplier is to ensure maximum speed is reached
 		// The multiplier also reduces the minimum speed
-		wheelRightA.set(speed);
+		wheelRightB.set(speed);
 		wheelLeftA.set(speed);
 	}
 	
@@ -140,7 +140,7 @@ public class Shooter extends Subsystem
 		// Set the shooter front wheel motor speeds
 		// Note: The multiplier is to ensure maximum speed is reached
 		// The multiplier also reduces the minimum speed
-		wheelRightB.set(speed);
+		wheelRightA.set(speed);
 		wheelLeftB.set(speed);
 	}
 
@@ -204,7 +204,7 @@ public class Shooter extends Subsystem
 	}
 
 	/**
-	 * Method to get teh shooter elecation angel
+	 * Method to get the shooter elevation angle
 	 */
 	public double GetShooterElevatorAngle()
 	{

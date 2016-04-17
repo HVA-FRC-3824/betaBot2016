@@ -46,7 +46,7 @@ public class AutonomousLowBar extends CommandGroup
 
 		// Raise the shooter while turning towards the goal
 		addSequential(new ShooterPositionControl(shooterHeight));
-		addSequential(new ChassisTurnAngle(50.0, 0.4));
+		addSequential(new ChassisTurnAngle(55.0, 0.4));
 		
 		// Drive towards goal
 		addSequential(new ChassisDriveStraightDistance(120.0, 1.0));

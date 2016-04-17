@@ -80,7 +80,7 @@ public class Constants
 	public static int STARTING_POSITION_6                     = 6;
 	
 	public static int NO_GOAL                                 = 0;
-	public static int LOW_GOAL                                = 1;
+//	public static int LOW_GOAL                                = 1;
 	public static int HIGH_GOAL                               = 2;
 	public static int SHOT_RETURN                             = 3;
 
@@ -158,7 +158,7 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
-	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 2.0;
+	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 1.0;
 	
 	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 40;
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 20;
@@ -190,19 +190,30 @@ public class Constants
 	public static int IMAGE_TURN_TO_TARGET_Y                  = 50;
 
 	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 30;
-	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 60;
-	
-	public static int IMAGE_ON_TARGET_X_FAR                   =   1;
-	public static int IMAGE_ON_TARGET_Y_FAR                   =   2;
+	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 60;	
+	                                                                        // Competition
+	public static int IMAGE_ON_TARGET_X_FAR                   =   4;  //  2 //  2 //  1
+	public static int IMAGE_ON_TARGET_Y_FAR                   =  10;  //  8 //  6 //  2
 
 	public static double IMAGE_DISTANCE_MEDIUM                = 275;
-	public static int IMAGE_ON_TARGET_X_MEDIUM                =   2;
-	public static int IMAGE_ON_TARGET_Y_MEDIUM                =   4;
+	public static int IMAGE_ON_TARGET_X_MEDIUM                =   6;  //  5 //  4 //  2
+	public static int IMAGE_ON_TARGET_Y_MEDIUM                =  14;  // 12 // 10 //  4
 
 	public static double IMAGE_DISTANCE_CLOSE                 = 200;
-	public static int IMAGE_ON_TARGET_X_CLOSE                 =   3;
-	public static int IMAGE_ON_TARGET_Y_CLOSE                 =   6;
+	public static int IMAGE_ON_TARGET_X_CLOSE                 =   8;  //  7 //  6 //  3
+	public static int IMAGE_ON_TARGET_Y_CLOSE                 =  18;  // 15 // 10 //  6
 	
+//public static int IMAGE_ON_TARGET_X_FAR                   =   1;
+//public static int IMAGE_ON_TARGET_Y_FAR                   =   2;
+//
+//public static double IMAGE_DISTANCE_MEDIUM                = 275;
+//public static int IMAGE_ON_TARGET_X_MEDIUM                =   1;
+//public static int IMAGE_ON_TARGET_Y_MEDIUM                =   2;
+//
+//public static double IMAGE_DISTANCE_CLOSE                 = 200;
+//public static int IMAGE_ON_TARGET_X_CLOSE                 =   1;
+//public static int IMAGE_ON_TARGET_Y_CLOSE                 =   2;
+
 	public static double DISTANCE_A                           =  0.0839;  //  0.0838;   // x^2
 	public static double DISTANCE_B                           = -16.762;  // -16.665;   // x
 	public static double DISTANCE_C                           =  967.84;  //  952.25;   // offset
@@ -212,8 +223,8 @@ public class Constants
 	public static double IMAGE_Y_C                            =  172.81;    //141.11;  //   172.81;    // offset
 	
 	//                                                         Thing 2  // Thing 1
-	public static int    IMAGE_ON_TARGET_X_POSITION           =   170;  // 170;        // X location of the "onTarget" position
-	public static int    IMAGE_ON_TARGET_Y_OFFSET             =   -25;  // -25;
+	public static int    IMAGE_ON_TARGET_X_POSITION           =   180;  // 170;        // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_Y_OFFSET             =   -15;  // -25;
 	
 	// ***************************************************************************************
 	// Chassis Auto Defense Drive
