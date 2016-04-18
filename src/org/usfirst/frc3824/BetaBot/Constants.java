@@ -231,4 +231,10 @@ public class Constants
 
 	public static double AUTO_DEFENSE_DRIVE_CLOSE_RANGE       =  50.0; // inches
 	public static double AUTO_DEFENSE_DRIVE_NUDGE             =   1.0; // degree
+	
+	// ***************************************************************************************
+	// Climber
+
+	public static double CLIMBER_LEFT_WINCH_SPEED             = 0.5;
+	public static double CLIMBER_RIGHT_WINCH_SPEED            = 0.5;
 }
