@@ -235,6 +235,6 @@ public class Constants
 	// ***************************************************************************************
 	// Climber
 
-	public static double CLIMBER_LEFT_WINCH_SPEED             = 0.5;
-	public static double CLIMBER_RIGHT_WINCH_SPEED            = 0.5;
+	public static double CLIMBER_LEFT_WINCH_SPEED             = 1.0;
+	public static double CLIMBER_RIGHT_WINCH_SPEED            = 1.0;
 }

@@ -202,8 +202,8 @@ public class Robot extends IterativeRobot
 
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle",       Robot.chassis.getCurrentHeading());	
-		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
-		SmartDashboard.putNumber("Ultrasonic Left",  Robot.chassis.getLeftUltrasonicDistance());
+//		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
+//		SmartDashboard.putNumber("Ultrasonic Left",  Robot.chassis.getLeftUltrasonicDistance());
 		
 		// find target - don't care about results, but this will also update the SmartDashboard
 		Robot.targets.getTargetingInfo();
@@ -212,8 +212,7 @@ public class Robot extends IterativeRobot
 	public void autonomousInit()
 	{
 		int startingLocation = 0;
-//		int shotChoice = Constants.NO_GOAL;
-		int shotChoice = Constants.HIGH_GOAL;
+		int shotChoice = Constants.NO_GOAL;
 		
 		// Determine the starting location
 		if (startingLocationChooser.getSelected() != null)
@@ -275,8 +274,8 @@ public class Robot extends IterativeRobot
 		// Add current gyro angle to smart dashboard
 		SmartDashboard.putNumber("Gyro Angle", Robot.chassis.getCurrentHeading());	
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
-		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
-		SmartDashboard.putNumber("Ultrasonic Left",  Robot.chassis.getLeftUltrasonicDistance());
+//		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
+//		SmartDashboard.putNumber("Ultrasonic Left",  Robot.chassis.getLeftUltrasonicDistance());
 		
 //		Robot.targets.updateSmartDashboard();
 }
@@ -303,8 +302,8 @@ public class Robot extends IterativeRobot
 		
 		// Show the Lidar range on the SmartDashboard
 		SmartDashboard.putNumber("Lidar Range (cm)", Robot.chassis.getLidarDistanceCentimeters());
-		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
-		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getLeftUltrasonicDistance());
+//		SmartDashboard.putNumber("Ultrasonic Right", Robot.chassis.getRightUltrasonicDistance());
+//		SmartDashboard.putNumber("Ultrasonic Left", Robot.chassis.getLeftUltrasonicDistance());
 		
 //		SmartDashboard.putNumber("X Encoder Error", Robot.chassis.getEncoderPID_Error());
 	}
