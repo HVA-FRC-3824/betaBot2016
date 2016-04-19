@@ -59,6 +59,9 @@ public class AutonomousLowBar extends CommandGroup
 	
 			// Turn around
 			addSequential(new ChassisTurnAngle(180.0, 0.0));
+			
+			// Drive away from goal
+			addSequential(new ChassisDriveStraightDistance(180.0, 0.8));
 		}
 	}
 }

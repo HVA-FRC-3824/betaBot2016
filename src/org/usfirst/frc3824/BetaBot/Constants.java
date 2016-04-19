@@ -192,16 +192,16 @@ public class Constants
 	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 30;
 	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 60;	
 	                                                                        // Competition
-	public static int IMAGE_ON_TARGET_X_FAR                   =   4;  //  2 //  2 //  1
-	public static int IMAGE_ON_TARGET_Y_FAR                   =  10;  //  8 //  6 //  2
+	public static int IMAGE_ON_TARGET_X_FAR                   =   4;  //  4 //  2 //  2 //  1
+	public static int IMAGE_ON_TARGET_Y_FAR                   =   8;  // 10 //  8 //  6 //  2
 
 	public static double IMAGE_DISTANCE_MEDIUM                = 275;
-	public static int IMAGE_ON_TARGET_X_MEDIUM                =   6;  //  5 //  4 //  2
-	public static int IMAGE_ON_TARGET_Y_MEDIUM                =  14;  // 12 // 10 //  4
+	public static int IMAGE_ON_TARGET_X_MEDIUM                =   6;  //  6 //  5 //  4 //  2
+	public static int IMAGE_ON_TARGET_Y_MEDIUM                =  10;  // 14 // 12 // 10 //  4
 
 	public static double IMAGE_DISTANCE_CLOSE                 = 200;
-	public static int IMAGE_ON_TARGET_X_CLOSE                 =   8;  //  7 //  6 //  3
-	public static int IMAGE_ON_TARGET_Y_CLOSE                 =  18;  // 15 // 10 //  6
+	public static int IMAGE_ON_TARGET_X_CLOSE                 =   8;  //  8 //  7 //  6 //  3
+	public static int IMAGE_ON_TARGET_Y_CLOSE                 =  12;  // 18 // 15 // 10 //  6
 	
 //public static int IMAGE_ON_TARGET_X_FAR                   =   1;
 //public static int IMAGE_ON_TARGET_Y_FAR                   =   2;

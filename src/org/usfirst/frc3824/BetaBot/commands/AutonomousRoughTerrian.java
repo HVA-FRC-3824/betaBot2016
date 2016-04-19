@@ -22,7 +22,7 @@ public class AutonomousRoughTerrian extends CommandGroup
 {
 	public double driveDistance      = 415.0;
 	
-	public double position2TurnAngle = 70.0; // Position 2
+	public double position2TurnAngle =  70.0; // Position 2
 	public double position2Drive     = 230.0;
 	
 	public double positionTurnAngle  = 20.0;  // Position 3 and 5
@@ -93,45 +93,13 @@ public class AutonomousRoughTerrian extends CommandGroup
 		addSequential(new ChassisDriveTargetLIDAR(LiDarDistance));
 
 		// Determine if the Robot should shoot the boulder
-		if ((ShotChoice == Constants.HIGH_GOAL) || (ShotChoice == Constants.SHOT_RETURN))
+		if (ShotChoice == Constants.HIGH_GOAL)
 		{
 			// Line up and shoot based on camera
 			addSequential(new VisionAutomatedAimAndShoot());
-		}
-		
-		if (ShotChoice == Constants.SHOT_RETURN)
-		{
-			if (StartingLocation == Constants.STARTING_POSITION_2)
-			{
-				// Turn around
-				addSequential(new ChassisTurnAngle(180.0, 0.0));
-				
-				//TODO: Drive back over after crossing position 2
-			}
-			else if (StartingLocation == Constants.STARTING_POSITION_3)
-			{
-				// Turn around
-				addSequential(new ChassisTurnAngle(180.0, 0.0));
-				
-				// Drive back over Rough Terrain
-				addSequential(new AutonomousAutoDriveOverDefense(driveDistance, 1.0));
-			}
-			else if (StartingLocation == Constants.STARTING_POSITION_4)
-			{
-				// Turn around
-				addSequential(new ChassisTurnAngle(180.0, 0.0));
-				
-				// Drive back over Rough Terrain
-				addSequential(new AutonomousAutoDriveOverDefense(driveDistance, 1.0));
-			}
-			else if (StartingLocation == Constants.STARTING_POSITION_5)
-			{
-				// Turn around
-				addSequential(new ChassisTurnAngle(180.0, 0.0));
-				
-				// Drive back over Rough Terrain
-				addSequential(new AutonomousAutoDriveOverDefense(driveDistance, 1.0));
-			}
+	
+			// Turn around
+			addSequential(new ChassisTurnAngle(180.0, 0.0));
 		}
 	}
 }
