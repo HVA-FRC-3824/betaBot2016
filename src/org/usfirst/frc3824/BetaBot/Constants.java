@@ -7,7 +7,7 @@ public class Constants
 	// Set the robot configuration (competition or practice)
 	// Thing 1 - true  (Competition)
 	// Thing 2 - false
-	static final boolean IS_COMP_ROBOT = false;
+	static final boolean IS_COMP_ROBOT = true;
 
 	public static double SHOOTER_ELEVATION_ANGLE_A;
 	public static double SHOOTER_ELEVATION_ANGLE_B;
@@ -222,9 +222,9 @@ public class Constants
 	public static double IMAGE_Y_B                            =  0.0534;    //0.1887;  //   0.0534;    // x
 	public static double IMAGE_Y_C                            =  172.81;    //141.11;  //   172.81;    // offset
 	
-	//                                                         Thing 2  // Thing 1
-	public static int    IMAGE_ON_TARGET_X_POSITION           =   180;  // 170;        // X location of the "onTarget" position
-	public static int    IMAGE_ON_TARGET_Y_OFFSET             =   -15;  // -25;
+	//                                                         Thing 1  // Thing 2  // Thing 1
+	public static int    IMAGE_ON_TARGET_X_POSITION           =   170;  // 170;        // X location of the "onTarget" position
+	public static int    IMAGE_ON_TARGET_Y_OFFSET             =   -25;  // -25;
 	
 	// ***************************************************************************************
 	// Chassis Auto Defense Drive
