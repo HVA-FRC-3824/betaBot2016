@@ -109,6 +109,9 @@ public class AutonomousChevaldeFrise extends CommandGroup
 	
 			// Turn around
 			addSequential(new ChassisTurnAngle(180.0, 0.0));
+			
+			// Drive away from goal
+			addSequential(new ChassisDriveStraightDistance(90.0, 0.8));
 		}
 	}
 }
