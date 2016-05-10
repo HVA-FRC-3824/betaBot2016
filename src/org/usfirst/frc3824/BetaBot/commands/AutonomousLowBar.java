@@ -57,11 +57,11 @@ public class AutonomousLowBar extends CommandGroup
 			// Line up and shoot based on camera
 			addSequential(new VisionAutomatedAimAndShoot());
 	
-			// Turn around
-			addSequential(new ChassisTurnAngle(180.0, 0.0));
-			
-			// Drive away from goal
-			addSequential(new ChassisDriveStraightDistance(180.0, 0.8));
+//			// Turn around
+//			addSequential(new ChassisTurnAngle(180.0, 0.0));
+//			
+//			// Drive away from goal
+//			addSequential(new ChassisDriveStraightDistance(180.0, 0.8));
 		}
 	}
 }

@@ -59,7 +59,7 @@ public class ChassisDriveTargetLIDAR extends Command
 		                                Constants.DRIVETRAIN_DRIVE_MINIMUM_OUTPUT,
 		                                Constants.DRIVETRAIN_DRIVE_MAXIMUM_OUTPUT,
 		                                Robot.chassis.getCurrentHeading(), 0.0, 
-		                                0.8 * (driveForward ? 1.0:-1.0));
+		                                0.4 * (driveForward ? 1.0:-1.0));
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -84,7 +84,7 @@ public class ChassisDriveTargetLIDAR extends Command
 	protected boolean isFinished()
 	{
 		// might overshoot here
-		return (Math.abs(m_TargetDistance - Robot.chassis.getLidarDistanceCentimeters()) < 5.0); 
+		return (Math.abs(m_TargetDistance - Robot.chassis.getLidarDistanceCentimeters()) < 10.0); 
 	}
 
 	// Called once after isFinished returns true

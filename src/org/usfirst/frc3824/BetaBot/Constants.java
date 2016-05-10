@@ -158,7 +158,7 @@ public class Constants
 	
 	// ***************************************************************************************
 	// Automated aim and shoot constants
-	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 1.0;
+	public static double IMAGE_SHOOTER_WHEEL_SPINUP_TIME      = 1.5;
 	
 	public static int IMAGE_LARGE_PIXEL_OFFSET_Y 			  = 40;
 	public static int IMAGE_MEDIUM_PIXEL_OFFSET_Y 			  = 20;
@@ -192,16 +192,16 @@ public class Constants
 	public static double IMAGE_SEARCH_MIN_SHOOTER_POSITION    = 30;
 	public static double IMAGE_SEARCH_MAX_SHOOTER_POSITION    = 60;	
 	                                                                        // Competition
-	public static int IMAGE_ON_TARGET_X_FAR                   =   4;  //  4 //  2 //  2 //  1
-	public static int IMAGE_ON_TARGET_Y_FAR                   =   8;  // 10 //  8 //  6 //  2
+	public static int IMAGE_ON_TARGET_X_FAR                   =   3;  //  4  //  4 //  2 //  2 //  1
+	public static int IMAGE_ON_TARGET_Y_FAR                   =   6;  //  8  // 10 //  8 //  6 //  2
 
 	public static double IMAGE_DISTANCE_MEDIUM                = 275;
-	public static int IMAGE_ON_TARGET_X_MEDIUM                =   6;  //  6 //  5 //  4 //  2
-	public static int IMAGE_ON_TARGET_Y_MEDIUM                =  10;  // 14 // 12 // 10 //  4
+	public static int IMAGE_ON_TARGET_X_MEDIUM                =   4;  //  6  //  6 //  5 //  4 //  2
+	public static int IMAGE_ON_TARGET_Y_MEDIUM                =   8;  // 10  // 14 // 12 // 10 //  4
 
 	public static double IMAGE_DISTANCE_CLOSE                 = 200;
-	public static int IMAGE_ON_TARGET_X_CLOSE                 =   8;  //  8 //  7 //  6 //  3
-	public static int IMAGE_ON_TARGET_Y_CLOSE                 =  12;  // 18 // 15 // 10 //  6
+	public static int IMAGE_ON_TARGET_X_CLOSE                 =   6;  //  8 //  8 //  7 //  6 //  3
+	public static int IMAGE_ON_TARGET_Y_CLOSE                 =  10;  // 12 // 18 // 15 // 10 //  6
 	
 //public static int IMAGE_ON_TARGET_X_FAR                   =   1;
 //public static int IMAGE_ON_TARGET_Y_FAR                   =   2;
@@ -218,9 +218,10 @@ public class Constants
 	public static double DISTANCE_B                           = -16.762;  // -16.665;   // x
 	public static double DISTANCE_C                           =  967.84;  //  952.25;   // offset
 	
-	public static double IMAGE_Y_A                            =  0.0001;    //0.00005; //   0.0001;    // x^2
-	public static double IMAGE_Y_B                            =  0.0534;    //0.1887;  //   0.0534;    // x
-	public static double IMAGE_Y_C                            =  172.81;    //141.11;  //   172.81;    // offset
+	// y = 0.0003x2 - 0.0462x + 183.46
+	public static double IMAGE_Y_A                            =   0.0003;  // 0.0001;    //0.00005; //   0.0001;    // x^2
+	public static double IMAGE_Y_B                            =  -0.0462;  // 0.0534;    //0.1887;  //   0.0534;    // x
+	public static double IMAGE_Y_C                            =   183.46;  // 172.81;    //141.11;  //   172.81;    // offset
 	
 	//                                                         Thing 1  // Thing 2  // Thing 1
 	public static int    IMAGE_ON_TARGET_X_POSITION           =   170;  // 170;        // X location of the "onTarget" position

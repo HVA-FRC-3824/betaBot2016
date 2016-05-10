@@ -22,7 +22,7 @@ public class AutonomousRockWall extends CommandGroup
 {
 	public double driveDistance      = 415.0;
 	
-	public double position2TurnAngle = 70.0; // Position 2
+	public double position2TurnAngle =  70.0; // Position 2
 	public double position2Drive     = 230.0;
 	
 	public double positionTurnAngle  = 20.0;  // Position 3 and 5
@@ -95,20 +95,25 @@ public class AutonomousRockWall extends CommandGroup
 		// Line up based on camera
 		addSequential(new ChassisTurnToImageTarget());
 
-		// Drive to shoot distance
-		addSequential(new ChassisDriveTargetLIDAR(LiDarDistance));
-
+		// Do not drive is started from slot 2	
+		if (StartingLocation != Constants.STARTING_POSITION_2)
+		{
+			// Drive to shoot distance
+//			addSequential(new ChassisDriveTargetLIDAR(LiDarDistance));
+			addSequential(new ChassisDriveStraightDistance(60.0, 0.8));
+		}
+		
 		// Determine if the Robot should shoot the boulder
 		if (ShotChoice == Constants.HIGH_GOAL)
 		{
 			// Line up and shoot based on camera
 			addSequential(new VisionAutomatedAimAndShoot());
 	
-			// Turn around
-			addSequential(new ChassisTurnAngle(180.0, 0.0));
-			
-			// Drive away from goal
-			addSequential(new ChassisDriveStraightDistance(90.0, 0.8));
+//			// Turn around
+//			addSequential(new ChassisTurnAngle(180.0, 0.0));
+//			
+//			// Drive away from goal
+//			addSequential(new ChassisDriveStraightDistance(90.0, 0.8));
 		}
 	}
 }

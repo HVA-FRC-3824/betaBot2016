@@ -67,8 +67,13 @@ public class AxeControlDown extends Command
 			// Determine when the shooter wheel is off or spinning for shooting
 			if (Robot.shooter.GetShooterWheelSpeed() < 0.0)
 			{
-				// Enable the boulder intake wheels
+				// Enable the boulder intake wheels (in)
 				Robot.battleAxes.setWheelIntakePower(-0.5, 0.5);
+			}
+			else if (Robot.battleAxes.getSquidsOutFlag() == true)
+			{
+				// Enable the boulder intake wheels (out)
+				Robot.battleAxes.setWheelIntakePower(0.5, -0.5);
 			}
 			else
 			{
